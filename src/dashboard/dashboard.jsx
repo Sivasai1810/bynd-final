@@ -179,7 +179,7 @@ export default function Dashboard() {
     const fetchProfile = async () => {
       try {
         setLoading(true);
-        const res = await axios.post("http://localhost:3000/fetch/profile", {}, { withCredentials: true });
+        const res = await axios.post("https://bynd-backend.onrender.com/fetch/profile", {}, { withCredentials: true });
         setProfile(res.data.profile);
       } catch (error) {
         showNotification('Failed to load profile');
@@ -195,7 +195,7 @@ export default function Dashboard() {
     const fetchSubmissions = async () => {
       try {
         setSubmissionsLoading(true);
-        const res = await axios.get("http://localhost:3000/userurls", { withCredentials: true });
+        const res = await axios.get("https://bynd-backend.onrender.com/userurls", { withCredentials: true });
         if (res.data.submissions && res.data.submissions.length > 0) {
           const formatted = res.data.submissions.map((s) => ({
             id: s.id,
@@ -263,7 +263,7 @@ export default function Dashboard() {
         status: "pending",
         created_at: new Date().toISOString()
       };
-      const res = await axios.post("http://localhost:3000/storeurls", payload, {
+      const res = await axios.post("https://bynd-backend.onrender.com/storeurls", payload, {
         withCredentials: true,
         headers: { 'Content-Type': 'application/json' }
       });

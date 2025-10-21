@@ -173,7 +173,7 @@ const Login = () => {
       return
     }
     try {
-      const res = await axios.post("http://localhost:3000/auth/login", {
+      const res = await axios.post("https://bynd-backend.onrender.com/auth/login", {
         user_email: email,
         user_password: password
       }, { withCredentials: true })

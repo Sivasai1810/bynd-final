@@ -188,7 +188,7 @@ const SignUp = () => {
     }
 
     try {
-      const res = await axios.post("http://localhost:3000/auth/signup", {
+      const res = await axios.post("https://bynd-backend.onrender.com/auth/signup", {
         user_name: `${firstName} ${lastName}`,
         user_email: email,
         user_password: password
