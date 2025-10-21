@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import '../dashboard/dashboard.css';
 import Logo from "../assets/byndlogo.svg";
 import Addsymbol from "../assets/addsymbol.svg";
-import Profile from "../assets/profiles.svg";
+import Profile from "../assets/Profiles.svg";
 import Dashsymbol from "../assets/dashsymbol.svg";
 import Analytics from "../assets/Analytics.svg";
 import Notification from "../assets/sidenotification.svg";
