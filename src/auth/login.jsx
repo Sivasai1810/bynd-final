@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom';
 import Signup from './sign.jsx'
-import './Login.css' 
+import './login.css' 
 
 // Toast Notification Component
 const Toast = ({ message, type = 'success', onClose, duration = 3000 }) => {
