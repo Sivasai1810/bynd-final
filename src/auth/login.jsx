@@ -173,6 +173,7 @@ const Login = () => {
       return
     }
     try {
+      //https://bynd-backend.onrender.com
       const res = await axios.post("https://bynd-backend.onrender.com/auth/login", {
         user_email: email,
         user_password: password

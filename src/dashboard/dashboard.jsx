@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import '../dashboard/dashboard.css';
 import Logo from "../assets/byndlogo.svg";
 import Addsymbol from "../assets/addsymbol.svg";
-import Profile from "../assets/Profiles.svg";
+import Profile from "../assets/profiles.svg";
 import Dashsymbol from "../assets/dashsymbol.svg";
 import Analytics from "../assets/Analytics.svg";
 import Notification from "../assets/sidenotification.svg";
@@ -14,9 +14,9 @@ import Counts from "../assets/count.svg";
 import Lastviewed from "../assets/lastviewed.svg";
 import Upgradetopro from "../assets/upgradetopro.svg";
 import Prorocket from "../assets/prorocket.svg";
-import axios from "axios";
+import axios from "axios"
 
-// ================= Toast Notification =================
+// Notification Component
 const Toast = ({ message, onClose }) => {
   const [progress, setProgress] = useState(100);
 
@@ -57,15 +57,15 @@ const Toast = ({ message, onClose }) => {
       justifyContent: 'space-between',
       gap: '12px'
     }}>
-      <span style={{
-        flex: 1,
-        fontSize: '14px',
+      <span style={{ 
+        flex: 1, 
+        fontSize: '14px', 
         color: '#333',
         fontWeight: '500'
       }}>
         {message}
       </span>
-      <button
+      <button 
         onClick={onClose}
         style={{
           background: 'none',
@@ -89,7 +89,7 @@ const Toast = ({ message, onClose }) => {
         bottom: 0,
         right: 0,
         height: '3px',
-        width: `${progress}%`,   // ✅ FIXED
+        width: `${progress}%`,
         backgroundColor: '#1DBC79',
         transition: 'width 0.01s linear',
         borderBottomRightRadius: progress > 5 ? '0' : '8px',
@@ -99,7 +99,7 @@ const Toast = ({ message, onClose }) => {
   );
 };
 
-// ================= Profile Dropdown =================
+// Profile Dropdown Component
 const ProfileDropdown = ({ profile, onLogout }) => {
   return (
     <div style={{
@@ -134,7 +134,7 @@ const ProfileDropdown = ({ profile, onLogout }) => {
           {profile?.user_email || 'email@example.com'}
         </p>
       </div>
-      <button
+      <button 
         onClick={onLogout}
         style={{
           width: '100%',
@@ -158,9 +158,11 @@ const ProfileDropdown = ({ profile, onLogout }) => {
   );
 };
 
-// ================= Dashboard =================
 export default function Dashboard() {
+  // Navigation
   const navigate = useNavigate();
+
+  // Form & Data States
   const [showForm, setShowForm] = useState(false);
   const [pdfFile, setPdfFile] = useState(null);
   const [pastedUrl, setPastedUrl] = useState("");
@@ -168,94 +170,136 @@ export default function Dashboard() {
   const [position, setPosition] = useState("");
   const [designInfo, setDesignInfo] = useState([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  
+  // Profile & Notification States
   const [notification, setNotification] = useState(null);
   const [profile, setProfile] = useState(null);
   const [showProfileDropdown, setShowProfileDropdown] = useState(false);
   const [loading, setLoading] = useState(true);
   const [submissionsLoading, setSubmissionsLoading] = useState(false);
 
-  // Fetch profile
+  // Fetch profile on mount
   useEffect(() => {
     const fetchProfile = async () => {
       try {
         setLoading(true);
-        const res = await axios.post("https://bynd-backend.onrender.com/fetch/profile", {}, { withCredentials: true });
+        const res = await axios.get("https://bynd-backend.onrender.com/fetch/profile",{ 
+          withCredentials: true 
+        });
+        console.log(res.data.profile.user_name)
         setProfile(res.data.profile);
       } catch (error) {
+        console.error('Error fetching profile:', error);
         showNotification('Failed to load profile');
       } finally {
         setLoading(false);
       }
     };
+
     fetchProfile();
   }, []);
 
-  // Fetch submissions
+  // Fetch submissions data
   useEffect(() => {
     const fetchSubmissions = async () => {
       try {
         setSubmissionsLoading(true);
-        const res = await axios.get("https://bynd-backend.onrender.com/userurls", { withCredentials: true });
+        const res = await axios.get("https://bynd-backend.onrender.com/userurls", { 
+          withCredentials: true 
+        });
+        
+        console.log("Submissions fetched:", res.data);
+        
         if (res.data.submissions && res.data.submissions.length > 0) {
-          const formatted = res.data.submissions.map((s) => ({
-            id: s.id,
-            pastedUrl: s.pasted_url,
-            companyName: s.companyname,
-            position: s.position,
-            submittedOn: s.created_at ? new Date(s.created_at).toLocaleDateString('en-CA') : 'N/A',
-            status: s.status,
-            shareableLink: s.shareable_link,
-            uniqueId: s.unique_id,
-            previewUrl: s.preview_url
+          const formattedSubmissions = res.data.submissions.map((submission) => ({
+            id: submission.id,
+            pastedUrl: submission.pasted_url,
+            companyName: submission.companyname,
+            position: submission.position,
+            submittedOn: submission.created_at ? new Date(submission.created_at).toLocaleDateString('en-CA') : 'N/A',
+            status: submission.status,
+            shareableLink: submission.shareable_link,
+            uniqueId: submission.unique_id,
+            previewUrl: submission.preview_url
           }));
-          setDesignInfo(formatted);
-        } else setDesignInfo([]);
+          
+          setDesignInfo(formattedSubmissions);
+        } else {
+          setDesignInfo([]);
+        }
       } catch (error) {
+        console.error('Error fetching submissions:', error);
         showNotification('Failed to load submissions');
+        setDesignInfo([]);
       } finally {
         setSubmissionsLoading(false);
       }
     };
+
     fetchSubmissions();
   }, []);
 
-  const showNotification = (msg) => setNotification(msg);
-  const closeNotification = () => setNotification(null);
-
-  const handleCopyLink = (link) => {
-    if (!link) return showNotification("No link available to copy");
-    navigator.clipboard.writeText(link)
-      .then(() => showNotification("BYND link copied to clipboard"))
-      .catch(() => showNotification("Failed to copy link"));
+  // Show notification helper
+  const showNotification = (message) => {
+    setNotification(message);
   };
 
+  // Close notification helper
+  const closeNotification = () => {
+    setNotification(null);
+  };
+
+  // Handle copy link to clipboard
+  const handleCopyLink = (shareableLink) => {
+    if (!shareableLink) {
+      showNotification("No link available to copy");
+      return;
+    }
+
+    navigator.clipboard.writeText(shareableLink).then(() => {
+      showNotification("BYND link copied to your clipboard");
+    }).catch(() => {
+      showNotification("Failed to copy link");
+    });
+  };
+
+  // Handle logout
   const handleLogout = () => {
     setProfile(null);
     setShowProfileDropdown(false);
     navigate('/login');
   };
 
+  // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (showProfileDropdown && !e.target.closest('.avatar-container')) {
         setShowProfileDropdown(false);
       }
     };
+
     document.addEventListener('click', handleClickOutside);
     return () => document.removeEventListener('click', handleClickOutside);
   }, [showProfileDropdown]);
 
+  // Derived values
   const activeSubmissions = designInfo.length;
   const availableSlots = Math.max(3 - activeSubmissions, 0);
 
+  // Show form only if slots available
   const handleShowForm = () => {
-    if (availableSlots > 0) setShowForm(true);
-    else showNotification("Maximum 3 submissions allowed!");
+    if (availableSlots > 0) {
+      setShowForm(true);
+    } else {
+      showNotification("Maximum 3 submissions allowed!");
+    }
   };
 
+  // Add new submission with API call
   const handleStoreData = async () => {
     try {
       setIsSubmitting(true);
+
       const payload = {
         pasted_url: pastedUrl.trim(),
         companyname: companyName.trim(),
@@ -263,31 +307,56 @@ export default function Dashboard() {
         status: "pending",
         created_at: new Date().toISOString()
       };
-      const res = await axios.post("https://bynd-backend.onrender.com/storeurls", payload, {
-        withCredentials: true,
-        headers: { 'Content-Type': 'application/json' }
-      });
+
+      console.log("Submitting payload:", payload);
+
+      const response = await axios.post(
+        "https://bynd-backend.onrender.com/storeurls",
+        payload,
+        { 
+          withCredentials: true,
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        }
+      );
+
+      console.log("Response from backend:", response.data);
 
       const newSubmission = {
         id: designInfo.length + 1,
-        pastedUrl,
-        companyName,
-        position,
+        pastedUrl: pastedUrl.trim(),
+        companyName: companyName.trim(),
+        position: position.trim(),
         submittedOn: new Date().toLocaleDateString('en-CA'),
         status: "pending",
-        shareableLink: res.data.shareableLink,
-        pdfFile
+        shareableLink: response.data.shareableLink,
+        pdfFile: pdfFile
       };
 
       setDesignInfo(prev => [...prev, newSubmission]);
+
+      // Reset form fields
       setPdfFile(null);
       setPastedUrl("");
       setCompanyName("");
       setPosition("");
       setShowForm(false);
+      
+      // Show success notification
       showNotification("Design submission added successfully!");
+
     } catch (error) {
-      showNotification(error.response?.data?.error || error.message || "Failed to submit design");
+      console.error('Error submitting data:', error);
+      
+      let errorMessage = "Failed to submit design";
+      if (error.response?.data?.error) {
+        errorMessage = error.response.data.error;
+      } else if (error.message) {
+        errorMessage = error.message;
+      }
+      
+      showNotification(errorMessage);
     } finally {
       setIsSubmitting(false);
     }
@@ -295,11 +364,17 @@ export default function Dashboard() {
 
   return (
     <div className="container">
-      {notification && <Toast message={notification} onClose={closeNotification} />}
+      {/* Notification Toast */}
+      {notification && (
+        <Toast message={notification} onClose={closeNotification} />
+      )}
 
       {/* Sidebar */}
       <div className="sidebar">
-        <div className="logo"><img src={Logo} alt="BYND Logo" className="logo-img" /></div>
+        <div className="logo">
+          <img src={Logo} alt="BYND Logo" className="logo-img" />
+        </div>
+
         <div className="section">
           <div className="section-label">MAIN</div>
           <button className="menu-item" onClick={handleShowForm}>
@@ -344,8 +419,11 @@ export default function Dashboard() {
             <img src={Addsymbol} alt="Add" className="btn-icon" />
             <span>New submission</span>
           </button>
-          <div className="avatar-container" style={{ position: 'relative' }}
-            onClick={() => setShowProfileDropdown(!showProfileDropdown)}>
+          <div 
+            className="avatar-container" 
+            style={{ position: 'relative' }}
+            onClick={() => setShowProfileDropdown(!showProfileDropdown)}
+          >
             <div className="avatar" style={{ cursor: 'pointer' }}>
               <img src={Profile} alt="User Avatar" className="avatar-img" />
             </div>
@@ -357,12 +435,30 @@ export default function Dashboard() {
 
         {/* Stats Cards */}
         <div className="stats-grid">
-          <div className="stat-card"><div className="stat-icon"><img src={Activesubmission} alt="" /></div><div className="stat-label">Active submissions</div><div className="stat-value">{activeSubmissions}</div></div>
-          <div className="stat-card"><div className="stat-icon"><img src={Availableslots} alt="" /></div><div className="stat-label">Available slots</div><div className="stat-value">{availableSlots}</div></div>
-          <div className="stat-card"><div className="stat-icon"><img src={Counts} alt="" /></div><div className="stat-label">Total assignments viewed</div><div className="stat-value">1</div></div>
-          <div className="stat-card"><div className="stat-icon"><img src={Lastviewed} alt="" /></div><div className="stat-label">Last assignment viewed</div><div className="stat-value">Zodiac Agency</div></div>
+          <div className="stat-card">
+            <div className="stat-icon"><img src={Activesubmission} alt="Active submissions" /></div>
+            <div className="stat-label">Active submissions</div>
+            <div className="stat-value">{activeSubmissions}</div>
+          </div>
+          <div className="stat-card">
+            <div className="stat-icon"><img src={Availableslots} alt="Available slots" /></div>
+            <div className="stat-label">Available slots</div>
+            <div className="stat-value">{availableSlots}</div>
+          </div>
+          <div className="stat-card">
+            <div className="stat-icon"><img src={Counts} alt="Total assignments viewed" /></div>
+            <div className="stat-label">Total assignments viewed</div>
+            <div className="stat-value">1</div>
+          </div>
+          <div className="stat-card">
+            <div className="stat-icon"><img src={Lastviewed} alt="Last assignment viewed" /></div>
+            <div className="stat-label">Last assignment viewed</div>
+            <div className="stat-value">Zodiac Agency</div>
+          </div>
         </div>
- <div className="pro-banner">
+
+        {/* Pro Banner */}
+        <div className="pro-banner">
           <div className="pro-banner-content">
             <div className="pro-banner-text">
               <p className="pro-banner-title">
@@ -377,7 +473,8 @@ export default function Dashboard() {
           </div>
           <img src={Upgradetopro} alt="Pro illustration" className="pro-illustration" />
         </div>
-        {/* Table */}
+
+        {/* Design Submissions Table */}
         <h2 className="table-title">Design Submissions</h2>
         <div className="table-container">
           <table className="table">
@@ -393,27 +490,40 @@ export default function Dashboard() {
             </thead>
             <tbody>
               {submissionsLoading ? (
-                <tr><td colSpan={6} style={{ textAlign: 'center', padding: '20px' }}>LOADING...</td></tr>
+                <tr>
+                  <td colSpan={6} style={{ textAlign: 'center', padding: '20px' }}>
+                    LOADING...
+                  </td>
+                </tr>
               ) : activeSubmissions > 0 ? (
-                designInfo.map((s) => (
-                  <tr key={s.id}>
-                    <td>{s.id}</td>
-                    <td>{s.companyName}</td>
-                    <td>{s.position}</td>
-                    <td>{s.submittedOn}</td>
+                designInfo.map((submission) => (
+                  <tr key={submission.id}>
+                    <td>{submission.id}</td>
+                    <td>{submission.companyName}</td>
+                    <td>{submission.position}</td>
+                    <td>{submission.submittedOn}</td>
                     <td>
-                      <span className={`status-badge status-${s.status}`}>  {/* ✅ FIXED */}
-                        {s.status.charAt(0).toUpperCase() + s.status.slice(1)}
+                      <span className={`status-badge status-${submission.status}`}>
+                        {submission.status.charAt(0).toUpperCase() + submission.status.slice(1)}
                       </span>
                     </td>
                     <td>
-                      <button className="action-btn" onClick={() => handleCopyLink(s.shareableLink)}>Copy BYND Link</button>
+                      <button 
+                        className="action-btn"
+                        onClick={() => handleCopyLink(submission.shareableLink)}
+                      >
+                        Copy BYND Link
+                      </button>
                       <button className="more-btn">⋮</button>
                     </td>
                   </tr>
                 ))
               ) : (
-                <tr><td colSpan={6} style={{ textAlign: 'center', padding: '20px' }}>NO DATA FOUND</td></tr>
+                <tr>
+                  <td colSpan={6} style={{ textAlign: 'center', padding: '20px' }}>
+                    NO DATA FOUND
+                  </td>
+                </tr>
               )}
             </tbody>
           </table>
@@ -424,42 +534,45 @@ export default function Dashboard() {
       {showForm && (
         <div className='form-container'>
           <div className='form-box'>
-            <p className='close-btn' onClick={() => setShowForm(false)}>x</p>
+            <p className='close-btn' onClick={()=>setShowForm(false)}>x</p>
             <div className='header-text'><p>New <span>Design</span> Submission</p></div>
             <span className='side-heading'>Upload Design PDF</span>
-            <input
-              type='file'
-              className='fields'
-              onChange={(e) => setPdfFile(e.target.files[0])}
+            <input 
+              type='file' 
+              className='fields' 
+              onChange={(e) => setPdfFile(e.target.files[0])} 
               disabled={pastedUrl.trim() !== ""}
             />
             <span className='side-heading'>Paste Design URL*</span>
-            <input
-              type='text'
-              className='fields'
-              value={pastedUrl}
-              onChange={(e) => setPastedUrl(e.target.value)}
-              placeholder='http://examplefigma-url.com'
+            <input 
+              type='text' 
+              className='fields' 
+              value={pastedUrl} 
+              onChange={(e) => setPastedUrl(e.target.value)} 
+              placeholder='http://examplefigma-url.com' 
               disabled={pdfFile !== null}
             />
+
             <span className='side-heading'>Company Name*</span>
-            <input
-              type='text'
-              className='fields'
-              value={companyName}
-              onChange={(e) => setCompanyName(e.target.value)}
+            <input 
+              type='text' 
+              className='fields' 
+              value={companyName} 
+              onChange={(e) => setCompanyName(e.target.value)} 
               placeholder='Enter Company name'
             />
+
             <span className='side-heading'>Position*</span>
-            <input
-              type='text'
-              className='fields'
-              value={position}
-              onChange={(e) => setPosition(e.target.value)}
+            <input 
+              type='text' 
+              className='fields' 
+              value={position} 
+              onChange={(e) => setPosition(e.target.value)} 
               placeholder='Enter position'
             />
-            <button
-              onClick={handleStoreData}
+
+            <button 
+              onClick={handleStoreData} 
               disabled={!companyName || !position || (!pdfFile && !pastedUrl) || isSubmitting}
             >
               {isSubmitting ? 'Submitting...' : 'Submit'}
@@ -470,4 +583,3 @@ export default function Dashboard() {
     </div>
   );
 }
-
