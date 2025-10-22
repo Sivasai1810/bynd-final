@@ -295,7 +295,7 @@ export default function Dashboard() {
     }
   };
 
-  // Add new submission with API call
+  // Add new submission with API call - FIXED VERSION
   const handleStoreData = async () => {
     try {
       setIsSubmitting(true);
@@ -357,6 +357,14 @@ export default function Dashboard() {
       }
       
       showNotification(errorMessage);
+      
+      // FIXED: Reset form and close it even on error
+      setPdfFile(null);
+      setPastedUrl("");
+      setCompanyName("");
+      setPosition("");
+      setShowForm(false);
+      
     } finally {
       setIsSubmitting(false);
     }
@@ -465,15 +473,14 @@ export default function Dashboard() {
                 Unlock powerful insights and notifications to stand out — upgrade to Pro and enjoy a 14-day <strong>free</strong> trial today.
               </p>
               <button className="upgrade-pro-btn">
-                <img src={Prorocket} alt="Upgrade"></img>
+                <img  className='prorocket'src={Prorocket} alt="Upgrade"></img>
                 <span> Upgrade to Pro</span>
               </button>
               <span className="no-credit-card">No credit card required</span>
             </div>
           </div>
-          <img src={Upgradetopro} alt="Pro illustration" className="pro-illustration" />
+      <img src={Upgradetopro} alt="Pro illustration" className="pro-illustration" />
         </div>
-
         {/* Design Submissions Table */}
         <h2 className="table-title">Design Submissions</h2>
         <div className="table-container">

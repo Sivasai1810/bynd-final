@@ -323,12 +323,14 @@ body {
 /* 1700px - Ultra Wide Desktop */
 @media screen and (min-width: 1700px) {
   .footers {
-    padding: 100px 80px 45px;
-    margin-top: 70px;
+    padding: 120px 80px 50px;
+    margin-top: 0;
+    background-color: #ffffff;
+    position: relative;
   }
   
   .footers > div {
-    max-width: 1550px;
+    max-width: 1680px;
     margin: 0 auto;
   }
   
@@ -336,17 +338,17 @@ body {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    margin-bottom: 48px;
+    margin-bottom: 50px;
   }
   
   .title img {
-    height: 48px;
+    height: 50px;
     width: auto;
-    margin-bottom: 18px;
+    margin-bottom: 20px;
   }
   
   .title p {
-    font-size: 1.125rem;
+    font-size: 1.15rem;
     color: #333333;
     font-weight: 400;
     margin: 0;
@@ -354,15 +356,15 @@ body {
   }
   
   .subpart {
-    margin-bottom: 24px;
+    margin-bottom: 26px;
   }
   
   .subpart p {
-    font-size: 1.125rem;
+    font-size: 1.15rem;
     color: #333333;
     font-weight: 400;
-    line-height: 1.6;
-    margin: 0 0 20px 0;
+    line-height: 1.65;
+    margin: 0 0 22px 0;
     text-align: left;
   }
   
@@ -385,11 +387,11 @@ body {
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
-    gap: 18px;
+    gap: 20px;
   }
   
   .footer p {
-    font-size: 1rem;
+    font-size: 1.05rem;
     color: #333333;
     font-weight: 400;
     margin: 0;

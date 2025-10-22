@@ -1,13 +1,13 @@
 .features-section {
   background-color: #ffffff;
   position: relative;
-  padding-top: 60px;
+  padding: 60px 40px;
 }
 
 .features-container {
   max-width: 1200px; 
   background-color: #ffffff;
-  margin: 10px 0px auto;
+  margin: 10px auto;
 }
 
 .features-header {
@@ -402,80 +402,58 @@
   }
   
   .features-container {
-    max-width: 1550px;
-    margin: 10px auto;
+    max-width: 1680px;
   }
   
   .features-header {
-    text-align: left;
     margin-bottom: 36px;
   }
   
   .features-title {
-    font-size: 2.75rem;
-    font-weight: 600;
-    color: #212529;
-    margin-bottom: 12px;
-    line-height: 1.2;
+    font-size: 2.875rem;
+    margin-bottom: 16px;
     letter-spacing: -0.02em;
   }
   
   .features-subtitle {
-    font-size: 1.1875rem;
-    max-width: 650px;
-    color: #6c757d;
-    line-height: 1.6;
-    font-weight: 400;
+    font-size: 1.25rem;
+    max-width: 700px;
+    line-height: 1.7;
   }
   
   .features-grid {
     grid-template-columns: repeat(3, 1fr);
     gap: 72px 56px;
     margin-top: 36px;
-    width: 100%;
-    box-sizing: border-box;
+    margin-left: 0;
   }
   
   .feature-card {
-    padding: 36px 28px;
-    background-color: #ffffff;
-    border: 1px solid #e9ecef;
-    border-radius: 12px;
-    text-align: left;
+    padding: 40px 28px;
+    border-radius: 14px;
   }
   
   .feature-icon {
-    margin-bottom: 26px;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
+    margin-bottom: 28px;
   }
   
   .feature-icon img {
-    width: 30px;
-    height: 30px;
-    object-fit: contain;
+    width: 32px;
+    height: 32px;
   }
   
   .feature-title {
-    font-size: 1.35rem;
-    font-weight: 600;
-    color: #212529;
+    font-size: 1.4rem;
     margin-bottom: 18px;
-    margin-top: 0;
     line-height: 1.3;
   }
   
   .feature-description {
-    font-size: 1rem;
-    color: #6c757d;
+    font-size: 1.0625rem;
     line-height: 1.65;
-    margin: 0;
-    font-weight: 400;
   }
   
   .feature-texts {
     left: 25%;
-    position: relative;
   }
 }

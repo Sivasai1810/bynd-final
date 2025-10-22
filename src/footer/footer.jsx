@@ -37,7 +37,9 @@ const Footer = () => {
         <div className='footer'>
           <p onClick={handleTermsClick} style={{ cursor: 'pointer'}}>Terms of use</p>
           <p onClick={handlePrivacyClick} style={{ cursor: 'pointer'}}>Privacy and Cookies policy</p>
-          <p>Contact</p>
+        <p href="https://mailto:byndhq@gmail.com" >
+  Contact
+</p>
           <p>© 2025 BYND. All rights reserved</p>
         </div>
       </div>
