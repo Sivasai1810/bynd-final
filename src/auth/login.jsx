@@ -278,6 +278,142 @@ const Login = () => {
 }
 
 export default Login */
+// import React, { useState, useEffect } from 'react'
+// import { useNavigate } from 'react-router-dom';
+// import { supabase } from './supabase'
+// import './login.css'
+
+// const Toast = ({ message, type = 'success', onClose, duration = 3000 }) => {
+//   const [progress, setProgress] = useState(100);
+
+//   useEffect(() => {
+//     const timer = setTimeout(onClose, duration);
+//     const interval = setInterval(() => {
+//       setProgress((p) => Math.max(p - (100 / (duration / 50)), 0));
+//     }, 50);
+//     return () => { clearTimeout(timer); clearInterval(interval); };
+//   }, [duration, onClose]);
+
+//   const colors = {
+//     success: { bg: '#10b981', border: '#059669' },
+//     error: { bg: '#ef4444', border: '#dc2626' },
+//     warning: { bg: '#f59e0b', border: '#d97706' },
+//     info: { bg: '#3b82f6', border: '#2563eb' }
+//   }[type] || { bg: '#10b981', border: '#059669' };
+
+//   return (
+//     <div style={{
+//       position: 'fixed', top: '20px', right: '20px',
+//       backgroundColor: 'white', borderRadius: '8px', boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
+//       minWidth: '300px', maxWidth: '400px', zIndex: 9999, overflow: 'hidden'
+//     }}>
+//       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '16px' }}>
+//         <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+//           <div style={{ width: '24px', height: '24px', borderRadius: '50%', backgroundColor: colors.bg,
+//             display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+//             <span style={{ color: 'white', fontWeight: 'bold' }}>{type === 'success' ? '✓' : type === 'error' ? '✕' : 'ℹ'}</span>
+//           </div>
+//           <span>{message}</span>
+//         </div>
+//         <button onClick={onClose} style={{ background: 'none', border: 'none', color: '#6b7280', fontSize: '20px' }}>×</button>
+//       </div>
+//       <div style={{ height: '3px', backgroundColor: colors.border, width: `${progress}%` }} />
+//     </div>
+//   );
+// };
+
+// const Login = () => {
+//   const Navigate = useNavigate()
+//   const [email, setEmail] = useState("")
+//   const [password, setPassword] = useState("")
+//   const [showPassword, setShowPassword] = useState(false)
+//   const [toasts, setToasts] = useState([])
+
+//   const showToast = (msg, type = 'success') => setToasts((p) => [...p, { id: Date.now(), msg, type }])
+//   const removeToast = (id) => setToasts((p) => p.filter((t) => t.id !== id))
+
+//   // Check for OAuth redirect on component mount
+//   useEffect(() => {
+//     const checkUser = async () => {
+//       const { data: { session } } = await supabase.auth.getSession()
+//       if (session) {
+//         // User is logged in (likely from OAuth redirect)
+//         Navigate('/dashboard')
+//       }
+//     }
+//     checkUser()
+//   }, [Navigate])
+
+//   const handlesign = () => Navigate('/signup')
+
+//   const handlelogin = async () => {
+//     if (!email) return showToast("Please enter your email", "warning")
+//     if (!password) return showToast("Please enter your password", "warning")
+
+//     const { data, error } = await supabase.auth.signInWithPassword({ email, password })
+//     if (error) {
+//       showToast(error.message, "error")
+//     } else {
+//       showToast("Login successful!", "success")
+//       setTimeout(() => Navigate('/dashboard'), 1000)
+//     }
+//   }
+
+//   const handleGoogleLogin = async () => {
+//     const { error } = await supabase.auth.signInWithOAuth({
+//       provider: 'google',
+//       options: { 
+//         redirectTo: `${window.location.origin}/dashboard`
+//       }
+//     })
+//     if (error) {
+//       showToast(error.message, "error")
+//     }
+//     // Don't navigate here - the OAuth will redirect automatically
+//   }
+
+//   return (
+//     <div className="login-container">
+//       {toasts.map((t) => (
+//         <Toast key={t.id} message={t.msg} type={t.type} onClose={() => removeToast(t.id)} />
+//       ))}
+//       <div className="login-box">
+//         <div className="login-header">
+//           <h1 className="login-title">Welcome Back</h1>
+//           <p className="login-subtitle">Login to access your dashboard</p>
+//         </div>
+//         <button className='close-btn' onClick={() => Navigate('/App')}>×</button>
+
+//         <form className="login-form" onSubmit={(e) => e.preventDefault()}>
+//           <div className="form-group">
+//             <label>Email</label>
+//             <input type='email' className="form-input" value={email}
+//               placeholder='Enter your email' onChange={(e) => setEmail(e.target.value)} />
+//           </div>
+
+//           <div className="form-group">
+//             <label>Password</label>
+//             <div className="password-input-wrapper">
+//               <input type={showPassword ? 'text' : 'password'} className="form-input"
+//                 placeholder='Enter your password' value={password} onChange={(e) => setPassword(e.target.value)} />
+//               <button type="button" className="password-toggle-btn" onClick={() => setShowPassword(!showPassword)}>
+//                 {showPassword ? 'Hide' : 'Show'}
+//               </button>
+//             </div>
+//           </div>
+
+//           <div className="button-group">
+//             <button className="btn btn-primary" onClick={handlelogin}>Login</button>
+//             <button className="btn btn-secondary" onClick={handlesign}>Sign Up</button>
+//             <button className="btn btn-google" onClick={handleGoogleLogin}>Sign in with Google</button>
+//           </div>
+//         </form>
+//       </div>
+//     </div>
+//   )
+// }
+
+// export default Login
 import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { supabase } from './supabase'
@@ -337,7 +473,6 @@ const Login = () => {
     const checkUser = async () => {
       const { data: { session } } = await supabase.auth.getSession()
       if (session) {
-        // User is logged in (likely from OAuth redirect)
         Navigate('/dashboard')
       }
     }
@@ -360,16 +495,13 @@ const Login = () => {
   }
 
   const handleGoogleLogin = async () => {
+    const redirectUrl = import.meta.env.VITE_REDIRECT_URL || `${window.location.origin}/dashboard`
+
     const { error } = await supabase.auth.signInWithOAuth({
       provider: 'google',
-      options: { 
-        redirectTo: `${window.location.origin}/dashboard`
-      }
+      options: { redirectTo: 'https://bynd-final.vercel.app/ '}
     })
-    if (error) {
-      showToast(error.message, "error")
-    }
-    // Don't navigate here - the OAuth will redirect automatically
+    if (error) showToast(error.message, "error")
   }
 
   return (
