@@ -1,7 +1,9 @@
+
 import React, { useState, useEffect } from 'react'
-import axios from 'axios'
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom'
+import { supabase } from './supabase'
 import './sign.css'
+import Dashboard from '../dashboard/dashboard';
 
 // Toast Notification Component
 const Toast = ({ message, type = 'success', onClose, duration = 3000 }) => {
@@ -123,17 +125,18 @@ const Toast = ({ message, type = 'success', onClose, duration = 3000 }) => {
   );
 };
 
+// Main SignUp Component
 const SignUp = () => {
   const Navigate = useNavigate()
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [agreeTerms, setAgreeTerms] = useState(false);
+  const [firstName, setFirstName] = useState("")
+  const [lastName, setLastName] = useState("")
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const [confirmPassword, setConfirmPassword] = useState("")
+  const [agreeTerms, setAgreeTerms] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
-  const [toasts, setToasts] = useState([]);
+  const [toasts, setToasts] = useState([])
 
   // Add slideIn animation
   useEffect(() => {
@@ -154,85 +157,46 @@ const SignUp = () => {
     return () => document.head.removeChild(style);
   }, []);
 
-  // Toast functions
-  const showToast = (message, type = 'success') => {
-    const id = Date.now();
-    setToasts((prev) => [...prev, { id, message, type }]);
-  };
-
-  const removeToast = (id) => {
-    setToasts((prev) => prev.filter((toast) => toast.id !== id));
-  };
+  const showToast = (msg, type = 'success') => setToasts((p) => [...p, { id: Date.now(), msg, type }])
+  const removeToast = (id) => setToasts((p) => p.filter((t) => t.id !== id))
 
   const handleSignup = async () => {
-    // Validation
-    if (!firstName || !lastName) {
-      showToast("Please enter your full name", "warning");
-      return
-    }
-    if (!email) {
-      showToast("Please enter your email", "warning");
-      return
-    }
-    if (!password) {
-      showToast("Please enter a password", "warning");
-      return
-    }
-    if (password !== confirmPassword) {
-      showToast("Passwords do not match", "error");
-      return
-    }
-    if (!agreeTerms) {
-      showToast("Please agree to the terms and conditions", "warning");
-      return
-    }
+    if (!firstName || !lastName) return showToast("Please enter your full name", "warning")
+    if (!email) return showToast("Please enter your email", "warning")
+    if (!password) return showToast("Please enter a password", "warning")
+    if (password !== confirmPassword) return showToast("Passwords do not match", "error")
+    if (!agreeTerms) return showToast("Please agree to the terms and conditions", "warning")
 
-    try {
-      const res = await axios.post("https://bynd-backend.onrender.com/auth/signup", {
-        user_name: `${firstName} ${lastName}`,
-        user_email: email,
-        user_password: password
-      }, { withCredentials: true })
-      
-      setFirstName("")
-      setLastName("")
-      setEmail("")
-      setPassword("")
-      setConfirmPassword("")
-      setAgreeTerms(false)
+    const { data, error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: { data: { name: `${firstName} ${lastName}` } }
+    })
 
-      if (res.data.success === true) {
-        showToast("Account created successfully! 🎉", "success");
-        setTimeout(() => {
-          Navigate('/Dashboard')
-        }, 1000);
-      } else {
-        showToast(res.data.message, "error");
+    if (error) {
+      showToast(error.message, "error")
+    } else {
+      showToast("Account created successfully! 🎉", "success")
+      setTimeout(() => Navigate('/Dashboard'), 1000)
+    }
+  }
+
+  const handleGoogleSignup = async () => {
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: 'google',
+      options: {
+       redirectTo: `${window.location.origin}/dashboard`
       }
-    } catch (err) {
-      console.log("Sign up error", err)
-      showToast("Sign up failed. Please try again.", "error");
-    }
-  }
-
-  const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword)
-  }
-
-  const toggleConfirmPasswordVisibility = () => {
-    setShowConfirmPassword(!showConfirmPassword)
+    })
+    if (error) showToast(error.message, "error")
+   
   }
 
   return (
     <div className="signup-container">
       {/* Toast Notifications */}
-      {toasts.map((toast) => (
-        <Toast
-          key={toast.id}
-          message={toast.message}
-          type={toast.type}
-          onClose={() => removeToast(toast.id)}
-        />
+      {toasts.map((t) => (
+        <Toast key={t.id} message={t.msg} type={t.type} onClose={() => removeToast(t.id)} />
       ))}
 
       <div className="signup-box">
@@ -241,7 +205,7 @@ const SignUp = () => {
           <p className="signup-subtitle">Sign up to get started with your dashboard</p>
         </div>
         
-        <button onClick={() => {Navigate('/App')}} className='close-btn'>×</button>
+        <button className='close-btn' onClick={() => Navigate('/App')}>×</button>
 
         <form className="signup-form" onSubmit={(e) => e.preventDefault()}>
           <div className="name-row">
@@ -292,20 +256,9 @@ const SignUp = () => {
               <button
                 type="button"
                 className="password-toggle-btn"
-                onClick={togglePasswordVisibility}
-                aria-label={showPassword ? 'Hide password' : 'Show password'}
+                onClick={() => setShowPassword(!showPassword)}
               >
-                {showPassword ? (
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24" />
-                    <line x1="1" y1="1" x2="23" y2="23" />
-                  </svg>
-                ) : (
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
-                    <circle cx="12" cy="12" r="3" />
-                  </svg>
-                )}
+                {showPassword ? 'Hide' : 'Show'}
               </button>
             </div>
           </div>
@@ -323,20 +276,9 @@ const SignUp = () => {
               <button
                 type="button"
                 className="password-toggle-btn"
-                onClick={toggleConfirmPasswordVisibility}
-                aria-label={showConfirmPassword ? 'Hide password' : 'Show password'}
+                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
               >
-                {showConfirmPassword ? (
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24" />
-                  <line x1="1" y1="1" x2="23" y2="23" />
-                  </svg>
-                ) : (
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
-                     <circle cx="12" cy="12" r="3" /> 
-                  </svg>
-                )}
+                {showConfirmPassword ? 'Hide' : 'Show'}
               </button>
             </div>
           </div>
@@ -354,9 +296,14 @@ const SignUp = () => {
             </label>
           </div>
 
-          <button className="btn btn-primary" onClick={handleSignup}>
-            Create Account
-          </button>
+          <div className="button-group">
+            <button className="btn btn-primary" onClick={handleSignup}>
+              Create Account
+            </button>
+            <button className="btn btn-google" onClick={handleGoogleSignup}>
+              Sign up with Google
+            </button>
+          </div>
         </form>
 
         <div className="signup-footer">

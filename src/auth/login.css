@@ -104,7 +104,7 @@
   gap: 8px;
 }
 
-.form-label {
+.form-group label{
   font-size: 14px;
   font-weight: 600;
   color: #374151;

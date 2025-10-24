@@ -1,0 +1,153 @@
+.pro-banner {
+  background-color: #f5f5f5;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  margin-left: 30px;
+  margin-right: 30px;
+  margin-bottom: 46px;
+  padding: 24px 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  min-height: 200px;
+}
+
+.pro-banner-content {
+  flex: 1;
+  text-align: left;
+}
+
+.pro-banner-text {
+  max-width: 100%;
+  text-align: left;
+}
+
+.pro-banner-title {
+  font-size: 24px;
+  color: #4b5563;
+  margin-bottom: 24px;
+  line-height: 1.6;
+  font-weight: 400;
+}
+
+.upgrade-pro-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  padding: 10px 20px;
+  background-color: #000;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  margin-right: 16px;
+  transition: opacity 0.2s;
+  position: relative;
+  white-space: nowrap;
+}
+
+.upgrade-pro-btn .prorocket {
+  width: 24px !important;
+  height: 24px !important;
+  min-width: 24px;
+  min-height: 24px;
+  max-width: 24px;
+  max-height: 24px;
+  display: block;
+  object-fit: contain;
+  position: relative;
+  top: 6px;
+}
+
+.upgrade-pro-btn span {
+  line-height: 1.5;
+  display: inline-block;
+  position: relative;
+  top: 2px;
+}
+
+.no-credit-card {
+  position: relative;
+  bottom: 8.5px;
+  font-size: 15px;
+  color: #6b7280;
+  font-weight: 400;
+  white-space: nowrap;
+}
+
+.pro-illustration {
+  width: 330px;
+  height: 200px;
+  object-fit: contain;
+  align-self: flex-end;
+  margin-bottom: -65px;
+  flex-shrink: 0;
+}
+
+/* Responsive Pro Banner */
+@media (min-width: 1024px) and (max-width: 1440px) {
+  .pro-banner { 
+    margin-left: 25px; 
+    margin-right: 25px; 
+    margin-bottom: 40px; 
+    padding: 20px 24px; 
+    min-height: 180px; 
+  }
+  .pro-banner-title { font-size: 20px; margin-bottom: 18px; }
+  .pro-illustration { width: 280px; height: 170px; margin-bottom: -55px; }
+  .upgrade-pro-btn { padding: 9px 18px; font-size: 13px; }
+  .upgrade-pro-btn .prorocket { 
+    width: 22px !important; 
+    height: 22px !important; 
+    min-width: 22px;
+    min-height: 22px;
+    max-width: 22px;
+    max-height: 22px;
+  }
+}
+
+@media (min-width: 1440px) and (max-width: 1920px) {
+  .pro-banner { 
+    margin-left: 35px; 
+    margin-right: 35px; 
+    margin-bottom: 50px; 
+    padding: 28px 36px; 
+    min-height: 220px; 
+  }
+  .pro-banner-title { font-size: 25px; margin-bottom: 22px; }
+  .pro-illustration { width: 360px; height: 190px; margin-bottom: -60px; }
+  .upgrade-pro-btn { padding: 11px 22px; font-size: 14px; }
+  .upgrade-pro-btn .prorocket { 
+    width: 26px !important; 
+    height: 26px !important; 
+    min-width: 26px;
+    min-height: 26px;
+    max-width: 26px;
+    max-height: 26px;
+  }
+}
+
+@media (min-width: 1920px) {
+  .pro-banner { 
+    margin-left: 45px; 
+    margin-right: 45px; 
+    margin-bottom: 60px; 
+    padding: 32px 40px; 
+    min-height: 240px; 
+  }
+  .pro-banner-title { font-size: 28px; margin-bottom: 24px; }
+  .pro-illustration { width: 420px; height: 210px; margin-bottom: -65px; }
+  .upgrade-pro-btn { padding: 12px 24px; font-size: 15px; }
+  .upgrade-pro-btn .prorocket { 
+    width: 28px !important; 
+    height: 28px !important; 
+    min-width: 28px;
+    min-height: 28px;
+    max-width: 28px;
+    max-height: 28px;
+  }
+}

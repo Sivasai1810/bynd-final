@@ -1,0 +1,76 @@
+/* ===== src/components/StatsGrid/StatsGrid.css ===== */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 46px;
+  padding-left: 30px;
+  padding-right: 30px;
+}
+
+.stat-card {
+  background-color: #f5f5f5;
+  padding: 20px;
+  border-radius: 12px;
+  border: 1px solid #f3f4f6;
+}
+
+.stat-icon {
+  width: 20px;
+  height: 27px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 12px;
+}
+
+.stat-icon-img {
+  width: 31px;
+  height: 31px;
+}
+
+.stat-label {
+  font-size: 17px;
+  color: #6b7280;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: flex-start;
+}
+
+.stat-value {
+  font-size: 24px;
+  font-weight: 600;
+  color: #111827;
+  display: flex;
+  align-items: flex-start;
+}
+
+/* Responsive Stats Grid */
+@media (min-width: 1024px) and (max-width: 1440px) {
+  .stats-grid { gap: 14px; margin-bottom: 40px; padding-left: 25px; padding-right: 25px; }
+  .stat-card { padding: 18px; }
+  .stat-icon { width: 24px; height: 32px; }
+  .stat-icon img { width: 34px; height: 34px; }
+  .stat-label { font-size: 16px; }
+  .stat-value { font-size: 22px; }
+}
+
+@media (min-width: 1440px) and (max-width: 1920px) {
+  .stats-grid { gap: 18px; margin-bottom: 50px; padding-left: 35px; padding-right: 35px; }
+  .stat-card { padding: 24px; }
+  .stat-icon { width: 28px; height: 36px; }
+  .stat-icon img { width: 42px; height: 42px; }
+  .stat-label { font-size: 17px; margin-bottom: 10px; }
+  .stat-value { font-size: 26px; }
+  .stat-icon-img { width: 36px; height: 36px; }
+}
+
+@media (min-width: 1920px) {
+  .stats-grid { gap: 22px; margin-bottom: 60px; padding-left: 45px; padding-right: 45px; }
+  .stat-card { padding: 28px; }
+  .stat-icon { width: 32px; height: 40px; }
+  .stat-icon img { width: 48px; height: 48px; }
+  .stat-label { font-size: 19px; margin-bottom: 12px; }
+  .stat-value { font-size: 28px; }
+}
