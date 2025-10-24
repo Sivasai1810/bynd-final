@@ -712,7 +712,7 @@ import StatsGrid from '../component/StatsGrid/StatsGrid';
 import ProBanner from '../component/ProBanner/ProBanner';
 import SubmissionsTable from '../component/SubmissionsTable/SubmissionsTable';
 import SubmissionForm from '../component/SubmissionForm/SubmissionForm';
-import './Dashboard.css';
+import './dashboard.css';
 
 export default function Dashboard() {
   const { profile, userId, logout } = useAuth();
