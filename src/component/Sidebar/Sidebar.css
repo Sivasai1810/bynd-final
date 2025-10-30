@@ -1,9 +1,8 @@
+/* Base Sidebar Styles (1300px and above) */
 .sidebar {
-position: relative;
+  position: relative;
   width: 18%;
-  /* min-width: 120px;
-  max-width: 290px; */
-  height: 100%;
+  min-height: 100vh;
   background-color: #f5f5f5;
   padding: 4px 16px;
   display: flex;
@@ -71,7 +70,7 @@ position: relative;
 }
 
 .upgrade-card {
-  margin-top: 120px;
+  margin-top: auto;
   background-color: #10b981;
   border-radius: 12px;
   padding: 13px;
@@ -106,169 +105,19 @@ position: relative;
   transform: translateY(-1px);
 }
 
-/* Responsive Sidebar */
-/*@media (min-width: 1024px) and (max-width: 1440px) {
+/* Responsive Breakpoints */
+
+/* 1000px - 1300px */
+@media (min-width: 1000px) and (max-width: 1300px) {
   .sidebar {
-    width: 16%;
-    min-width: 240px;
-    max-width: 280px;
-  }
-  .logo-img { height: 38px; }
-  .section-label { font-size: 16px; }
-  .menu-item { font-size: 15px; padding: 11px 12px; }
-  .menu-icon { width: 19px; height: 19px; }
-  .upgrade-card { padding: 15px; margin-bottom: 24px; }
-  .upgrade-text { font-size: 13px; margin-bottom: 14px; }
-  .upgrade-button { padding: 10px; font-size: 14px; }
-}
-
-@media (min-width: 1440px) and (max-width: 1920px) {
-  .sidebar {
-    width: 17%;
-    min-width: 260px;
-    max-width: 320px;
-  }
-  .logo-img { height: 40px; }
-  .section-label { font-size: 17px; }
-  .menu-item { font-size: 16px; padding: 12px 12px; }
-  .menu-icon { width: 20px; height: 20px; }
-  .upgrade-card { padding: 17px; margin-bottom: 28px; }
-  .upgrade-text { font-size: 14px; margin-bottom: 16px; }
-  .upgrade-button { padding: 11px; font-size: 15px; }
-}
-
-@media (min-width: 1920px) {
-  .sidebar {
-    width: 18%;
-    min-width: 280px;
-    max-width: 380px;
-  }
-  .logo-img { height: 44px; }
-  .section-label { font-size: 18px; }
-  .menu-item { font-size: 17px; padding: 13px 14px; }
-  .menu-icon { width: 22px; height: 22px; }
-  .upgrade-card { padding: 20px; margin-bottom: 32px; }
-  .upgrade-text { font-size: 15px; margin-bottom: 18px; line-height: 1.6; }
-  .upgrade-button { padding: 12px; font-size: 16px; }
-}
-  */
-  /* Breakpoint: 0-470px */
-/*@media (min-width: 0px) and (max-width: 470px) {
-  .sidebar {
-    width: 100%;
-    min-width: 100%;
-    max-width: none;
-    padding: 3px 12px;
-    order: -1;
+    width: 20%;
+    padding: 4px 14px;
   }
 
-  .logo-img {
-    height: 28px;
-  }
-
-  .section {
-    margin-bottom: 16px;
-  }
-
-  .section-label {
-    font-size: 12px;
-    margin-left: 8px;
-    margin-bottom: 4px;
-  }
-
-  .menu-item {
-    font-size: 12px;
-    padding: 8px 10px;
-    gap: 8px;
-    margin-bottom: 3px;
-  }
-
-  .menu-icon {
-    width: 16px;
-    height: 16px;
-  }
-
-  .upgrade-card {
-    padding: 10px;
-    margin-left: 2px;
-    margin-right: 2px;
-    margin-bottom: 12px;
-  }
-
-  .upgrade-text {
-    font-size: 11px;
+  .logo {
+    bottom: 12px;
     margin-bottom: 10px;
-    line-height: 1.4;
-  }
-
-  .upgrade-button {
-    padding: 8px;
-    font-size: 12px;
-  }
-}
-
-/* Breakpoint: 470-770px */
-/*@media (min-width: 471px) and (max-width: 770px) {
-  .sidebar {
-    width: 100%;
-    min-width: 100%;
-    max-width: none;
-    padding: 4px 14px;
-    order: -1;
-  }
-
-  .logo-img {
-    height: 30px;
-  }
-
-  .section {
-    margin-bottom: 18px;
-  }
-
-  .section-label {
-    font-size: 13px;
-    margin-left: 10px;
-    margin-bottom: 4px;
-  }
-
-  .menu-item {
-    font-size: 13px;
-    padding: 9px 11px;
-    gap: 9px;
-    margin-bottom: 3px;
-  }
-
-  .menu-icon {
-    width: 17px;
-    height: 17px;
-  }
-
-  .upgrade-card {
-    padding: 11px;
-    margin-left: 3px;
-    margin-right: 3px;
-    margin-bottom: 14px;
-  }
-
-  .upgrade-text {
-    font-size: 12px;
-    margin-bottom: 12px;
-    line-height: 1.45;
-  }
-
-  .upgrade-button {
-    padding: 9px;
-    font-size: 13px;
-  }
-}
-
-/* Breakpoint: 770-1200px */
-/*@media (min-width: 771px) and (max-width: 1200px) {
-  .sidebar {
-    width: 15%;
-    min-width: 180px;
-    max-width: 220px;
-    padding: 4px 14px;
+    padding-left: 10px;
   }
 
   .logo-img {
@@ -281,23 +130,26 @@ position: relative;
 
   .section-label {
     font-size: 13px;
-    margin-left: 10px;
+    letter-spacing: 0.4px;
     margin-bottom: 4px;
+    margin-left: 10px;
   }
 
   .menu-item {
-    font-size: 13px;
+    gap: 9px;
     padding: 9px 10px;
-    gap: 8px;
+    border-radius: 5px;
+    font-size: 13px;
     margin-bottom: 3px;
   }
 
   .menu-icon {
-    width: 17px;
-    height: 17px;
+    width: 16px;
+    height: 16px;
   }
 
   .upgrade-card {
+    border-radius: 10px;
     padding: 11px;
     margin-left: 3px;
     margin-right: 3px;
@@ -306,120 +158,199 @@ position: relative;
 
   .upgrade-text {
     font-size: 12px;
-    margin-bottom: 12px;
-    line-height: 1.45;
+    line-height: 1.4;
+    margin-bottom: 14px;
   }
 
   .upgrade-button {
     padding: 9px;
+    border-radius: 5px;
     font-size: 13px;
   }
 }
 
-/* Breakpoint: 1200-1400px */
-/*@media (min-width: 1201px) and (max-width: 1400px) {
+/* 770px - 1000px */
+@media (min-width: 770px) and (max-width: 999px) {
   .sidebar {
-    width: 16%;
-    min-width: 240px;
-    max-width: 280px;
-    padding: 4px 16px;
+    width: 22%;
+    padding: 3px 12px;
+  }
+
+  .logo {
+    bottom: 10px;
+    margin-bottom: 9px;
+    padding-left: 8px;
   }
 
   .logo-img {
-    height: 38px;
+    height: 28px;
   }
 
   .section {
-    margin-bottom: 22px;
+    margin-bottom: 18px;
   }
 
   .section-label {
-    font-size: 14px;
-    margin-left: 11px;
-    margin-bottom: 5px;
+    font-size: 12px;
+    letter-spacing: 0.3px;
+    margin-bottom: 3px;
+    margin-left: 8px;
   }
 
   .menu-item {
-    font-size: 14px;
-    padding: 10px 11px;
-    gap: 9px;
-    margin-bottom: 4px;
+    gap: 8px;
+    padding: 8px 9px;
+    border-radius: 5px;
+    font-size: 12px;
+    margin-bottom: 3px;
   }
 
   .menu-icon {
-    width: 18px;
-    height: 18px;
+    width: 15px;
+    height: 15px;
   }
 
   .upgrade-card {
-    padding: 13px;
-    margin-left: 3px;
-    margin-right: 3px;
-    margin-bottom: 20px;
-  }
-
-  .upgrade-text {
-    font-size: 13px;
-    margin-bottom: 14px;
-    line-height: 1.5;
-  }
-
-  .upgrade-button {
+    border-radius: 9px;
     padding: 10px;
-    font-size: 14px;
-  }
-}
-
-/* Breakpoint: 1400px+ */
-/*@media (min-width: 1401px) {
-  .sidebar {
-    width: 17%;
-    min-width: 280px;
-    max-width: 340px;
-    padding: 4px 18px;
-  }
-
-  .logo-img {
-    height: 42px;
-  }
-
-  .section {
-    margin-bottom: 26px;
-  }
-
-  .section-label {
-    font-size: 16px;
-    margin-left: 13px;
-    margin-bottom: 6px;
-  }
-
-  .menu-item {
-    font-size: 16px;
-    padding: 12px 13px;
-    gap: 11px;
-    margin-bottom: 4px;
-  }
-
-  .menu-icon {
-    width: 20px;
-    height: 20px;
-  }
-
-  .upgrade-card {
-    padding: 16px;
-    margin-left: 4px;
-    margin-right: 4px;
-    margin-bottom: 26px;
+    margin-left: 2px;
+    margin-right: 2px;
+    margin-bottom: 14px;
   }
 
   .upgrade-text {
-    font-size: 14px;
-    margin-bottom: 16px;
-    line-height: 1.6;
+    font-size: 11px;
+    line-height: 1.4;
+    margin-bottom: 12px;
   }
 
   .upgrade-button {
-    padding: 11px;
-    font-size: 15px;
+    padding: 8px;
+    border-radius: 5px;
+    font-size: 12px;
+  }
+}
+
+/* 470px - 770px */
+@media (min-width: 470px) and (max-width: 769px) {
+  .sidebar {
+    width: 25%;
+    padding: 3px 10px;
+  }
+
+  .logo {
+    bottom: 8px;
+    margin-bottom: 8px;
+    padding-left: 6px;
+  }
+
+  .logo-img {
+    height: 24px;
+  }
+
+  .section {
+    margin-bottom: 16px;
+  }
+
+  .section-label {
+    font-size: 11px;
+    letter-spacing: 0.3px;
+    margin-bottom: 3px;
+    margin-left: 6px;
+  }
+
+  .menu-item {
+    gap: 7px;
+    padding: 7px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    margin-bottom: 2px;
+  }
+
+  .menu-icon {
+    width: 14px;
+    height: 14px;
+  }
+
+  .upgrade-card {
+    border-radius: 8px;
+    padding: 9px;
+    margin-left: 2px;
+    margin-right: 2px;
+    margin-bottom: 12px;
+  }
+
+  .upgrade-text {
+    font-size: 10px;
+    line-height: 1.3;
+    margin-bottom: 10px;
+  }
+
+  .upgrade-button {
+    padding: 7px;
+    border-radius: 4px;
+    font-size: 11px;
+  }
+}
+
+/* 0px - 470px */
+@media (max-width: 469px) {
+  .sidebar {
+    width: 100%;
+    padding: 3px 8px;
+  }
+
+  .logo {
+    bottom: 6px;
+    margin-bottom: 7px;
+    padding-left: 4px;
+  }
+
+  .logo-img {
+    height: 22px;
+  }
+
+  .section {
+    margin-bottom: 14px;
+  }
+
+  .section-label {
+    font-size: 10px;
+    letter-spacing: 0.2px;
+    margin-bottom: 2px;
+    margin-left: 4px;
+  }
+
+  .menu-item {
+    gap: 6px;
+    padding: 6px 7px;
+    border-radius: 4px;
+    font-size: 10px;
+    margin-bottom: 2px;
+  }
+
+  .menu-icon {
+    width: 13px;
+    height: 13px;
+  }
+
+  .upgrade-card {
+    border-radius: 7px;
+    padding: 8px;
+    margin-left: 1px;
+    margin-right: 1px;
+    margin-bottom: 10px;
+  }
+
+  .upgrade-text {
+    font-size: 9px;
+    line-height: 1.3;
+    margin-bottom: 8px;
+  }
+
+  .upgrade-button {
+    padding: 6px;
+    border-radius: 4px;
+    font-size: 10px;
   }
 }
