@@ -369,10 +369,6 @@
   transform: translateX(-50%) translateY(-2px);
 }
 
-/* ========================================
-   RESPONSIVE BREAKPOINTS
-======================================== */
-
 /* Large Desktop - 1440px and above */
 @media (min-width: 1440px) {
   .login-form-section {
@@ -614,7 +610,6 @@
     margin: 8px 0 0 0;
   }
 
-  /* Hide Features Section */
   .login-features-container {
     display: none;
   }
