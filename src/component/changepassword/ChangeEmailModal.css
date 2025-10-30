@@ -1,0 +1,464 @@
+/* ==================== TOAST NOTIFICATIONS (cem-toast-*) ==================== */
+
+.cem-toast-notification {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background-color: #10b981;
+  color: white;
+  padding: 16px 24px;
+  border-radius: 8px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  z-index: 10001;
+  animation: cemSlideInRight 0.3s ease;
+  max-width: 400px;
+}
+
+@keyframes cemSlideInRight {
+  from {
+    transform: translateX(500px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.cem-toast-icon {
+  font-size: 20px;
+  font-weight: bold;
+  flex-shrink: 0;
+}
+
+.cem-toast-message {
+  font-size: 14px;
+  font-weight: 500;
+  flex: 1;
+  line-height: 1.4;
+}
+
+.cem-toast-close {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+  padding: 0;
+  margin-left: 12px;
+  flex-shrink: 0;
+  transition: opacity 0.2s;
+}
+
+.cem-toast-close:hover {
+  opacity: 0.8;
+}
+
+/* ==================== MODAL OVERLAY (cem-modal-overlay) ==================== */
+
+.cem-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  animation: cemFadeIn 0.2s ease;
+  padding: 16px;
+}
+
+@keyframes cemFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes cemSlideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* ==================== MODAL CONTAINER (cem-change-email-modal) ==================== */
+
+.cem-change-email-modal {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+  width: 100%;
+  max-width: 420px;
+  animation: cemSlideUp 0.3s ease;
+  overflow: hidden;
+}
+
+/* ==================== MODAL HEADER (cem-modal-header) ==================== */
+
+.cem-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.cem-modal-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin: 0;
+}
+
+.cem-modal-close {
+  background: none;
+  border: none;
+  font-size: 28px;
+  color: #9ca3af;
+  cursor: pointer;
+  padding: 0;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.cem-modal-close:hover {
+  color: #1a1a1a;
+}
+
+/* ==================== MODAL FORM (cem-modal-form) ==================== */
+
+.cem-modal-form {
+  padding: 24px;
+}
+
+.cem-modal-subtext {
+  font-size: 14px;
+  color: #6b7280;
+  margin: 0 0 24px 0;
+  line-height: 1.5;
+}
+
+/* ==================== FORM GROUP (cem-form-group) ==================== */
+
+.cem-form-group {
+  margin-bottom: 20px;
+}
+
+.cem-modal-label {
+  display: block;
+  font-size: 13px;
+  font-weight: 500;
+  color: #374151;
+  margin-bottom: 8px;
+}
+
+.cem-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+/* ==================== INPUT FIELDS (cem-modal-input) ==================== */
+
+.cem-modal-input {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  font-size: 14px;
+  font-family: inherit;
+  transition: all 0.2s;
+  box-sizing: border-box;
+  background-color: #fff;
+  color: #1a1a1a;
+}
+
+.cem-modal-input:focus {
+  outline: none;
+  border-color: #1DBC79;
+  box-shadow: 0 0 0 3px rgba(29, 188, 121, 0.1);
+}
+
+.cem-modal-input::placeholder {
+  color: #9ca3af;
+}
+
+.cem-disabled-input {
+  background-color: #f9fafb;
+  color: #6b7280;
+  cursor: not-allowed;
+}
+
+.cem-code-input {
+  font-size: 24px;
+  letter-spacing: 8px;
+  text-align: center;
+  font-weight: 600;
+  font-family: 'Courier New', monospace;
+}
+
+.cem-code-hint {
+  font-size: 12px;
+  color: #9ca3af;
+  margin-top: 8px;
+  margin-bottom: 0;
+}
+
+/* ==================== BUTTONS (cem-modal-buttons) ==================== */
+
+.cem-modal-buttons {
+  display: flex;
+  gap: 12px;
+  margin-top: 28px;
+}
+
+.cem-modal-cancel,
+.cem-modal-update {
+  flex: 1;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.cem-modal-cancel {
+  background-color: #f3f4f6;
+  color: #1a1a1a;
+  border: 1px solid #e5e7eb;
+}
+
+.cem-modal-cancel:hover:not(:disabled) {
+  background-color: #e5e7eb;
+  border-color: #d1d5db;
+}
+
+.cem-modal-update {
+  background-color: #1DBC79;
+  color: white;
+}
+
+.cem-modal-update:hover:not(:disabled) {
+  background-color: #17a573;
+  box-shadow: 0 4px 12px rgba(29, 188, 121, 0.3);
+}
+
+.cem-modal-cancel:disabled,
+.cem-modal-update:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ==================== RESEND SECTION (cem-resend-*) ==================== */
+
+.cem-resend-section {
+  margin-top: 24px;
+  text-align: center;
+  padding-top: 16px;
+  border-top: 1px solid #f0f0f0;
+}
+
+.cem-resend-text {
+  font-size: 13px;
+  color: #6b7280;
+  margin: 0 0 12px 0;
+}
+
+.cem-resend-button {
+  background: none;
+  border: none;
+  color: #1DBC79;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: color 0.2s;
+  text-decoration: underline;
+}
+
+.cem-resend-button:hover:not(:disabled) {
+  color: #17a573;
+}
+
+.cem-resend-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ==================== RESPONSIVE BREAKPOINTS ==================== */
+
+/* 0-470px */
+@media (max-width: 470px) {
+  .cem-toast-notification {
+    top: 10px;
+    right: 10px;
+    left: 10px;
+    max-width: none;
+  }
+
+  .cem-modal-overlay {
+    padding: 12px;
+  }
+
+  .cem-change-email-modal {
+    max-width: 100%;
+  }
+
+  .cem-modal-header {
+    padding: 18px;
+  }
+
+  .cem-modal-title {
+    font-size: 16px;
+  }
+
+  .cem-modal-form {
+    padding: 18px;
+  }
+
+  .cem-modal-subtext {
+    font-size: 13px;
+    margin-bottom: 18px;
+  }
+
+  .cem-modal-label {
+    font-size: 12px;
+  }
+
+  .cem-modal-input {
+    padding: 10px 12px;
+    font-size: 13px;
+  }
+
+  .cem-code-input {
+    font-size: 20px;
+    letter-spacing: 4px;
+  }
+
+  .cem-modal-buttons {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .cem-modal-cancel,
+  .cem-modal-update {
+    padding: 10px 16px;
+  }
+}
+
+/* 470-770px */
+@media (min-width: 471px) and (max-width: 770px) {
+  .cem-toast-notification {
+    top: 12px;
+    right: 12px;
+  }
+
+  .cem-modal-overlay {
+    padding: 14px;
+  }
+
+  .cem-change-email-modal {
+    max-width: 390px;
+  }
+
+  .cem-modal-header {
+    padding: 20px;
+  }
+
+  .cem-modal-title {
+    font-size: 17px;
+  }
+
+  .cem-modal-form {
+    padding: 20px;
+  }
+
+  .cem-modal-subtext {
+    font-size: 13px;
+    margin-bottom: 20px;
+  }
+
+  .cem-modal-input {
+    padding: 11px 14px;
+    font-size: 14px;
+  }
+
+  .cem-modal-buttons {
+    gap: 11px;
+  }
+}
+
+/* 770-1200px */
+@media (min-width: 771px) and (max-width: 1200px) {
+  .cem-change-email-modal {
+    max-width: 410px;
+  }
+
+  .cem-modal-header {
+    padding: 22px;
+  }
+
+  .cem-modal-form {
+    padding: 22px;
+  }
+}
+
+/* 1200-1400px */
+@media (min-width: 1201px) and (max-width: 1400px) {
+  .cem-change-email-modal {
+    max-width: 420px;
+  }
+
+  .cem-modal-header {
+    padding: 24px;
+  }
+
+  .cem-modal-form {
+    padding: 24px;
+  }
+
+  .cem-modal-title {
+    font-size: 18px;
+  }
+}
+
+/* 1400px+ */
+@media (min-width: 1401px) {
+  .cem-change-email-modal {
+    max-width: 440px;
+  }
+
+  .cem-modal-header {
+    padding: 26px;
+  }
+
+  .cem-modal-form {
+    padding: 26px;
+  }
+
+  .cem-modal-title {
+    font-size: 19px;
+  }
+}

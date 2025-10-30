@@ -712,6 +712,8 @@ import StatsGrid from '../component/StatsGrid/StatsGrid';
 import ProBanner from '../component/ProBanner/ProBanner';
 import SubmissionsTable from '../component/SubmissionsTable/SubmissionsTable';
 import SubmissionForm from '../component/SubmissionForm/SubmissionForm';
+import EmptyState from '../component/EmptyState/EmptyState';
+import SuccessModal from '../component/SuccessModal/SuccessModal';
 import './dashboard.css';
 
 export default function Dashboard() {
@@ -726,6 +728,10 @@ export default function Dashboard() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [notification, setNotification] = useState(null);
   const [showProfileDropdown, setShowProfileDropdown] = useState(false);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [submittedShareableLink, setSubmittedShareableLink] = useState("");
+
+  const hasNoSubmissions = !submissionsLoading && submissions.length === 0;
 
   useEffect(() => {
     const handleClickOutside = (e) => {
@@ -742,13 +748,17 @@ export default function Dashboard() {
     setNotification(message);
   };
 
-  const handleShowForm = () => {
-    if (stats.available_slots > 0) {
-      setShowForm(true);
-    } else {
-      showNotification("Maximum 3 submissions allowed!");
-    }
-  };
+const handleShowForm = () => {
+  if (stats.available_slots > 0) {
+    setShowForm(true);
+    setPdfFile(null);
+    setPastedUrl("");
+    setCompanyName("");
+    setPosition("");
+  } else {
+    showNotification("Maximum 3 submissions allowed!");
+  }
+};
 
   const handleCopyLink = (shareableLink) => {
     if (!shareableLink) {
@@ -763,18 +773,18 @@ export default function Dashboard() {
     });
   };
 
-  const handleDelete = async (submissionId) => {
-    try {
-      const success = await deleteSubmission(submissionId);
-      if (success) {
-        showNotification("Submission deleted successfully!");
-      } else {
-        showNotification("Failed to delete submission");
-      }
-    } catch (error) {
-      showNotification("Error deleting submission");
+ const handleDelete = async (uniqueId) => {
+  try {
+    const success = await deleteSubmission(uniqueId);
+    if (success) {
+      showNotification("Submission deleted successfully!");
+    } else {
+      showNotification("Failed to delete submission");
     }
-  };
+  } catch (error) {
+    showNotification("Error deleting submission");
+  }
+};
 
   const handleStoreData = async () => {
     try {
@@ -829,6 +839,8 @@ export default function Dashboard() {
         );
       }
 
+      const shareableLink = response.data.shareable_link || response.data.shareableLink;
+
       const newSubmission = {
         id: response.data.submission?.id || uniqueId,
         pastedUrl: designType === 'figma' ? pastedUrl.trim() : null,
@@ -836,7 +848,7 @@ export default function Dashboard() {
         position: position.trim(),
         submittedOn: new Date().toLocaleDateString('en-CA'),
         status: "pending",
-        shareableLink: response.data.shareable_link || response.data.shareableLink,
+        shareableLink: shareableLink,
         uniqueId: uniqueId,
         designType: designType,
         totalViews: 0
@@ -855,7 +867,9 @@ export default function Dashboard() {
       setPosition("");
       setShowForm(false);
       
-      showNotification("Design submission added successfully!");
+      // Show success modal instead of toast
+      setSubmittedShareableLink(shareableLink);
+      setShowSuccessModal(true);
 
     } catch (error) {
       console.error('Error submitting data:', error);
@@ -897,16 +911,20 @@ export default function Dashboard() {
           onLogout={logout}
         />
 
-        <StatsGrid stats={stats} />
-
-        <ProBanner />
-
-        <SubmissionsTable 
-          submissions={submissions}
-          loading={submissionsLoading}
-          onCopyLink={handleCopyLink}
-          onDelete={handleDelete}
-        />
+        {hasNoSubmissions ? (
+          <EmptyState onNewSubmission={handleShowForm} />
+        ) : (
+          <>
+            <StatsGrid stats={stats} />
+            <ProBanner />
+            <SubmissionsTable 
+              submissions={submissions}
+              loading={submissionsLoading}
+              onCopyLink={handleCopyLink}
+              onDelete={handleDelete}
+            />
+          </>
+        )}
       </div>
 
       <SubmissionForm
@@ -922,6 +940,13 @@ export default function Dashboard() {
         setPosition={setPosition}
         onSubmit={handleStoreData}
         isSubmitting={isSubmitting}
+      />
+
+      <SuccessModal 
+        show={showSuccessModal}
+        onClose={() => setShowSuccessModal(false)}
+        shareableLink={submittedShareableLink}
+        onCopyLink={handleCopyLink}
       />
     </div>
   );

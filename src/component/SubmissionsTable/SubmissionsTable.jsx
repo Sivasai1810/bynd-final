@@ -1,6 +1,5 @@
 import React from 'react';
 import SubmissionRow from './SubmissionsRow';
-// import './SubmissionsTable.css';
 
 export default function SubmissionsTable({ 
   submissions, 
@@ -20,15 +19,17 @@ export default function SubmissionsTable({
               <th>Position</th>
               <th>Submitted on</th>
               <th>Status</th>
-              {/* <th>Views</th> */}
               <th>Actions</th>
             </tr>
           </thead>
           <tbody>
             {loading ? (
               <tr>
-                <td colSpan={7} style={{ textAlign: 'center', padding: '20px' }}>
-                  LOADING...
+                <td colSpan={6} style={{ textAlign: 'center', padding: '20px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px' }}>
+                    <div className="spinner"></div>
+                    LOADING...
+                  </div>
                 </td>
               </tr>
             ) : submissions.length > 0 ? (
@@ -43,8 +44,10 @@ export default function SubmissionsTable({
               ))
             ) : (
               <tr>
-                <td colSpan={7} style={{ textAlign: 'center', padding: '20px' }}>
-                  NO DATA FOUND
+                <td colSpan={6} style={{ textAlign: 'center', padding: '20px' }}>
+                  <div style={{ color: '#666' }}>
+                    NO DATA FOUND
+                  </div>
                 </td>
               </tr>
             )}

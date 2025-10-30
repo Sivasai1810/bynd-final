@@ -3,11 +3,13 @@
   align-items: center;
   gap: 8px;
   margin-bottom: 46px;
-  padding-bottom: 10px;
+  padding-bottom: 15px;
   width: 100%;
   border-bottom: 1px solid #f0f0f0;
-  padding-left: 5px;
-  padding-right: 40px;
+  padding-left: 0px; 
+  padding-right: 20px;
+  margin-left: 0; 
+  margin-right: 0;
 }
 
 .search-container {
@@ -32,6 +34,7 @@
   font-size: 16px;
   outline: none;
   border: none;
+  background: none;
 }
 
 .search-input:focus + .search-icon,
@@ -100,41 +103,5 @@
   object-fit: cover;
 }
 
-/* Responsive Header */
-@media (min-width: 1024px) and (max-width: 1440px) {
-  .header {
-    gap: 6px;
-    margin-bottom: 40px;
-    padding-left: 2px;
-    padding-right: 30px;
-  }
-  .new-submission-btn { 
-    padding: 10px 28px;
-    font-size: 14px;
-  }
-  .avatar { width: 40px; height: 40px; }
-}
+/* Breakpoint: 0-470px */
 
-@media (min-width: 1440px) and (max-width: 1920px) {
-  .header {
-    gap: 12px;
-    margin-bottom: 50px;
-    padding-left: 20px;
-    padding-right: 40px;
-  }
-  .search-container { max-width: 450px; }
-  .new-submission-btn { padding: 12px 36px; font-size: 15px; }
-  .avatar { width: 44px; height: 44px; }
-}
-
-@media (min-width: 1920px) {
-  .header {
-    gap: 16px;
-    margin-bottom: 60px;
-    padding-left: 30px;
-    padding-right: 50px;
-  }
-  .search-container { max-width: 500px; }
-  .new-submission-btn { padding: 13px 40px; font-size: 16px; }
-  .avatar { width: 48px; height: 48px; }
-}

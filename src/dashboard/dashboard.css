@@ -1,18 +1,756 @@
+/* Global Reset for Dashboard */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
+/* Main Container */
 .container {
   display: flex;
-  height: 100vh;
+  min-height: 100vh;
+  overflow: hidden;
+  max-height: 100vh;
+  background-color: #ffffff;
 }
 
+/* Main Content Area */
 .main-content {
   flex: 1;
   overflow-y: auto;
-  padding: 17px 0;
+  overflow-x: hidden;
+  padding: 20px 0px 20px 0px;
   display: flex;
   flex-direction: column;
+  background-color: #FFFFFF;
+  height: 100vh;
+}
+
+/* When empty state is shown */
+.main-content:has(.empty-state-container) {
+  background-color: #ffffff;
+  padding: 20px 0;
+}
+/* Success Modal */
+.success-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  animation: fadeIn 0.2s ease;
+}
+
+.success-modal {
+  background: white;
+  border-radius: 12px;
+  padding: 40px 32px;
+  max-width: 400px;
+  width: 90%;
+  position: relative;
+  text-align: center;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+  animation: slideUp 0.3s ease;
+}
+
+.success-modal-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: #9ca3af;
+  cursor: pointer;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s;
+}
+
+.success-modal-close:hover {
+  color: #1a1a1a;
+}
+
+.success-icon-wrapper {
+  margin: 0 auto 24px;
+  width: 80px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.success-icon-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.success-modal h3 {
+  font-size: 20px;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin: 0 0 12px 0;
+}
+
+.success-modal p {
+  font-size: 14px;
+  color: #6b7280;
+  line-height: 1.6;
+  margin: 0 0 32px 0;
+}
+
+.success-modal-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.btn-copy-link {
+  width: 100%;
+  padding: 14px 24px;
+  background: #1DBC79;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.btn-copy-link:hover {
+  background: #17a573;
+}
+
+.btn-copy-link::before {
+  /* content: '; */
+  font-size: 16px;
+}
+
+.btn-dashboard {
+  width: 100%;
+  padding: 14px 24px;
+  background: white;
+  color: #1a1a1a;
+  border: 1.5px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-dashboard:hover {
+  background: #f9fafb;
+  border-color: #9ca3af;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Responsive Layout */
+@media (min-width: 0px) and (max-width: 470px) {
+  .main-content {
+    padding: 12px 0;
+  }
+}
+
+/* Breakpoint: 470-770px */
+@media (min-width: 471px) and (max-width: 770px) {
+  .main-content {
+    padding: 14px 0;
+  }
+}
+
+/* Breakpoint: 770-1200px */
+@media (min-width: 771px) and (max-width: 1200px) {
+  .main-content {
+    padding: 16px 0;
+  }
+}
+
+/* Breakpoint: 1200-1400px */
+@media (min-width: 1201px) and (max-width: 1400px) {
+  .main-content {
+    padding: 18px 0;
+  }
+}
+
+/* Breakpoint: 1400px+ */
+@media (min-width: 1401px) {
+  .main-content {
+    padding: 20px 0;
+  }
+}
+
+/* ==================== FILE 1B: EMPTY STATE ==================== */
+
+/* Breakpoint: 0-470px */
+@media (min-width: 0px) and (max-width: 470px) {
+  .main-content:has(.empty-state-container) {
+    padding: 12px 0;
+  }
+
+  .empty-state-container {
+    min-height: auto;
+    padding: 20px 12px;
+  }
+
+  .empty-state-features {
+    bottom: auto;
+    right: auto;
+    gap: 40px;
+    margin-bottom: 30px;
+  }
+
+  .empty-state-features-sections {
+    gap: 6px;
+    padding: 6px 4px;
+  }
+
+  .empty-state-features-sections img {
+    width: 14px;
+    height: 14px;
+  }
+
+  .empty-state-features-sections p {
+    font-size: 9px;
+  }
+
+  .empty-state-content {
+    max-width: 100%;
+  }
+
+  .empty-state-title {
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+
+  .empty-state-subtitle {
+    font-size: 12px;
+    margin-bottom: 16px;
+  }
+
+  .empty-state-button {
+    padding: 8px 16px;
+    font-size: 12px;
+    gap: 6px;
+  }
+
+  .empty-state-button svg {
+    width: 14px;
+    height: 14px;
+  }
+}
+
+/* Breakpoint: 470-770px */
+@media (min-width: 471px) and (max-width: 770px) {
+  .main-content:has(.empty-state-container) {
+    padding: 14px 0;
+  }
+
+  .empty-state-container {
+    min-height: auto;
+    padding: 24px 16px;
+  }
+
+  .empty-state-features {
+    bottom: auto;
+    right: auto;
+    gap: 50px;
+    margin-bottom: 32px;
+  }
+
+  .empty-state-features-sections {
+    gap: 7px;
+    padding: 7px 5px;
+  }
+
+  .empty-state-features-sections img {
+    width: 15px;
+    height: 15px;
+  }
+
+  .empty-state-features-sections p {
+    font-size: 10px;
+  }
+
+  .empty-state-content {
+    max-width: 100%;
+  }
+
+  .empty-state-title {
+    font-size: 20px;
+    margin-bottom: 12px;
+  }
+
+  .empty-state-subtitle {
+    font-size: 13px;
+    margin-bottom: 20px;
+  }
+
+  .empty-state-button {
+    padding: 9px 18px;
+    font-size: 13px;
+    gap: 6px;
+  }
+
+  .empty-state-button svg {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+/* Breakpoint: 770-1200px */
+@media (min-width: 771px) and (max-width: 1200px) {
+  .main-content:has(.empty-state-container) {
+    padding: 16px 0;
+  }
+
+  .empty-state-container {
+    min-height: 100vh;
+  }
+
+  .empty-state-features {
+    bottom: 120px;
+    right: 10px;
+    gap: 60px;
+    margin-bottom: 36px;
+  }
+
+  .empty-state-features-sections {
+    gap: 7px;
+    padding: 7px 5px;
+  }
+
+  .empty-state-features-sections img {
+    width: 15px;
+    height: 15px;
+  }
+
+  .empty-state-features-sections p {
+    font-size: 10px;
+  }
+
+  .empty-state-content {
+    max-width: 650px;
+  }
+
+  .empty-state-title {
+    font-size: 24px;
+    margin-bottom: 14px;
+  }
+
+  .empty-state-subtitle {
+    font-size: 14px;
+    margin-bottom: 24px;
+  }
+
+  .empty-state-button {
+    padding: 10px 22px;
+    font-size: 13px;
+    gap: 7px;
+  }
+
+  .empty-state-button svg {
+    width: 17px;
+    height: 17px;
+  }
+}
+
+/* Breakpoint: 1200-1400px */
+@media (min-width: 1201px) and (max-width: 1400px) {
+  .main-content:has(.empty-state-container) {
+    padding: 18px 0;
+  }
+
+  .empty-state-features {
+    bottom: 160px;
+    right: 14px;
+    gap: 80px;
+    margin-bottom: 44px;
+  }
+
+  .empty-state-features-sections {
+    gap: 8px;
+    padding: 8px 6px;
+  }
+
+  .empty-state-features-sections img {
+    width: 16px;
+    height: 16px;
+  }
+
+  .empty-state-features-sections p {
+    font-size: 11px;
+  }
+
+  .empty-state-content {
+    max-width: 680px;
+  }
+
+  .empty-state-title {
+    font-size: 28px;
+    margin-bottom: 15px;
+  }
+
+  .empty-state-subtitle {
+    font-size: 15px;
+    margin-bottom: 28px;
+  }
+
+  .empty-state-button {
+    padding: 11px 23px;
+    font-size: 14px;
+    gap: 8px;
+  }
+
+  .empty-state-button svg {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+/* Breakpoint: 1400px+ */
+@media (min-width: 1401px) {
+  .main-content:has(.empty-state-container) {
+    padding: 20px 0;
+  }
+
+  .empty-state-features {
+    bottom: 190px;
+    right: 17px;
+    gap: 102px;
+    margin-bottom: 50px;
+  }
+
+  .empty-state-features-sections {
+    gap: 8px;
+    padding: 8px 6px;
+  }
+
+  .empty-state-features-sections img {
+    width: 16px;
+    height: 16px;
+  }
+
+  .empty-state-features-sections p {
+    font-size: 11px;
+  }
+
+  .empty-state-content {
+    max-width: 700px;
+  }
+
+  .empty-state-title {
+    font-size: 30px;
+    margin-bottom: 16px;
+  }
+
+  .empty-state-subtitle {
+    font-size: 16px;
+    margin-bottom: 32px;
+  }
+
+  .empty-state-button {
+    padding: 12px 24px;
+    font-size: 15px;
+    gap: 8px;
+  }
+
+  .empty-state-button svg {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+/* ==================== FILE 1C: SUCCESS MODAL ==================== */
+
+/* Breakpoint: 0-470px */
+@media (min-width: 0px) and (max-width: 470px) {
+  .success-modal-overlay {
+    z-index: 10000;
+  }
+
+  .success-modal {
+    padding: 24px 16px;
+    max-width: 100%;
+  }
+
+  .success-modal-close {
+    top: 12px;
+    right: 12px;
+    font-size: 18px;
+    width: 28px;
+    height: 28px;
+  }
+
+  .success-icon-wrapper {
+    margin-bottom: 16px;
+    width: 60px;
+    height: 60px;
+  }
+
+  .success-modal h3 {
+    font-size: 16px;
+    margin-bottom: 8px;
+  }
+
+  .success-modal p {
+    font-size: 12px;
+    margin-bottom: 16px;
+  }
+
+  .success-modal-actions {
+    gap: 8px;
+  }
+
+  .btn-copy-link {
+    padding: 10px 12px;
+    font-size: 12px;
+    gap: 6px;
+  }
+
+  .btn-copy-link::before {
+    font-size: 14px;
+  }
+
+  .btn-dashboard {
+    padding: 10px 12px;
+    font-size: 12px;
+  }
+}
+
+/* Breakpoint: 470-770px */
+@media (min-width: 471px) and (max-width: 770px) {
+  .success-modal {
+    padding: 28px 20px;
+    max-width: 100%;
+  }
+
+  .success-modal-close {
+    top: 12px;
+    right: 12px;
+    font-size: 20px;
+    width: 30px;
+    height: 30px;
+  }
+
+  .success-icon-wrapper {
+    margin-bottom: 18px;
+    width: 68px;
+    height: 68px;
+  }
+
+  .success-modal h3 {
+    font-size: 17px;
+    margin-bottom: 10px;
+  }
+
+  .success-modal p {
+    font-size: 13px;
+    margin-bottom: 20px;
+  }
+
+  .success-modal-actions {
+    gap: 10px;
+  }
+
+  .btn-copy-link {
+    padding: 11px 16px;
+    font-size: 13px;
+    gap: 7px;
+  }
+
+  .btn-copy-link::before {
+    font-size: 15px;
+  }
+
+  .btn-dashboard {
+    padding: 11px 16px;
+    font-size: 13px;
+  }
+}
+
+/* Breakpoint: 770-1200px */
+@media (min-width: 771px) and (max-width: 1200px) {
+  .success-modal {
+    padding: 32px 28px;
+    max-width: 380px;
+  }
+
+  .success-modal-close {
+    top: 14px;
+    right: 14px;
+    font-size: 22px;
+    width: 30px;
+    height: 30px;
+  }
+
+  .success-icon-wrapper {
+    margin-bottom: 20px;
+    width: 72px;
+    height: 72px;
+  }
+
+  .success-modal h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+
+  .success-modal p {
+    font-size: 13px;
+    margin-bottom: 24px;
+  }
+
+  .success-modal-actions {
+    gap: 10px;
+  }
+
+  .btn-copy-link {
+    padding: 12px 20px;
+    font-size: 13px;
+    gap: 7px;
+  }
+
+  .btn-copy-link::before {
+    font-size: 15px;
+  }
+
+  .btn-dashboard {
+    padding: 12px 20px;
+    font-size: 13px;
+  }
+}
+
+/* Breakpoint: 1200-1400px */
+@media (min-width: 1201px) and (max-width: 1400px) {
+  .success-modal {
+    padding: 36px 30px;
+    max-width: 390px;
+  }
+
+  .success-modal-close {
+    top: 15px;
+    right: 15px;
+    font-size: 23px;
+    width: 31px;
+    height: 31px;
+  }
+
+  .success-icon-wrapper {
+    margin-bottom: 22px;
+    width: 76px;
+    height: 76px;
+  }
+
+  .success-modal h3 {
+    font-size: 19px;
+    margin-bottom: 11px;
+  }
+
+  .success-modal p {
+    font-size: 14px;
+    margin-bottom: 28px;
+  }
+
+  .success-modal-actions {
+    gap: 11px;
+  }
+
+  .btn-copy-link {
+    padding: 13px 22px;
+    font-size: 14px;
+    gap: 8px;
+  }
+
+  .btn-copy-link::before {
+    font-size: 16px;
+  }
+
+  .btn-dashboard {
+    padding: 13px 22px;
+    font-size: 14px;
+  }
+}
+
+/* Breakpoint: 1400px+ */
+@media (min-width: 1401px) {
+  .success-modal {
+    padding: 40px 32px;
+    max-width: 400px;
+  }
+
+  .success-modal-close {
+    top: 16px;
+    right: 16px;
+    font-size: 24px;
+    width: 32px;
+    height: 32px;
+  }
+
+  .success-icon-wrapper {
+    margin-bottom: 24px;
+    width: 80px;
+    height: 80px;
+  }
+
+  .success-modal h3 {
+    font-size: 20px;
+    margin-bottom: 12px;
+  }
+
+  .success-modal p {
+    font-size: 14px;
+    margin-bottom: 32px;
+  }
+
+  .success-modal-actions {
+    gap: 12px;
+  }
+
+  .btn-copy-link {
+    padding: 14px 24px;
+    font-size: 14px;
+    gap: 8px;
+  }
+
+  .btn-copy-link::before {
+    font-size: 16px;
+  }
+
+  .btn-dashboard {
+    padding: 14px 24px;
+    font-size: 14px;
+  }
 }

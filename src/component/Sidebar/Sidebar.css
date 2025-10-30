@@ -1,7 +1,9 @@
 .sidebar {
-  width: 16%;
-  min-width: 220px;
-  max-width: 300px;
+position: relative;
+  width: 18%;
+  /* min-width: 120px;
+  max-width: 290px; */
+  height: 100%;
   background-color: #f5f5f5;
   padding: 4px 16px;
   display: flex;
@@ -69,7 +71,7 @@
 }
 
 .upgrade-card {
-  margin-top: auto;
+  margin-top: 120px;
   background-color: #10b981;
   border-radius: 12px;
   padding: 13px;
@@ -105,7 +107,7 @@
 }
 
 /* Responsive Sidebar */
-@media (min-width: 1024px) and (max-width: 1440px) {
+/*@media (min-width: 1024px) and (max-width: 1440px) {
   .sidebar {
     width: 16%;
     min-width: 240px;
@@ -148,4 +150,276 @@
   .upgrade-card { padding: 20px; margin-bottom: 32px; }
   .upgrade-text { font-size: 15px; margin-bottom: 18px; line-height: 1.6; }
   .upgrade-button { padding: 12px; font-size: 16px; }
+}
+  */
+  /* Breakpoint: 0-470px */
+/*@media (min-width: 0px) and (max-width: 470px) {
+  .sidebar {
+    width: 100%;
+    min-width: 100%;
+    max-width: none;
+    padding: 3px 12px;
+    order: -1;
+  }
+
+  .logo-img {
+    height: 28px;
+  }
+
+  .section {
+    margin-bottom: 16px;
+  }
+
+  .section-label {
+    font-size: 12px;
+    margin-left: 8px;
+    margin-bottom: 4px;
+  }
+
+  .menu-item {
+    font-size: 12px;
+    padding: 8px 10px;
+    gap: 8px;
+    margin-bottom: 3px;
+  }
+
+  .menu-icon {
+    width: 16px;
+    height: 16px;
+  }
+
+  .upgrade-card {
+    padding: 10px;
+    margin-left: 2px;
+    margin-right: 2px;
+    margin-bottom: 12px;
+  }
+
+  .upgrade-text {
+    font-size: 11px;
+    margin-bottom: 10px;
+    line-height: 1.4;
+  }
+
+  .upgrade-button {
+    padding: 8px;
+    font-size: 12px;
+  }
+}
+
+/* Breakpoint: 470-770px */
+/*@media (min-width: 471px) and (max-width: 770px) {
+  .sidebar {
+    width: 100%;
+    min-width: 100%;
+    max-width: none;
+    padding: 4px 14px;
+    order: -1;
+  }
+
+  .logo-img {
+    height: 30px;
+  }
+
+  .section {
+    margin-bottom: 18px;
+  }
+
+  .section-label {
+    font-size: 13px;
+    margin-left: 10px;
+    margin-bottom: 4px;
+  }
+
+  .menu-item {
+    font-size: 13px;
+    padding: 9px 11px;
+    gap: 9px;
+    margin-bottom: 3px;
+  }
+
+  .menu-icon {
+    width: 17px;
+    height: 17px;
+  }
+
+  .upgrade-card {
+    padding: 11px;
+    margin-left: 3px;
+    margin-right: 3px;
+    margin-bottom: 14px;
+  }
+
+  .upgrade-text {
+    font-size: 12px;
+    margin-bottom: 12px;
+    line-height: 1.45;
+  }
+
+  .upgrade-button {
+    padding: 9px;
+    font-size: 13px;
+  }
+}
+
+/* Breakpoint: 770-1200px */
+/*@media (min-width: 771px) and (max-width: 1200px) {
+  .sidebar {
+    width: 15%;
+    min-width: 180px;
+    max-width: 220px;
+    padding: 4px 14px;
+  }
+
+  .logo-img {
+    height: 32px;
+  }
+
+  .section {
+    margin-bottom: 20px;
+  }
+
+  .section-label {
+    font-size: 13px;
+    margin-left: 10px;
+    margin-bottom: 4px;
+  }
+
+  .menu-item {
+    font-size: 13px;
+    padding: 9px 10px;
+    gap: 8px;
+    margin-bottom: 3px;
+  }
+
+  .menu-icon {
+    width: 17px;
+    height: 17px;
+  }
+
+  .upgrade-card {
+    padding: 11px;
+    margin-left: 3px;
+    margin-right: 3px;
+    margin-bottom: 16px;
+  }
+
+  .upgrade-text {
+    font-size: 12px;
+    margin-bottom: 12px;
+    line-height: 1.45;
+  }
+
+  .upgrade-button {
+    padding: 9px;
+    font-size: 13px;
+  }
+}
+
+/* Breakpoint: 1200-1400px */
+/*@media (min-width: 1201px) and (max-width: 1400px) {
+  .sidebar {
+    width: 16%;
+    min-width: 240px;
+    max-width: 280px;
+    padding: 4px 16px;
+  }
+
+  .logo-img {
+    height: 38px;
+  }
+
+  .section {
+    margin-bottom: 22px;
+  }
+
+  .section-label {
+    font-size: 14px;
+    margin-left: 11px;
+    margin-bottom: 5px;
+  }
+
+  .menu-item {
+    font-size: 14px;
+    padding: 10px 11px;
+    gap: 9px;
+    margin-bottom: 4px;
+  }
+
+  .menu-icon {
+    width: 18px;
+    height: 18px;
+  }
+
+  .upgrade-card {
+    padding: 13px;
+    margin-left: 3px;
+    margin-right: 3px;
+    margin-bottom: 20px;
+  }
+
+  .upgrade-text {
+    font-size: 13px;
+    margin-bottom: 14px;
+    line-height: 1.5;
+  }
+
+  .upgrade-button {
+    padding: 10px;
+    font-size: 14px;
+  }
+}
+
+/* Breakpoint: 1400px+ */
+/*@media (min-width: 1401px) {
+  .sidebar {
+    width: 17%;
+    min-width: 280px;
+    max-width: 340px;
+    padding: 4px 18px;
+  }
+
+  .logo-img {
+    height: 42px;
+  }
+
+  .section {
+    margin-bottom: 26px;
+  }
+
+  .section-label {
+    font-size: 16px;
+    margin-left: 13px;
+    margin-bottom: 6px;
+  }
+
+  .menu-item {
+    font-size: 16px;
+    padding: 12px 13px;
+    gap: 11px;
+    margin-bottom: 4px;
+  }
+
+  .menu-icon {
+    width: 20px;
+    height: 20px;
+  }
+
+  .upgrade-card {
+    padding: 16px;
+    margin-left: 4px;
+    margin-right: 4px;
+    margin-bottom: 26px;
+  }
+
+  .upgrade-text {
+    font-size: 14px;
+    margin-bottom: 16px;
+    line-height: 1.6;
+  }
+
+  .upgrade-button {
+    padding: 11px;
+    font-size: 15px;
+  }
 }
