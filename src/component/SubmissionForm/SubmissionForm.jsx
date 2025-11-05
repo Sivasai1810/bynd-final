@@ -1,72 +1,3 @@
-// import React from 'react';
-// import './SubmissionForm.css';
-
-// export default function SubmissionForm({
-//   showForm,
-//   onClose,
-//   pdfFile,
-//   setPdfFile,
-//   pastedUrl,
-//   setPastedUrl,
-//   companyName,
-//   setCompanyName,
-//   position,
-//   setPosition,
-//   onSubmit,
-//   isSubmitting
-// }) {
-//   if (!showForm) return null;
-
-//   return (
-//     <div className='form-container'>
-//       <div className='form-box'>
-//         <p className='close-btn' onClick={onClose}>x</p>
-//         <div className='header-text'>
-//           <p>New <span>Design</span> Submission</p>
-//         </div>
-//         <span className='side-heading'>Upload Design PDF (Optional)</span>
-//         <input 
-//           type='file' 
-//           accept=".pdf"
-//           className='fields' 
-//           onChange={(e) => setPdfFile(e.target.files[0])} 
-//           disabled={pastedUrl.trim() !== ""}
-//         />
-//         <span className='side-heading'>Paste Design URL*</span>
-//         <input 
-//           type='text' 
-//           className='fields' 
-//           value={pastedUrl} 
-//           onChange={(e) => setPastedUrl(e.target.value)} 
-//           placeholder='http://examplefigma-url.com' 
-//           disabled={pdfFile !== null}
-//         />
-//         <span className='side-heading'>Company Name*</span>
-//         <input 
-//           type='text' 
-//           className='fields' 
-//           value={companyName} 
-//           onChange={(e) => setCompanyName(e.target.value)} 
-//           placeholder='Enter Company name'
-//         />
-//         <span className='side-heading'>Position*</span>
-//         <input 
-//           type='text' 
-//           className='fields' 
-//           value={position} 
-//           onChange={(e) => setPosition(e.target.value)} 
-//           placeholder='Enter position'
-//         />
-//         <button 
-//           onClick={onSubmit} 
-//           disabled={!companyName || !position || (!pdfFile && !pastedUrl) || isSubmitting}
-//         >
-//           {isSubmitting ? 'Submitting...' : 'Submit'}
-//         </button>
-//       </div>
-//     </div>
-//   );
-// }
 import React, { useState ,useEffect} from 'react';
 import Addsymbol from "../../assets/addsymbol.svg"
 import DiscardModal from '../discard/DiscardModal';
@@ -261,9 +192,7 @@ useEffect(() => {
                     disabled={pastedUrl.trim() !== ""}
                   />
                   <label htmlFor='file-input' className='file-upload-label'>
-                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
-                    </svg>
+                  
                     <p>Choose a PDF, JPEG, PNG file or drag & drop it here</p>
                     <button type='button' className='browse-btn' disabled={pastedUrl.trim() !== ""}>Browse File</button>
                   </label>

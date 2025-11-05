@@ -121,7 +121,8 @@ const CopyButtonWithTooltip = ({ onCopyLink, shareableLink }) => {
       {showTooltip && (
         <div className="copy-tooltip">
           <div className="copy-tooltip-content">
-           <span>Share only this link with recruiters</span><br></br> it's the only one that will provide assignment status, insights, metrics and detailed analytics.
+            <span><h3>Share only this link with recruiters</h3></span>
+            it's the only one that will provide assignment status, insights, metrics and detailed analytics.
           </div>
         </div>
       )}
@@ -133,7 +134,27 @@ export default function SubmissionRow({ submission, index, onCopyLink, onDelete,
   const [showMenu, setShowMenu] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
+  const [flipUp, setFlipUp] = useState(false);
   const menuRef = useRef(null);
+  const buttonRef = useRef(null);
+  const dropdownRef = useRef(null);
+
+  // Check if dropdown should flip upward
+  const checkDropdownPosition = () => {
+    if (buttonRef.current && dropdownRef.current) {
+      const buttonRect = buttonRef.current.getBoundingClientRect();
+      const viewportHeight = window.innerHeight;
+      const dropdownHeight = 150; // Approximate dropdown height
+      const spaceBelow = viewportHeight - buttonRect.bottom;
+      
+      // If not enough space below (less than dropdown height + gap), flip upward
+      if (spaceBelow < dropdownHeight + 20) {
+        setFlipUp(true);
+      } else {
+        setFlipUp(false);
+      }
+    }
+  };
 
   useEffect(() => {
     function handleClickOutside(event) {
@@ -142,14 +163,33 @@ export default function SubmissionRow({ submission, index, onCopyLink, onDelete,
       }
     }
 
+    function handleEscKey(event) {
+      if (event.key === 'Escape') {
+        setShowMenu(false);
+      }
+    }
+
     if (showMenu) {
       document.addEventListener('mousedown', handleClickOutside);
+      document.addEventListener('keydown', handleEscKey);
+      checkDropdownPosition();
     }
 
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('keydown', handleEscKey);
     };
   }, [showMenu]);
+
+  const handleMenuToggle = () => {
+    if (!showMenu) {
+      // Wait for next frame to check position after menu renders
+      setTimeout(() => {
+        checkDropdownPosition();
+      }, 0);
+    }
+    setShowMenu(!showMenu);
+  };
 
   const handleDeleteClick = () => {
     setShowMenu(false);
@@ -201,19 +241,32 @@ export default function SubmissionRow({ submission, index, onCopyLink, onDelete,
             
             <div className="more-btn-container" ref={menuRef}>
               <button 
+                ref={buttonRef}
                 className="more-btn"
-                onClick={() => setShowMenu(!showMenu)}
+                onClick={handleMenuToggle}
                 disabled={isDeleting}
+                aria-label="More actions"
+                aria-expanded={showMenu}
+                aria-haspopup="true"
               >
                 ⋮
               </button>
               {showMenu && (
-                <div className="dropdown-menu">
+                <div 
+                  ref={dropdownRef}
+                  className="dropdown-menu"
+                  style={flipUp ? { 
+                    top: 'auto', 
+                    bottom: 'calc(100% + 6px)' 
+                  } : {}}
+                  role="menu"
+                >
                   <div className="dropdown-header">
                     <span className="dropdown-title">Actions</span>
                     <button 
                       className="dropdown-close"
                       onClick={() => setShowMenu(false)}
+                      aria-label="Close menu"
                     >
                       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                         <line x1="18" y1="6" x2="6" y2="18"></line>
@@ -225,6 +278,7 @@ export default function SubmissionRow({ submission, index, onCopyLink, onDelete,
                   <button
                     onClick={handleDeleteClick}
                     className="dropdown-item delete-item"
+                    role="menuitem"
                   >
                     <svg className="dropdown-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
@@ -235,6 +289,7 @@ export default function SubmissionRow({ submission, index, onCopyLink, onDelete,
                   <button
                     onClick={handleEmployerView}
                     className="dropdown-item view-item"
+                    role="menuitem"
                   >
                     <svg className="dropdown-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
