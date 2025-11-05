@@ -747,17 +747,17 @@ export default function Dashboard() {
     setNotification(message);
   };
 
-const handleShowForm = () => {
-  if (stats.available_slots > 0) {
-    setShowForm(true);
-    setPdfFile(null);
-    setPastedUrl("");
-    setCompanyName("");
-    setPosition("");
-  } else {
-    showNotification("Maximum 3 submissions allowed!");
-  }
-};
+  const handleShowForm = () => {
+    if (stats.available_slots > 0) {
+      setShowForm(true);
+      setPdfFile(null);
+      setPastedUrl("");
+      setCompanyName("");
+      setPosition("");
+    } else {
+      showNotification("Maximum 3 submissions allowed!");
+    }
+  };
 
   const handleCopyLink = (shareableLink) => {
     if (!shareableLink) {
@@ -772,18 +772,18 @@ const handleShowForm = () => {
     });
   };
 
- const handleDelete = async (uniqueId) => {
-  try {
-    const success = await deleteSubmission(uniqueId);
-    if (success) {
-      showNotification("Submission deleted successfully!");
-    } else {
-      showNotification("Failed to delete submission");
+  const handleDelete = async (uniqueId) => {
+    try {
+      const success = await deleteSubmission(uniqueId);
+      if (success) {
+        showNotification("Submission deleted successfully!");
+      } else {
+        showNotification("Failed to delete submission");
+      }
+    } catch (error) {
+      showNotification("Error deleting submission");
     }
-  } catch (error) {
-    showNotification("Error deleting submission");
-  }
-};
+  };
 
   const handleStoreData = async () => {
     try {
@@ -795,21 +795,48 @@ const handleShowForm = () => {
       }
 
       const uniqueId = nanoid(10);
-      const designType = pdfFile ? 'pdf' : 'figma';
+      
+      // Determine design type based on input
+     let designType;
+if (pdfFile) {
+  const fileType = pdfFile.type;
+  if (fileType === "application/pdf") {
+    designType = "pdf";
+  } else if (fileType === "image/png" || fileType === "image/jpeg" || fileType === "image/jpg") {
+    designType = "image";
+  } else {
+    showNotification("Please upload only PDF, PNG, or JPEG files.");
+    return;
+  }
+} else if (pastedUrl.trim()) {
+  if (pastedUrl.includes("figma.com")) {
+    designType = "figma";
+  } else {
+    showNotification("Please provide a valid Figma link.");
+    return;
+  }
+} else {
+  showNotification("Please provide a Figma link or upload a file.");
+  return;
+}
+
+      console.log('Submitting with design type:', designType);
 
       let response;
       if (pdfFile) {
         const formData = new FormData();
         formData.append('user_id', userId);
         formData.append('unique_id', uniqueId);
-        formData.append('design_type', 'pdf');
-        formData.append('pdf_file', pdfFile);
+        formData.append('design_type', designType);
+        formData.append('pdf_file', pdfFile); // Field name stays as 'pdf_file' for backend compatibility
         formData.append('company_name', companyName.trim());
         formData.append('position', position.trim());
         formData.append('status', 'pending');
 
+        console.log('Sending FormData to server...');
+
         response = await axios.post(
-          // https://bynd-backend.onrender.com
+          // 
           "https://bynd-backend.onrender.com/storeurls",
           formData,
           { 
@@ -829,6 +856,8 @@ const handleShowForm = () => {
           status: "pending"
         };
 
+        console.log('Sending JSON payload to server...');
+
         response = await axios.post(
           "https://bynd-backend.onrender.com/storeurls",
           payload,
@@ -838,6 +867,8 @@ const handleShowForm = () => {
           }
         );
       }
+
+      console.log('Server response:', response.data);
 
       const shareableLink = response.data.shareable_link || response.data.shareableLink;
 
@@ -873,10 +904,13 @@ const handleShowForm = () => {
 
     } catch (error) {
       console.error('Error submitting data:', error);
+      console.error('Error response:', error.response?.data);
       
       let errorMessage = "Failed to submit design";
       if (error.response?.data?.error) {
         errorMessage = error.response.data.error;
+      } else if (error.response?.data?.details) {
+        errorMessage = error.response.data.details;
       } else if (error.message) {
         errorMessage = error.message;
       }
