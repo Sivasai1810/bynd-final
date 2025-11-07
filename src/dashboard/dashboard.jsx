@@ -837,7 +837,7 @@ if (pdfFile) {
 
         response = await axios.post(
           // 
-          "http://localhost:3000/storeurls",
+          "https://bynd-backend.onrender.com/storeurls",
           formData,
           { 
             withCredentials: true,
@@ -859,7 +859,7 @@ if (pdfFile) {
         console.log('Sending JSON payload to server...');
 
         response = await axios.post(
-          "http://localhost:3000/storeurls",
+          "https://bynd-backend.onrender.com/storeurls",
           payload,
           { 
             withCredentials: true,
