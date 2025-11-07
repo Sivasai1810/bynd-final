@@ -240,7 +240,7 @@ export default function ProfileDropdown({ profile, onClose, onLogout }) {
             />
           </svg>
           <span className="help-text">Need help?</span>
-          <a href="mailto:support@example.com" className="email-link">
+          <a href="mailto:byndhq@gmail.com" className="email-link">
             Email us
           </a>
         </div>
