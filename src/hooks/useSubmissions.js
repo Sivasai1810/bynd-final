@@ -372,7 +372,7 @@ export function useSubmissions(userId) {
   const deleteSubmission = async (uniqueId) => {
     try {
       console.log('Deleting submission with uniqueId:', uniqueId);
-      
+      //
       const res = await axios.delete(
         `https://bynd-backend.onrender.com/submissions/delete/${uniqueId}`, 
         {

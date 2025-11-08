@@ -832,9 +832,7 @@ if (pdfFile) {
         formData.append('company_name', companyName.trim());
         formData.append('position', position.trim());
         formData.append('status', 'pending');
-
         console.log('Sending FormData to server...');
-
         response = await axios.post(
           // https://bynd-backend.onrender.com
           "https://bynd-backend.onrender.com/storeurls",
