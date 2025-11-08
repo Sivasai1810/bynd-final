@@ -1,5 +1,3 @@
-/* ===== src/components/SubmissionsTable/SubmissionsTable.css ===== */
-
 .table-container {
   background-color: #fff;
   padding: 0px;
@@ -8,7 +6,7 @@
   margin-bottom: 30px;
   border: 1px solid #f3f4f6;
   border-radius: 14px;
-  overflow: visible;
+  overflow: hidden; /* Changed from 'visible' to 'hidden' */
   min-height: auto;
   max-height: auto;
   position: relative;
@@ -42,6 +40,7 @@
 
 .table thead tr {
   border-bottom: 1px solid #e5e7eb;
+  background-color: #FAFAF8;
 }
 
 .table thead th {
@@ -50,6 +49,18 @@
   font-size: 18px;
   font-weight: 600;
   color: #606062;
+  background-color: #FAFAF8;
+}
+
+/* Add border radius to first and last header cells */
+.table thead th:first-child {
+  border-top-left-radius: 13px;
+  padding-left: 19px;
+}
+
+.table thead th:last-child {
+  border-top-right-radius: 13px;
+  padding-right: 19px;
 }
 
 .table tbody {
@@ -65,6 +76,15 @@
 
 .table tbody tr:last-child {
   border-bottom: none;
+}
+
+/* Add border radius to last row cells */
+.table tbody tr:last-child td:first-child {
+  border-bottom-left-radius: 13px;
+}
+
+.table tbody tr:last-child td:last-child {
+  border-bottom-right-radius: 13px;
 }
 
 .table tbody td {

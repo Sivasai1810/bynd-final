@@ -91,7 +91,7 @@
 
 .or-divider-line {
   flex: 1;
-  height: 1.5px;
+  height: 1px;
   background-color: #c5c5c5; 
 }
 
@@ -99,7 +99,7 @@
   margin: 0 8px;
   color: #6b6b6b;
   font-weight: 600;
-  font-size: 14px;
+  font-size: 12px;
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
@@ -114,9 +114,9 @@
 }
 
 .form-label-modern {
-  font-size: 14px;
-  font-weight: 600;
-  color: #111827;
+  font-size: 16px;
+  font-weight: 500;
+  color: #4A5568;
   text-align: left;
 }
 
@@ -126,7 +126,7 @@
   border: 1px solid #d1d5db;
   border-radius: 6px;
   font-size: 15px;
-  color: #111827;
+  color: #4A5568;
   transition: all 0.2s;
   background: white;
   box-sizing: border-box;
@@ -135,7 +135,7 @@
 .form-input-modern:focus {
   outline: none;
   border-color: #10b981;
-  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+  box-shadow: 0 0 0 1px rgba(16, 185, 129, 0.1);
 }
 
 .form-input-modern::placeholder {
@@ -144,7 +144,7 @@
 
 .form-hint {
   font-size: 12px;
-  color: #6b7280;
+  color: #718096;
   margin: 0;
   line-height: 1.4;
   text-align: left;
@@ -185,6 +185,7 @@
   align-items: center;
   justify-content: space-between;
   margin-top: -6px;
+  margin-bottom: 14px;
 }
 
 .checkbox-label {
@@ -195,18 +196,45 @@
 }
 
 .checkbox-input {
-  width: 16px;
-  height: 16px;
+  appearance: none;
+  -webkit-appearance: none;
+  width: 15px;
+  height: 15px;
+  border: 2px solid #1DBC79;
+  border-radius: 3px;
   cursor: pointer;
-  accent-color: #10b981;
+  position: relative;
+  background-color: #fff;
+  transition: all 0.2s ease;
 }
+
+/* Checked state */
+.checkbox-input:checked {
+  background-color: #1DBC79;
+  border-color: #1DBC79;
+}
+
+/* White checkmark centered */
+.checkbox-input:checked::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 4px;
+  height: 8px;
+  border: solid #fff;
+  border-width: 0 2px 2px 0;
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
 
 .checkbox-text {
   font-size: 14px;
-  color: #374151;
+  color: #718096;
   position: relative;
   top: 3.5px;
 }
+
 
 .forgot-password-link {
   background: none;
@@ -249,9 +277,9 @@
 /* Sign Up Link */
 .signup-link-text {
   text-align: center;
-  font-size: 14px;
+  font-size: 14.8px;
   color: #6b7280;
-  margin: 2px 20px 0 0;
+  margin: 20px 20px 0 0;
 }
 
 .signup-link {
@@ -260,24 +288,27 @@
   color: #10b981;
   font-weight: 600;
   cursor: pointer;
-  padding: 0;
-  text-decoration: none;
+  padding: 1px;
+  text-decoration: underline #1DBC79;
 }
 
 .signup-link:hover {
-  text-decoration: underline;
+   text-decoration: 1px #1DBC79;
+  
 }
 
 /* Terms */
 .terms-text {
   text-align: center;
-  font-size: 12px;
-  color: #9ca3af;
-  margin: 10px 0 0 12px;
-  line-height: 1.5;
+  font-size: 14px;
+  color: #718096;
+  margin: 30px 0 0 12px;
+  line-height: 2.5;
 }
 
 .terms-link {
+  font-size: 14px;
+  font-weight: bold;
   color: #6b7280;
   text-decoration: underline;
 }
@@ -304,7 +335,6 @@
   background-color: #e8e8e8;
   padding: 40px 30px;
   border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .login-feature-card {
