@@ -6,22 +6,24 @@
   padding-bottom: 15px;
   width: 100%;
   border-bottom: 1px solid #f0f0f0;
-  padding-left: 0px; 
-  padding-right: 20px;
+  padding-left: 30px; 
+  padding-right: 30px;
   margin-left: 0; 
   margin-right: 0;
+  box-sizing: border-box;
 }
 
 .search-container {
   position: relative;
   flex: 1;
   max-width: 400px;
+  min-width: 150px;
 }
 
 .search-icon {
   position: absolute;
-  left: 36px;
-  top: 49%;
+  left: 10px;
+  top: 50%;
   transform: translateY(-50%);
   color: #9ca3af;
   width: 18px;
@@ -30,7 +32,7 @@
 
 .search-input {
   width: 100%;
-  padding: 10px 12px 10px 62px;
+  padding: 10px 12px 10px 30px;
   font-size: 16px;
   outline: none;
   border: none;
@@ -63,12 +65,13 @@
   transition: opacity 0.2s;
   white-space: nowrap;
   flex-shrink: 0;
+  height: 40px;
 }
 
 .new-submission-btn span {
   align-content: center;
   position: relative;
-  top: 1px;
+  top: 0px;
 }
 
 .new-submission-btn:hover {
@@ -84,24 +87,331 @@
 .avatar-container {
   position: relative;
   cursor: pointer;
+  flex-shrink: 0;
 }
 
 .avatar {
-  position: relative;
-  top: 3px;
-  width: 40px;
-  height: 40px;
+  width: 37px;
+  height: 37px;
   border-radius: 50%;
   overflow: hidden;
   margin-left: 12px;
   flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .avatar-img {
-  width: 90%;
-  height: 90%;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
+  display: block;
 }
 
-/* Breakpoint: 0-470px */
+/* 1920px and above - Matches stats-grid padding */
+@media (min-width: 1920px) {
+  .header {
+    padding-left: 45px;
+    padding-right: 45px;
+    margin-bottom: 60px;
+    gap: 14px;
+  }
 
+  .search-container {
+    max-width: 450px;
+    min-width: 180px;
+  }
+
+  .search-icon {
+    left: 11px;
+    width: 20px;
+    height: 20px;
+  }
+
+  .search-input {
+    padding: 12px 14px 12px 42px;
+    font-size: 18px;
+  }
+
+  .new-submission-btn {
+    padding: 12px 38px;
+    font-size: 16px;
+    gap: 10px;
+    height: 48px;
+  }
+
+  .btn-icon {
+    width: 20px;
+    height: 20px;
+  }
+
+  .avatar {
+    width: 48px;
+    height: 48px;
+    margin-left: 16px;
+  }
+}
+
+/* 1440px - 1920px - Matches stats-grid padding */
+@media (min-width: 1440px) and (max-width: 1919px) {
+  .header {
+    padding-left: 35px;
+    padding-right: 35px;
+    margin-bottom: 50px;
+    gap: 12px;
+  }
+
+  .search-container {
+    max-width: 420px;
+    min-width: 170px;
+  }
+
+  .search-icon {
+    left: 10px;
+    width: 19px;
+    height: 19px;
+  }
+
+  .search-input {
+    padding: 11px 13px 11px 40px;
+    font-size: 17px;
+  }
+
+  .new-submission-btn {
+    padding: 11px 35px;
+    font-size: 15px;
+    gap: 9px;
+    height: 46px;
+  }
+
+  .btn-icon {
+    width: 19px;
+    height: 19px;
+  }
+
+  .avatar {
+    width: 44px;
+    height: 44px;
+    margin-left: 14px;
+  }
+}
+
+/* 1024px - 1440px - Matches stats-grid padding */
+@media (min-width: 1024px) and (max-width: 1439px) {
+  .header {
+    padding-left: 25px;
+    padding-right: 25px;
+    margin-bottom: 40px;
+    gap: 10px;
+  }
+
+  .search-container {
+    max-width: 380px;
+    min-width: 160px;
+  }
+
+  .search-icon {
+    left: 9px;
+    width: 17px;
+    height: 17px;
+  }
+
+  .search-input {
+    padding: 10px 12px 10px 33px;
+    font-size: 15px;
+  }
+
+  .new-submission-btn {
+    padding: 10px 30px;
+    font-size: 14px;
+    gap: 8px;
+    height: 42px;
+  }
+
+  .btn-icon {
+    width: 17px;
+    height: 17px;
+  }
+
+  .avatar {
+    width: 40px;
+    height: 40px;
+    margin-left: 12px;
+  }
+}
+
+/* 800px - 1024px */
+@media (min-width: 800px) and (max-width: 1023px) {
+  .header {
+    gap: 10px;
+    padding-right: 16px;
+    margin-bottom: 40px;
+  }
+
+  .search-container {
+    max-width: 300px;
+    min-width: 130px;
+  }
+
+  .search-icon {
+    left: 10px;
+    width: 16px;
+    height: 16px;
+  }
+
+  .search-input {
+    padding: 8px 10px 8px 32px;
+    font-size: 14px;
+  }
+
+  .new-submission-btn {
+    padding: 8px 24px;
+    font-size: 13px;
+    gap: 6px;
+    height: 36px;
+  }
+
+  .btn-icon {
+    width: 16px;
+    height: 16px;
+  }
+
+  .avatar {
+    width: 34px;
+    height: 34px;
+    margin-left: 8px;
+  }
+}
+
+/* 470px - 800px */
+@media (min-width: 470px) and (max-width: 799px) {
+  .header {
+    gap: 8px;
+    padding-right: 12px;
+    margin-bottom: 36px;
+  }
+
+  .search-container {
+    max-width: 250px;
+    min-width: 120px;
+  }
+
+  .search-icon {
+    left: 8px;
+    width: 15px;
+    height: 15px;
+  }
+
+  .search-input {
+    padding: 7px 10px 7px 30px;
+    font-size: 13px;
+  }
+
+  .new-submission-btn {
+    padding: 7px 20px;
+    font-size: 12px;
+    gap: 6px;
+    height: 34px;
+  }
+
+  .btn-icon {
+    width: 15px;
+    height: 15px;
+  }
+
+  .avatar {
+    width: 32px;
+    height: 32px;
+    margin-left: 6px;
+  }
+}
+
+/* 0px - 470px */
+@media (max-width: 469px) {
+  .header {
+    gap: 6px;
+    padding-right: 10px;
+    margin-bottom: 32px;
+    padding-bottom: 12px;
+  }
+
+  .search-container {
+    max-width: 180px;
+    min-width: 100px;
+  }
+
+  .search-icon {
+    left: 8px;
+    width: 14px;
+    height: 14px;
+  }
+
+  .search-input {
+    padding: 6px 8px 6px 28px;
+    font-size: 12px;
+  }
+
+  .new-submission-btn {
+    padding: 6px 16px;
+    font-size: 11px;
+    gap: 5px;
+    border-radius: 6px;
+    height: 30px;
+  }
+
+  .new-submission-btn span {
+    top: 0px;
+  }
+
+  .btn-icon {
+    width: 14px;
+    height: 14px;
+  }
+
+  .avatar {
+    width: 28px;
+    height: 28px;
+    margin-left: 4px;
+  }
+}
+
+/* Extra small screens - below 375px */
+@media (max-width: 374px) {
+  .header {
+    gap: 4px;
+    padding-right: 8px;
+  }
+
+  .search-container {
+    max-width: 140px;
+    min-width: 80px;
+  }
+
+  .search-icon {
+    left: 6px;
+  }
+
+  .search-input {
+    padding: 5px 6px 5px 26px;
+    font-size: 11px;
+  }
+
+  .new-submission-btn {
+    padding: 5px 12px;
+    font-size: 10px;
+    gap: 4px;
+    height: 28px;
+  }
+
+  .btn-icon {
+    width: 12px;
+    height: 12px;
+  }
+
+  .avatar {
+    width: 26px;
+    height: 26px;
+    margin-left: 3px;
+  }
+}

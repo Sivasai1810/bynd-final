@@ -9,6 +9,7 @@ import Welcome from './auth/welcome.jsx';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Analytics from './component/Analytics/analytics.jsx'
 import SuccessModal from './component/SuccessModal/SuccessModal.jsx';
+import Pricingtable from "./pricingtable/pricingtable.jsx"
 import ChangeEmail from "./component/changepassword/changemail.jsx"
 import Lang from './lang.jsx';
 createRoot(document.getElementById('root')).render(
@@ -23,6 +24,7 @@ createRoot(document.getElementById('root')).render(
          <Route path="/Welcome" element={<Welcome />}  />
          <Route path="/SuccessModal" element={<SuccessModal />}/>
          <Route path="/ChangeEmail" element={<ChangeEmail />}/>
+         <Route path="/Pricingtable" element={<Pricingtable />}/>
          <Route path="/Lang" element={<Lang/>}/>
       </Routes>
     </BrowserRouter>

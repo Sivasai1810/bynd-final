@@ -68,7 +68,7 @@
   color: #333;
 }
 
-.close-btn {
+.closess-btnss {
   margin-left: auto;
   margin-top: 2.09%;
 }
@@ -160,7 +160,10 @@
   font-family: inherit;
   background: #ffffff;
   box-sizing: border-box;
-  padding-right: 45px;
+  padding-right: 14px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .fields:focus {
@@ -171,6 +174,9 @@
 
 .fields::placeholder {
   color: #9ca3af;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .fields:disabled {
@@ -181,6 +187,10 @@
 
 .input-with-icon {
   position: relative;
+}
+
+.input-with-icon .fields {
+  padding-right: 45px;
 }
 
 .input-icon {
@@ -243,10 +253,10 @@ select {
   flex-shrink: 0;
 }
 
-.file-upload-area:hover {
+/* .file-upload-area:hover {
   border-color: #1DBC79;
   background: #f9fafb;
-}
+} */
 
 .file-input-hidden {
   display: none;
@@ -417,16 +427,17 @@ select {
 .summary-grid {
   position: relative;
   top: 10px;
-  left: 22px;
+  left: 5px;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 156px;
+  gap: 40px;
   margin-bottom: 16px;
+  padding: 0 15px;
 }
 
 .summary-item label {
   display: block;
-  font-size: 13px;
+  font-size: 14px;
   color: #6b7280;
   margin-bottom: 4px;
   font-weight: 500;
@@ -434,9 +445,11 @@ select {
 
 .summary-item p {
   font-size: 14px;
-  color: #1a1a1a;
+  color: #000000;
   margin: 0;
   font-weight: 500;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 .summary-item.full-width {
@@ -490,7 +503,7 @@ select {
 }
 
 .terms-checkbox label {
-  font-size: 13px;
+  font-size: 15px;
   color: #535862;
   cursor: pointer;
   line-height: 1.5;

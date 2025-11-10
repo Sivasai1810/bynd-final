@@ -1,249 +1,382 @@
-/* TermsOfUse.css */
+/* Modal Overlay */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  z-index: 10000;
+  padding: 10px;
+  overflow-y: auto;
+}
 
-* {
-  margin: 0;
+/* Modal Content */
+.modal-content {
+  background-color: #ffffff;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 1000px;
   padding: 0;
-  box-sizing: border-box;
+  position: relative;
+  margin-top: 30px;
+  margin-bottom: 10px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
 }
 
+/* Close Button */
+.xclose-xbtn {
+  position: absolute;
+  top: -10px;
+  right: 15px;
+  background: transparent;
+  border: none;
+  font-size: 40px;
+  line-height: 1;
+  cursor: pointer;
+  color: #333;
+  z-index: 1000;
+  padding: 5px 10px;
+  font-weight: 300;
+  transition: color 0.2s ease;
+}
+/* Terms Container */
 .terms-container {
-  min-height: 100vh;
-  background-color: #F5F5F5;
-  padding: 80px 20px;
+  padding: 20px 50px;
+  text-align: left;
+  position: relative;
 }
 
-.terms-header {
-  max-width: 1200px;
-  margin: 0 auto 60px;
-}
-
-.terms-main-title {
-  font-size: 3.5rem;
+/* Main Title */
+.terms-container h1 {
+  font-size: 31px;
   font-weight: 600;
+  margin: 0 0 16px 0;
   color: #000000;
-  margin-bottom: 12px;
   line-height: 1.2;
+  letter-spacing: -0.5px;
+  text-align: left;
+  padding-right: 50px;
 }
 
-.terms-main-title .highlight {
-  color: #10B981;
+.terms-container h1 .highlight {
+  color: #1DBC79;
 }
 
-.terms-subtitle {
-  font-size: 1.25rem;
+/* Subtitle */
+.terms-container > p.subtitle {
+  font-size: 13px;
   color: #6B7280;
+  margin: 16px 0 30px 0;
   font-weight: 400;
   line-height: 1.5;
+  text-align: left;
 }
 
+/* Terms Content */
 .terms-content {
-  max-width: 1200px;
-  margin: 0 auto;
-  background-color: #FFFFFF;
-  border-radius: 12px;
-  padding: 60px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  width: 100%;
 }
 
-.content-title {
-  font-size: 1.5rem;
+/* Terms Box */
+.terms-box {
+  background-color: #FAFAFA;
+  border: 1px solid #E5E5E5;
+  border-radius: 8px;
+  padding: 20px;
+}
+
+/* Terms Box Heading */
+.terms-box h2 {
+  font-size: 13px;
   font-weight: 600;
   color: #000000;
-  margin-bottom: 32px;
+  margin: 0 0 24px 0;
 }
 
-.content-section {
-  margin-bottom: 32px;
+.terms-box p span {
+  border-bottom: 1px solid black;
 }
 
-.effective-date {
-  font-size: 1rem;
+/* Effective Date */
+.terms-box > p:nth-of-type(1) {
+  font-size: 16px;
   color: #000000;
+  margin: 0 0 24px 0;
   line-height: 1.6;
 }
 
-.effective-date strong {
+.terms-box strong {
   font-weight: 600;
 }
 
-.content-section p {
-  font-size: 1rem;
+/* Main Paragraphs */
+.terms-box > p:nth-of-type(2),
+.terms-box > p:nth-of-type(3) {
+  font-size: 14px;
   color: #000000;
   line-height: 1.6;
-  margin: 0;
+  margin: 0 0 24px 0;
 }
 
-.link {
+/* Links */
+.terms-box a {
   color: #000000;
   text-decoration: underline;
   transition: color 0.3s ease;
 }
 
-.link:hover {
-  color: #10B981;
+.terms-box a:hover {
+  color: #1DBC79;
 }
 
-.section-heading {
-  font-size: 1.125rem;
+/* Section Headings */
+.terms-box h3 {
+  font-size: 14px;
   font-weight: 600;
   color: #000000;
-  margin-bottom: 16px;
+  margin: 32px 0 16px 0;
 }
 
-.content-list {
-  list-style-position: outside;
-  padding-left: 20px;
-  margin: 0;
-}
-
-.content-list li {
-  font-size: 1rem;
+/* Section Paragraphs */
+.terms-box > p:not(:nth-of-type(1)):not(:nth-of-type(2)):not(:nth-of-type(3)) {
+  font-size: 16px;
   color: #000000;
   line-height: 1.6;
-  margin-bottom: 12px;
+  margin: 0 0 24px 0;
 }
 
-.content-list li:last-child {
+/* Lists */
+.terms-box ul {
+  list-style: disc;
+  margin: 0 0 14px 0;
+  padding-left: 24px;
+}
+
+.terms-box ul li {
+  font-size: 14px;
+  color: #000000;
+  line-height: 1.6;
+  margin-bottom: 7px;
+  font-weight: 400;
+}
+
+.terms-box ul li:last-child {
   margin-bottom: 0;
 }
 
-/* 770px to 1200px - Tablet Landscape */
-@media screen and (min-width: 770px) and (max-width: 1200px) {
-  .terms-container {
-    padding: 60px 24px;
-  }
-
-  .terms-header {
-    margin-bottom: 50px;
-  }
-
-  .terms-main-title {
-    font-size: 3rem;
-  }
-
-  .terms-subtitle {
-    font-size: 1.15rem;
-  }
-
-  .terms-content {
-    padding: 50px 40px;
-  }
-
-  .content-title {
-    font-size: 1.375rem;
-    margin-bottom: 28px;
-  }
-
-  .content-section {
-    margin-bottom: 28px;
-  }
-
-  .section-heading {
-    font-size: 1.1rem;
-  }
+/* Scrollbar Styling */
+.modal-content::-webkit-scrollbar {
+  width: 8px;
 }
 
-/* 468px to 769px - Tablet Portrait */
-@media screen and (min-width: 468px) and (max-width: 769px) {
-  .terms-container {
-    padding: 50px 20px;
+.modal-content::-webkit-scrollbar-track {
+  background: #f3f4f6;
+  border-radius: 4px;
+}
+
+.modal-content::-webkit-scrollbar-thumb {
+  background: #d1d5db;
+  border-radius: 4px;
+}
+
+.modal-content::-webkit-scrollbar-thumb:hover {
+  background: #9ca3af;
+}
+
+/* Tablet Landscape - 770px to 1200px */
+@media screen and (min-width: 770px) and (max-width: 1200px) {
+  .xclose-xbtn {
+    top: -10px;
+    right: 15px;
+    font-size: 40px;
   }
 
-  .terms-header {
+  .terms-container {
+    padding: 50px 60px;
+  }
+
+  .terms-container h1 {
+    font-size: 38px;
+    margin-bottom: 12px;
+    padding-right: 60px;
+  }
+
+  .terms-container > p.subtitle {
+    font-size: 15px;
     margin-bottom: 40px;
   }
 
-  .terms-main-title {
-    font-size: 2.5rem;
+  .terms-box {
+    padding: 35px;
   }
 
-  .terms-subtitle {
-    font-size: 1.1rem;
+  .terms-box h2 {
+    font-size: 15px;
+    margin-bottom: 20px;
   }
 
-  .terms-content {
-    padding: 40px 32px;
-    border-radius: 10px;
+  .terms-box h3 {
+    font-size: 15px;
+    margin: 28px 0 14px 0;
   }
 
-  .content-title {
-    font-size: 1.25rem;
-    margin-bottom: 24px;
+  .terms-box > p:nth-of-type(1),
+  .terms-box > p:nth-of-type(2),
+  .terms-box > p:nth-of-type(3),
+  .terms-box > p:not(:nth-of-type(1)):not(:nth-of-type(2)):not(:nth-of-type(3)),
+  .terms-box ul li {
+    font-weight: 400;
+    font-size: 15px;
+    margin-bottom: 20px;
+  }
+}
+
+/* Tablet Portrait - 468px to 769px */
+@media screen and (min-width: 468px) and (max-width: 769px) {
+  .modal-content {
+    margin-top: 30px;
+    margin-bottom: 30px;
   }
 
-  .content-section {
-    margin-bottom: 24px;
+  .xclose-xbtn {
+    top: -10px;
+    right: 15px;
+    font-size: 40px;
   }
 
-  .content-section p,
-  .content-list li {
-    font-size: 0.95rem;
+  .terms-container {
+    padding: 40px 40px;
   }
 
-  .section-heading {
-    font-size: 1.05rem;
-    margin-bottom: 14px;
+  .terms-container h1 {
+    font-size: 36px;
+    margin-bottom: 10px;
+    padding-right: 50px;
   }
 
-  .content-list {
-    padding-left: 18px;
+  .terms-container > p.subtitle {
+    font-size: 14px;
+    margin-bottom: 35px;
   }
 
-  .content-list li {
+  .terms-box {
+    padding: 30px;
+    border-radius: 6px;
+  }
+
+  .terms-box h2 {
+    font-size: 14px;
+    margin-bottom: 18px;
+  }
+
+  .terms-box h3 {
+    font-size: 14px;
+    margin: 24px 0 12px 0;
+  }
+
+  .terms-box > p:nth-of-type(1),
+  .terms-box > p:nth-of-type(2),
+  .terms-box > p:nth-of-type(3),
+  .terms-box > p:not(:nth-of-type(1)):not(:nth-of-type(2)):not(:nth-of-type(3)),
+  .terms-box ul li {
+    font-size: 14px;
+    margin-bottom: 16px;
+  }
+
+  .terms-box ul {
+    padding-left: 20px;
+  }
+
+  .terms-box ul li {
     margin-bottom: 10px;
   }
 }
 
-/* 0px to 467px - Mobile */
+/* Mobile - 0px to 467px */
 @media screen and (max-width: 467px) {
+  .modal-overlay {
+    padding: 16px;
+  }
+
+  .modal-content {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border-radius: 6px;
+  }
+
+  .xclose-xbtn{
+    top: 2px;
+    right: 12px;
+    font-size: 32px;
+    padding: 3px 8px;
+  }
+
   .terms-container {
-    padding: 40px 16px;
-  }
-
-  .terms-header {
-    margin-bottom: 32px;
-  }
-
-  .terms-main-title {
-    font-size: 2rem;
-    margin-bottom: 10px;
-  }
-
-  .terms-subtitle {
-    font-size: 1rem;
-  }
-
-  .terms-content {
     padding: 32px 20px;
-    border-radius: 8px;
   }
 
-  .content-title {
-    font-size: 1.125rem;
-    margin-bottom: 20px;
-  }
-
-  .content-section {
-    margin-bottom: 20px;
-  }
-
-  .effective-date,
-  .content-section p,
-  .content-list li {
-    font-size: 0.9rem;
-    line-height: 1.5;
-  }
-
-  .section-heading {
-    font-size: 1rem;
-    margin-bottom: 12px;
-  }
-
-  .content-list {
-    padding-left: 16px;
-  }
-
-  .content-list li {
+  .terms-container h1 {
+    font-size: 28px;
     margin-bottom: 8px;
+    padding-right: 45px;
+  }
+
+  .terms-container > p.subtitle {
+    font-size: 13px;
+    margin-bottom: 28px;
+  }
+
+  .terms-box {
+    padding: 24px;
+    border-radius: 6px;
+  }
+
+  .terms-box h2 {
+    font-size: 13px;
+    margin-bottom: 16px;
+  }
+
+  .terms-box h3 {
+    font-size: 13px;
+    margin: 20px 0 10px 0;
+  }
+
+  .terms-box > p:nth-of-type(1),
+  .terms-box > p:nth-of-type(2),
+  .terms-box > p:nth-of-type(3),
+  .terms-box > p:not(:nth-of-type(1)):not(:nth-of-type(2)):not(:nth-of-type(3)),
+  .terms-box ul li {
+    font-size: 13px;
+    line-height: 1.5;
+    margin-bottom: 14px;
+  }
+
+  .terms-box ul {
+    padding-left: 18px;
+    margin-bottom: 14px;
+  }
+
+  .terms-box ul li {
+    margin-bottom: 8px;
+  }
+}
+
+/* Fix for 409px to 467px breakpoint specifically */
+@media screen and (min-width: 409px) and (max-width: 467px) {
+  .terms-container h1 {
+    font-size: 26px;
+    padding-right: 50px;
+    line-height: 1.3;
+  }
+  
+  .xclose-xbtn {
+    top: 2px;
+    font-size: 30px;
   }
 }

@@ -47,7 +47,7 @@ const Footer = () => {
       {showTerms && (
         <div className='modal-overlay' onClick={handleCloseTerms}>
           <div className='modal-content' onClick={(e) => e.stopPropagation()}>
-            <button className='close-btn' onClick={handleCloseTerms}>×</button>
+            <button className='xclose-xbtn' onClick={handleCloseTerms}>×</button>
             <div className='terms-container'>
               <h1>Terms of <span className='highlight'>use</span></h1>
               <p className='subtitle'>Guidelines and rules for using BYND's services</p>
@@ -186,7 +186,7 @@ These disclaimers are fundamental to your use of BYND, and by using the Services
       {showPrivacy && (
         <div className='modal-overlay' onClick={handleClosePrivacy}>
           <div className='modal-content' onClick={(e) => e.stopPropagation()}>
-            <button className='close-btn' onClick={handleClosePrivacy}>×</button>
+            <button className='xclose-xbtn' onClick={handleClosePrivacy}>×</button>
             <div className='terms-container'>
               <h1>Privacy and  <span className='highlight'> cookies </span> policy</h1>
               <p className='subtitle'>Our approach to user privacy, personal data, and cookies</p>

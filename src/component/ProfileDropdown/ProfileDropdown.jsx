@@ -72,55 +72,58 @@
 //   );
 // }
 
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import ChangeEmailModal from '../../component/changepassword/changemail.jsx';
-import Creditcard from "../../assets/creditcard.svg"
+import Creditcard from "../../assets/creditcard.svg";
 import './ProfileDropdown.css';
 
 export default function ProfileDropdown({ profile, onClose, onLogout }) {
   const [showEmailModal, setShowEmailModal] = useState(false);
   const [currentEmail, setCurrentEmail] = useState(profile?.user_email || 'mohdayaan@gmail.com');
+  const dropdownRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        if (onClose) onClose();
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [onClose]);
 
   const handleChangeEmail = (e) => {
-    // Stop propagation to prevent dropdown from closing prematurely
+    e.preventDefault();
     e.stopPropagation();
-    
-    // Close the dropdown first
-    if (onClose) {
-      onClose();
-    }
-    
-    // Then open the email modal
-    setShowEmailModal(true);
+
+    if (onClose) onClose(); 
+    setTimeout(() => setShowEmailModal(true), 200); 
   };
 
-  const handleCloseEmailModal = () => {
-    setShowEmailModal(false);
-  };
+  const handleCloseEmailModal = () => setShowEmailModal(false);
 
   const handleEmailChanged = (newEmail) => {
-    // Update the email after successful change
     setCurrentEmail(newEmail);
     console.log('Email successfully changed to:', newEmail);
   };
 
   const handleLogoutClick = (e) => {
+    e.preventDefault();
     e.stopPropagation();
-    if (onLogout) {
-      onLogout();
-    }
+    if (onLogout) onLogout();
   };
 
   const handleCloseClick = (e) => {
+    e.preventDefault();
     e.stopPropagation();
-    if (onClose) {
-      onClose();
-    }
+    if (onClose) onClose();
   };
 
   return (
     <>
-      {/* Email Modal - Rendered at root level with higher z-index */}
       {showEmailModal && (
         <ChangeEmailModal
           currentEmail={currentEmail}
@@ -129,21 +132,26 @@ export default function ProfileDropdown({ profile, onClose, onLogout }) {
         />
       )}
 
-      {/* Profile Dropdown */}
-      <div className="profile-dropdown">
-        {/* Header with Plan */}
+      <div
+        className="profile-dropdown"
+        ref={dropdownRef}
+        onClick={(e) => e.stopPropagation()} 
+      >
+        {/* Header */}
         <div className="profile-dropdown-plan-header">
           <span className="plan-label">Free Plan</span>
-          <button 
-            className="close-button" 
+          <button
+            className="close-button"
             onClick={handleCloseClick}
+            type="button"
             aria-label="Close dropdown"
+            style={{ cursor: 'pointer' }}
           >
             ×
           </button>
         </div>
 
-        {/* Profile Section */}
+        {/* Profile Info */}
         <div className="profile-dropdown-info">
           <div className="profile-avatar-section">
             {profile?.avatar_url && (
@@ -162,45 +170,29 @@ export default function ProfileDropdown({ profile, onClose, onLogout }) {
 
             <div className="profile-email-row">
               <p className="profile-dropdown-email">{currentEmail}</p>
-              <button
-                className="change-link"
-                onClick={handleChangeEmail}
-              >
+              <button className="change-link" onClick={handleChangeEmail} type="button">
                 change
               </button>
             </div>
           </div>
         </div>
 
-        {/* Current Plan Section */}
+        {/* Current Plan */}
         <div className="profile-plan-section">
           <div className="plan-info">
-            {/* <svg
-              className="plan-icon"
-              width="16"
-              height="16"
-              viewBox="0 0 16 16"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M8 1L10.472 5.99533L16 6.76393L12 10.6607L12.944 16L8 13.3953L3.056 16L4 10.6607L0 6.76393L5.528 5.99533L8 1Z"
-                fill="currentColor"
-              />
-            </svg> */}
-            <img src={Creditcard} alt='card'></img>
+            <img src={Creditcard} alt="card" />
             <span className="plan-text">
               Current plan: <strong>Free</strong>
             </span>
-            <a href="#" className="upgrade-link">
+            <a href="#" className="upgrade-link" onClick={(e) => e.preventDefault()}>
               Upgrade to Pro
             </a>
           </div>
         </div>
 
-        {/* Logout Section */}
+        {/* Logout */}
         <div className="profile-logout-section">
-          <button className="logout-button" onClick={handleLogoutClick}>
+          <button className="logout-button" onClick={handleLogoutClick} type="button">
             <svg
               className="logout-icon"
               width="18"
@@ -221,7 +213,7 @@ export default function ProfileDropdown({ profile, onClose, onLogout }) {
           </button>
         </div>
 
-        {/* Help Section */}
+        {/* Help */}
         <div className="profile-help-section">
           <svg
             className="help-icon"
@@ -248,3 +240,4 @@ export default function ProfileDropdown({ profile, onClose, onLogout }) {
     </>
   );
 }
+

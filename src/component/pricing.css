@@ -1,4 +1,4 @@
-/* Bas/* Base Styles */
+/* Base Styles */
 .pricing-section {
   background-color: #ffffff;
   padding: 80px 20px;
@@ -122,7 +122,7 @@
 
 .feature-item {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: 12px;
 }
 
@@ -130,7 +130,6 @@
   width: 20px;
   height: 20px;
   flex-shrink: 0;
-  margin-top: 1px;
 }
 
 .feature-icon svg {
@@ -158,8 +157,7 @@
   left: 50%;
   transform: translateX(-50%);
   width: calc(100% - 64px);
-  /* padding-top: 30px; */
-  font-family: 'Circular Std', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+  /* font-family: 'Circular Std', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif; */
 }
 
 /* Specific styling for pro-tier feature spacing */
@@ -180,7 +178,7 @@
 }
 
 .pricing-cta-button {
-background-color: #1DBC79;
+  background-color: #1DBC79;
   color: #ffffff;
   border: none;
   border-radius: 12px;
@@ -197,7 +195,6 @@ background-color: #1DBC79;
 
 .pricing-cta-button:hover {
   background-color: #1DBC79;
-  /* background-color: red; */
   transform: translateY(-1px);
   box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
 }
@@ -280,6 +277,7 @@ background-color: #1DBC79;
 
   .feature-item {
     gap: 10px;
+    align-items: center;
   }
 
   .feature-text, .assignment-text {
@@ -291,7 +289,6 @@ background-color: #1DBC79;
     font-size: 0.85rem;
     bottom: 2px;
     width: calc(100% - 36px);
-    /* margin-top: 150px; */
   }
 
   .feature-icon {
@@ -383,6 +380,10 @@ background-color: #1DBC79;
     margin-top: 12px;
   }
 
+  .feature-item {
+    align-items: center;
+  }
+
   .feature-text, .assignment-text {
     font-size: 0.9375rem;
     line-height: 1.5;
@@ -467,6 +468,10 @@ background-color: #1DBC79;
     font-size: 1.25rem;
   }
 
+  .feature-item {
+    align-items: center;
+  }
+
   .feature-text, .assignment-text {
     font-size: 1rem;
   }
@@ -474,10 +479,10 @@ background-color: #1DBC79;
   .pricing-footer {
     margin-top: 30px;
   }
-  .feature-textss{
+  
+  .feature-textss {
     bottom: 15px;
   }
-  
 }
 
 /* 1200px and above - Large Desktop */
@@ -517,15 +522,19 @@ background-color: #1DBC79;
     font-size: 15.36px;
   }
 
+  .feature-item {
+    align-items: center;
+  }
+
   .pricing-footer {
     margin-top: 32px;
   }
-  .feature-textss{
+  
+  .feature-textss {
     bottom: 15px;
   }
 }
 
-/* Extra Large Desktop */
 /* Extra Large Desktop */
 @media screen and (min-width: 1400px) {
   .pricing-section {
@@ -549,7 +558,12 @@ background-color: #1DBC79;
     padding: 48px 40px;
     min-height: 550px;
   }
-  .feature-textss{
+
+  .feature-item {
+    align-items: center;
+  }
+
+  .feature-textss {
     bottom: 20px;
   }
 }
@@ -679,7 +693,7 @@ background-color: #1DBC79;
 
   .feature-item {
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     gap: 14px;
   }
 
@@ -687,7 +701,6 @@ background-color: #1DBC79;
     width: 22px;
     height: 22px;
     flex-shrink: 0;
-    margin-top: 1px;
   }
 
   .feature-icon svg {

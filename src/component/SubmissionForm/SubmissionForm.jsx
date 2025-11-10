@@ -1,6 +1,7 @@
-import React, { useState ,useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import Addsymbol from "../../assets/addsymbol.svg"
 import DiscardModal from '../discard/DiscardModal';
+import TermsOfUseModal from '../../footer/TermsOfUse';
 import './SubmissionForm.css';
 
 export default function SubmissionForm({
@@ -18,17 +19,30 @@ export default function SubmissionForm({
   isSubmitting
 }) {
   const [step, setStep] = useState(1);
-  const [termsAccepted,setTermsAccepted] = useState(false);
-  const [showDiscardModal,setShowDiscardModal] = useState(false);
+  const [termsAccepted, setTermsAccepted] = useState(false);
+  const [showDiscardModal, setShowDiscardModal] = useState(false);
+  const [isTyping, setIsTyping] = useState(false);
+  const [showTermsModal, setShowTermsModal] = useState(false);
 
  
-useEffect(() => {
-  if (showForm) {
-    setStep(1);
-    setTermsAccepted(false);
-  }
-}, [showForm]);
- if (!showForm) return null;
+  useEffect(() => {
+    if (showForm) {
+      setStep(1);
+      setTermsAccepted(false);
+      setIsTyping(false);
+    }
+  }, [showForm]);
+
+  if (!showForm) return null;
+
+  const handleUrlChange = (e) => {
+    setPastedUrl(e.target.value);
+    setIsTyping(true);
+    
+    setTimeout(() => {
+      setIsTyping(false);
+    }, 1000);
+  };
 
   const handleNext = () => {
     if (step === 1 && companyName && position) {
@@ -49,12 +63,6 @@ useEffect(() => {
   };
 
   const handleCancelClick = () => {
-    // Check if user has started filling the form
-    // if (companyName || position || pdfFile || pastedUrl) {
-    //   setShowDiscardModal(true);
-    // } else {
-    //   handleFormClose();
-    // }
     setShowDiscardModal(true)
   };
 
@@ -77,8 +85,13 @@ useEffect(() => {
     onClose();
   };
 
+  const handleTermsClick = (e) => {
+    e.preventDefault();
+    setShowTermsModal(true);
+  };
+
   const isStep1Valid = companyName && position;
-  const isStep2Valid = pdfFile || pastedUrl;
+  const isStep2Valid = (pdfFile || pastedUrl) && !isTyping;
 
   return (
     <>
@@ -136,8 +149,8 @@ useEffect(() => {
               </div>
 
               <div className='info-box'>
-                <div className= 'info-heading'>
-                <h4>BYND Assignment upload tips</h4>
+                <div className='info-heading'>
+                  <h4>BYND Assignment upload tips</h4>
                 </div>
                 <ul>
                   <li>Watch this 1 min <a href="#" className='info-link'>video</a> on how to upload assignments</li>
@@ -163,7 +176,7 @@ useEffect(() => {
                     type='text' 
                     className='fields' 
                     value={pastedUrl} 
-                    onChange={(e) => setPastedUrl(e.target.value)} 
+                    onChange={handleUrlChange}
                     placeholder='https://www.figma.com/design/...' 
                     disabled={pdfFile !== null}
                   />
@@ -191,11 +204,17 @@ useEffect(() => {
                     onChange={(e) => setPdfFile(e.target.files[0])} 
                     disabled={pastedUrl.trim() !== ""}
                   />
-                  <label htmlFor='file-input' className='file-upload-label'>
-                  
+                  <div className='file-upload-label'>
                     <p>Choose a PDF, JPEG, PNG file or drag & drop it here</p>
-                    <button type='button' className='browse-btn' disabled={pastedUrl.trim() !== ""}>Browse File</button>
-                  </label>
+                    <button 
+                      type='button' 
+                      className='browse-btn' 
+                      onClick={() => document.getElementById('file-input').click()}
+                      disabled={pastedUrl.trim() !== ""}
+                    >
+                      Browse File
+                    </button>
+                  </div>
                   {pdfFile && (
                     <div className='file-selected'>
                       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
@@ -219,9 +238,9 @@ useEffect(() => {
           {step === 3 && (
             <div className='form-step'>
               <div className='submission-summary'>
-           <div className='submission-tables'>
+                <div className='submission-tables'>
                   <h3>Submission Summary</h3>
-           </div>
+                </div>
             
                 <div className='summary-grid'>
                   <div className='summary-item'>
@@ -254,7 +273,7 @@ useEffect(() => {
                   onChange={(e) => setTermsAccepted(e.target.checked)}
                 />
                 <label htmlFor='terms'>
-                  I have read and agreed to the <a href='#' className='info-link'>terms of use</a> of BYND.
+                  I have read and agreed to the <a href='#' className='info-link' onClick={handleTermsClick}>terms of use</a> of BYND.
                 </label>
               </div>
 
@@ -278,6 +297,12 @@ useEffect(() => {
         isOpen={showDiscardModal}
         onStay={handleStayHere}
         onDiscard={handleDiscardAndExit}
+      />
+
+      {/* Terms of Use Modal */}
+      <TermsOfUseModal 
+        isOpen={showTermsModal}
+        onClose={() => setShowTermsModal(false)}
       />
     </>
   );
