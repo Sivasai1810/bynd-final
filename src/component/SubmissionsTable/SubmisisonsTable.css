@@ -411,7 +411,7 @@
     min-height: 280px; 
     max-height: 320px; 
   }
-  .table-title { margin-left: 28px; font-size: 19px; }
+  .table-title { margin-left: 28px; font-size: 19px; margin-top: 10px; }
   .table thead th { padding: 22px 20px; font-size: 17px; font-weight: 400; }
   .table tbody td { padding: 18px 20px; font-size: 17px; }
   .status-badge { font-size: 14px; }
@@ -444,7 +444,7 @@
     min-height: 420px; 
     max-height: 480px; 
   }
-  .table-title { font-size: 23px; margin-bottom: 28px; margin-left: 48px; margin-top: 36px; }
+  .table-title { font-size: 23px; margin-bottom: 28px; margin-left: 48px; margin-top: 10px; }
   .table thead th { padding: 30px 28px; font-size: 20px; font-weight: 400; }
   .table tbody td { padding: 26px 28px; font-size: 20px; }
   .status-badge { font-size: 17px; }
