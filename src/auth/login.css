@@ -286,7 +286,7 @@
   text-align: center;
   font-size: 14.8px;
   color: #6b7280;
-  margin: 20px 20px 0 0;
+  margin: 10px 20px 0 0;
 }
 
 .signup-link {
@@ -310,7 +310,7 @@
   text-align: center;
   font-size: 14px;
   color: #718096;
-  margin: 20px 0 0 12px;
+  margin: 10px 0 0 12px;
   line-height: 1.5;
   white-space: nowrap;
 }
@@ -426,7 +426,7 @@ background-color: #F3F3F3;
   }
 
   .modern-form {
-    gap: 18px;
+    gap: 12px;
   }
 
   .google-signin-btn {

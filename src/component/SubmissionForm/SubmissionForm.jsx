@@ -99,13 +99,13 @@ export default function SubmissionForm({
         <div className='form-box'>
           <div className='form-header'>
             {step > 1 && (
-              <button className='back-btn' onClick={handleBack}>
+              <button className='header-back-btn' onClick={handleBack}>
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
                 </svg>
               </button>
             )}
-            <button className='close-btn' onClick={handleCancelClick}>
+            <button className='header-close-btn' onClick={handleCancelClick}>
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
               </svg>
@@ -123,9 +123,8 @@ export default function SubmissionForm({
             </h6>
           </div>
 
-          {/* Step 1: Company Details */}
           {step === 1 && (
-            <div className='form-step'>
+            <div className='form-step step-1'>
               <div className='form-group'>
                 <label className='side-heading'>Company name*</label>
                 <input 
@@ -166,7 +165,6 @@ export default function SubmissionForm({
             </div>
           )}
 
-          {/* Step 2: File Upload */}
           {step === 2 && (
             <div className='form-step'>
               <div className='form-group'>

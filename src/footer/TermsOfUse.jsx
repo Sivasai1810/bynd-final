@@ -78,7 +78,7 @@ const TermsOfUseModal = ({ isOpen, onClose }) => {
   return (
     <div className='modal-overlay' onClick={handleOverlayClick}>
       <div className='modal-content' onClick={(e) => e.stopPropagation()}>
-        <button className='xclose-xbtn' onClick={onClose}>×</button>
+        <button className='close-btn' onClick={onClose}>×</button>
         <div className='terms-container'>
           <h1>Terms of <span className='highlight'>use</span></h1>
           <p className='subtitle'>Guidelines and rules for using BYND's services</p>
