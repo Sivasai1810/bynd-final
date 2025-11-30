@@ -233,14 +233,12 @@
   transform: translate(-50%, -50%) rotate(45deg);
 }
 
-
 .checkbox-text {
   font-size: 14px;
   color: #718096;
   position: relative;
   top: 3.5px;
 }
-
 
 .forgot-password-link {
   background: none;
@@ -253,10 +251,6 @@
   position: relative;
   right: 31px;
 }
-
-/* .forgot-password-link:hover {
-  color: #10b981;
-} */
 
 /* Sign In Button */
 .signin-btn-modern {
@@ -301,8 +295,7 @@
 }
 
 .signup-link:hover {
-   text-decoration: 1px #1DBC79;
-  
+  text-decoration: 1px #1DBC79;
 }
 
 /* Terms */
@@ -322,6 +315,7 @@
   text-decoration: underline;
   text-underline-offset: 3px;
 }
+
 /* Right Side - Features Section */
 .login-features-container {
   min-height: 90vh;
@@ -337,8 +331,7 @@
   width: 100%;
   max-width: 700px;
   min-height: 600px;
-  /* background-color: #e8e8e8; */
-background-color: #F3F3F3;
+  background-color: #F3F3F3;
   padding: 40px 30px;
   border-radius: 8px;
 }
@@ -367,7 +360,7 @@ background-color: #F3F3F3;
   line-height: 1.2;
 }
 
-/* Feature Card Positioning */
+/* Feature Card Positioning - Consistent 80px gaps */
 .login-feature-card:nth-child(1) {
   top: 100px;
   left: 30px;
@@ -375,27 +368,27 @@ background-color: #F3F3F3;
 }
 
 .login-feature-card:nth-child(2) {
-  top: 190px;
+  top: 190px;  /* 90px gap from card 1 */
   left: 60%;
   transform: translateX(-50%);
   width: 60%;
 }
 
 .login-feature-card:nth-child(3) {
-  top: 280px;
+  top: 280px;  /* 90px gap from card 2 */
   left: 40%;
   transform: translateX(-50%);
   width: 50%;
 }
 
 .login-feature-card:nth-child(4) {
-  top: 380px;
+  top: 370px;  /* 90px gap from card 3 */
   left: 30px;
   width: 59%;
 }
 
 .login-feature-card:nth-child(5) {
-  top: 460px;
+  top: 460px;  /* 90px gap from card 4 */
   right: 30px;
   width: 68%;
 }
@@ -502,6 +495,7 @@ background-color: #F3F3F3;
     font-size: 16px;
   }
 
+  /* Consistent 100px gaps for large screens */
   .login-feature-card:nth-child(1) {
     top: 120px;
     left: 40px;
@@ -509,31 +503,129 @@ background-color: #F3F3F3;
   }
 
   .login-feature-card:nth-child(2) {
-    top: 220px;
+    top: 220px;  /* 100px gap */
     left: 62%;
     width: 62%;
   }
 
   .login-feature-card:nth-child(3) {
-    top: 320px;
+    top: 320px;  /* 100px gap */
     left: 42%;
     width: 52%;
   }
 
   .login-feature-card:nth-child(4) {
-    top: 430px;
+    top: 420px;  /* 100px gap */
     left: 40px;
     width: 60%;
   }
 
   .login-feature-card:nth-child(5) {
-    top: 520px;
+    top: 520px;  /* 100px gap */
     right: 40px;
     width: 70%;
   }
 }
 
-/* Medium Screens - 1024px and below */
+/* CRITICAL FIX: 1200px to 1348px breakpoint */
+@media (min-width: 1200px) and (max-width: 1348px) {
+  .login-features-box {
+    max-width: 620px;
+    min-height: 580px;
+    padding: 35px 25px;
+  }
+
+  .login-feature-card {
+    padding: 9px 12px;
+  }
+
+  .login-feature-text {
+    font-size: 13.5px;
+    line-height: 1.25;
+  }
+
+  /* Consistent 80px gaps */
+  .login-feature-card:nth-child(1) {
+    top: 90px;
+    left: 25px;
+    width: 54%;
+  }
+
+  .login-feature-card:nth-child(2) {
+    top: 170px;  /* 80px gap */
+    left: 58%;
+    width: 58%;
+  }
+
+  .login-feature-card:nth-child(3) {
+    top: 250px;  /* 80px gap */
+    left: 38%;
+    width: 48%;
+  }
+
+  .login-feature-card:nth-child(4) {
+    top: 330px;  /* 80px gap */
+    left: 25px;
+    width: 62%;
+  }
+
+  .login-feature-card:nth-child(5) {
+    top: 410px;  /* 80px gap */
+    right: 25px;
+    width: 66%;
+  }
+}
+
+/* Medium Screens - 1024px to 1199px */
+@media (min-width: 1025px) and (max-width: 1199px) {
+  .login-features-box {
+    max-width: 580px;
+    min-height: 560px;
+    padding: 30px 20px;
+  }
+
+  .login-feature-card {
+    padding: 8px 11px;
+  }
+
+  .login-feature-text {
+    font-size: 13px;
+    line-height: 1.3;
+  }
+
+  /* Consistent 75px gaps */
+  .login-feature-card:nth-child(1) {
+    top: 85px;
+    left: 20px;
+    width: 52%;
+  }
+
+  .login-feature-card:nth-child(2) {
+    top: 160px;  /* 75px gap */
+    left: 56%;
+    width: 56%;
+  }
+
+  .login-feature-card:nth-child(3) {
+    top: 235px;  /* 75px gap */
+    left: 36%;
+    width: 46%;
+  }
+
+  .login-feature-card:nth-child(4) {
+    top: 310px;  /* 75px gap */
+    left: 20px;
+    width: 58%;
+  }
+
+  .login-feature-card:nth-child(5) {
+    top: 385px;  /* 75px gap */
+    right: 20px;
+    width: 64%;
+  }
+}
+
+/* Medium Screens - 1024px and below (Hide features) */
 @media (max-width: 1024px) {
   .modern-login-content {
     flex-direction: column;

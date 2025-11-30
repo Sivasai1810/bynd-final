@@ -1,12 +1,8 @@
-
-
 body {
   font-family: 'DM Sans', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-
-/* Main wrapper - full viewport with centered content */
 .pricing-wrapper {
   min-height: 100vh;
   width: 100vw;
@@ -15,38 +11,60 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 10px 14px 0 2px;
+  padding: 20px 16px;
+  position: relative;
+}
+
+/* Close button */
+.closes-buttons {
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s ease;
+  color: #666;
+  z-index: 10;
+}
+
+.closes-buttons:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+  color: #000;
 }
 
 /* Title */
 .pricing-title {
-  font-size: 32px;
+  font-size: 24px;
   font-weight: 600;
   color: #111827;
-  margin-bottom: 15px;
-  margin-left: 100px;
+  margin-bottom: 20px;
   text-align: left;
   line-height: 1.2;
   width: 100%;
-  max-width: 1200px;
+  max-width: 1000px;
 }
-
-/* Cards container - two columns */
 .pricing-cards-container {
   display: flex;
-  gap: 26px;
-  max-width: 1100px;
+  gap: 20px;
+  max-width: 1000px;
   width: 100%;
-  margin-bottom: 24px;
+  margin-bottom: 16px;
 }
 
-/* Individual plan card */
 .plan-card {
   flex: 1;
   background: #ffffff;
   border: 1px solid #e5e7eb;
-  border-radius: 12px;
-  padding: 25px;
+  border-radius: 10px;
+  padding: 20px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
   position: relative;
   display: flex;
@@ -58,111 +76,110 @@ body {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.06);
 }
 
-/* Best value badge */
 .badge-best-value {
   position: absolute;
-  top: 16px;
-  right: 16px;
+  top: 20px;
+  right: 15px;
   background: #3b82f6;
   color: #ffffff;
-  font-size: 12px;
-  font-weight: 600;
-  padding: 6px 12px;
+  font-size: 13px;
+  font-weight: 500;
+  padding: 7px 10px;
   border-radius: 6px;
   text-transform: capitalize;
 }
 
 /* Plan card top section */
 .plan-card-top {
-  margin-bottom: 24px;
+  margin-bottom: 16px;
 }
 
 /* Plan name */
 .plan-name {
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 600;
   color: #111827;
-  margin-bottom: 12px;
+  margin-bottom: 8px;
 }
 
 /* Price row */
 .plan-price-row {
   display: flex;
   align-items: baseline;
-  gap: 8px;
+  gap: 6px;
 }
 
 .plan-price {
-  font-size: 40px;
+  font-size: 32px;
   font-weight: 700;
   color: #111827;
   line-height: 1;
 }
 
 .plan-price-period {
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 400;
   color: #6b7280;
 }
 
 /* Features header (Pro Tier only) */
 .plan-features-header {
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 500;
   color: #6b7280;
-  margin-bottom: 16px;
+  margin-bottom: 12px;
 }
 
 /* Features list */
 .plan-features {
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  margin-bottom: 24px;
+  gap: 10px;
+  margin-bottom: 16px;
   flex-grow: 1;
 }
 
 /* Feature row */
 .feature-row {
   display: flex;
-  align-items: center;
-  gap: 12px;
+  align-items: flex-start;
+  gap: 10px;
 }
 
 .feature-check-icon {
-  width: 20px;
-  height: 20px;
+  width: 18px;
+  height: 18px;
   flex-shrink: 0;
+  margin-top: 2px;
 }
 
 .feature-label {
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 400;
   color: #374151;
-  line-height: 1.5;
+  line-height: 1.4;
 }
 
-/* Current plan badge */
 .plan-current-badge {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  gap: 6px;
   background: #f3f4f6;
-  padding: 12px 16px;
-  border-radius: 8px;
+  padding: 11px 14px;
+  border-radius: 6px;
   margin-top: auto;
-  margin-bottom: 29px;
+  margin-bottom: 23px;
 }
 
 .plan-current-icon {
-  width: 18px;
-  height: 18px;
+  width: 16px;
+  height: 16px;
   color: #6b7280;
 }
 
 .plan-current-label {
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 500;
   color: #6b7280;
 }
@@ -173,39 +190,107 @@ body {
   background: #1DBC79;
   color: #ffffff;
   font-size: 14px;
-  font-weight: 600;
-  padding: 14px 16px;
+  font-weight: 500;
+  padding: 10px 16px;
   border: none;
   border-radius: 8px;
   cursor: pointer;
   transition: background-color 0.2s ease;
   margin-top: auto;
-  font-family: 'DM Sans', sans-serif;
+  /* font-family: 'DM Sans', sans-serif; */
 }
 
 .plan-cta-btn:hover {
-  background: #059669;
+  background: #1DBC79;
 }
 
+.plan-trial-info {
+  margin-top: 1.5rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 0.95rem; 
+}
+
+.plan-trial-return {
+  font-size: 14px;
+  font-weight: 500;
+  color: #1f2937;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.plan-trial-lose-access {
+  font-size: 13px;
+  color: #6b7280;
+  margin: 0;
+  line-height: 1.4;
+}
+.plan-trial-badge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 1.5rem;
+}
+
+.plan-trial-text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.plan-trial-badge .plan-current-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 15px; 
+  font-weight: 500;
+  color: #1f2937;
+  margin: 0;
+  line-height: 1.4;
+  padding: 0.55rem 9rem;
+  background-color: #F0F2F5; 
+  border-radius: 8px;
+}
+
+.plan-trial-ends {
+  font-size: 13px;
+  color: #6b7280;
+  margin: 0 0 0 20px;
+  font-weight: 400;
+  line-height: 1.4;
+}
+
+.plan-trial-badge .plan-current-icon {
+  width: 20px;
+  height: 20px; 
+  color: #10b981;
+  flex-shrink: 0;
+}
 .plan-cta-btn:active {
-  background: #047857;
+  background: #1DBC79;
 }
 
 /* CTA Note */
 .plan-cta-note {
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 400;
   color: #6b7280;
   text-align: center;
-  margin-top: 10px;
+  margin-top: 8px;
+  margin-bottom: 0;
 }
 
 /* Footer text */
 .pricing-footer-text {
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 400;
   color: #6b7280;
   text-align: center;
+  margin: 0;
 }
 
 /* Responsive design */
@@ -216,59 +301,65 @@ body {
   }
   
   .pricing-title {
-    font-size: 28px;
-    margin-bottom: 32px;
+    font-size: 22px;
+    margin-bottom: 24px;
   }
 }
 
 @media (max-width: 640px) {
   .pricing-wrapper {
-    padding: 40px 16px;
+    padding: 60px 16px 20px;
   }
   
   .pricing-title {
-    font-size: 24px;
-    margin-bottom: 24px;
+    font-size: 20px;
+    margin-bottom: 20px;
   }
   
   .plan-card {
-    padding: 24px;
+    padding: 18px;
   }
   
   .plan-price {
-    font-size: 36px;
+    font-size: 28px;
   }
   
   .badge-best-value {
-    top: 12px;
-    right: 12px;
-    font-size: 11px;
-    padding: 5px 10px;
+    top: 10px;
+    right: 10px;
+    font-size: 10px;
+    padding: 4px 8px;
+  }
+  
+  .feature-label {
+    font-size: 13px;
   }
 }
-.closes-buttons {
-    width: 60px;
-    height: 60px;
-  position: absolute;
-  top: 0;
-  right: 0;
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 8px;
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background-color 0.2s ease;
-  color: #666;
-}
 
-.closes-buttons:hover {
-  background-color: rgba(0, 0, 0, 0.05);
-  color: #000;
-}
-
-.pricing-wrapper {
-  position: relative;
+/* For very small screens or zoomed views */
+@media (max-width: 480px) {
+  .pricing-title {
+    font-size: 18px;
+  }
+  
+  .plan-name {
+    font-size: 16px;
+  }
+  
+  .plan-price {
+    font-size: 26px;
+  }
+  
+  .plan-card {
+    padding: 16px;
+  }
+  
+  .feature-row {
+    gap: 8px;
+  }
+  
+  .feature-check-icon {
+    width: 16px;
+    height: 16px;
+  }
 }

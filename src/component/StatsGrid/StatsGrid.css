@@ -44,8 +44,78 @@
   color: #111827;
   text-align: left;
 }
+.stat-value {
+  font-size: inherit; 
+}
 
-/* Responsive Stats Grid */
+.stat-value:has(> .infinity-symbol) {
+  display: flex;
+  align-items:flex-start;
+  justify-content: flex-start;
+}
+
+.infinity-symbol {
+  font-size: 2.7rem; 
+  font-weight: 100;
+  line-height: 0.5;
+}
+/* ===== MOBILE VERSION – VERTICAL STACKED LEFT ALIGNED ===== */
+@media (max-width: 767px) {
+
+  .stats-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 0 12px;
+    margin-bottom: 20px;
+  }
+
+  .stat-card {
+    display: flex;
+    flex-direction: column;           /* STACK VERTICALLY */
+    align-items: flex-start;          /* LEFT ALIGN */
+    justify-content: flex-start;
+    gap: 6px;
+    background: #ffffff;
+    border: none;
+    border-radius: 12px;
+    padding: 14px 16px;
+  }
+
+  .stat-icon {
+    width: 24px;
+    height: 24px;
+    margin: 0;
+  }
+
+  .stat-icon img {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+  }
+
+  .stat-label {
+    font-size: 13px;
+    font-weight: 500;
+    color: #6b7280;
+    margin: 0;
+    text-align: left;
+  }
+
+  .stat-value {
+    font-size: 16px;
+    font-weight: 600;
+    color: #111827;
+    text-align: left;
+    line-height: 1.2;
+  }
+
+  .infinity-symbol {
+    font-size: 18px;
+    line-height: 1;
+  }
+}
+
 @media (min-width: 1024px) and (max-width: 1440px) {
   .stats-grid { gap: 14px; margin-bottom: 40px; padding-left: 25px; padding-right: 25px; }
   .stat-card { padding: 18px; }

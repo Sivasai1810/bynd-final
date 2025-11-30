@@ -7,7 +7,7 @@
   box-shadow: 0 2px 16px rgba(0, 0, 0, 0.12);
   min-width: 300px;
   z-index: 9998;
-  overflow: hidden;
+  overflow: visible;
 }
 
 /* Plan Header */
@@ -137,8 +137,10 @@
 }
 
 .plan-text strong {
+  position: relative;
+  top: 1px;
   color: #111827;
-  font-weight: 600;
+  font-weight: 500;
 }
 
 .upgrade-link {

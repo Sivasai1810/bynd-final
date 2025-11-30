@@ -25,9 +25,9 @@
 .form-box {
   background: #ffffff;
   border-radius: 12px;
-  padding: 25px;
+  padding: 20px;
   width: 100%;
-  max-width: 500px;
+  max-width: 550px; /* Increased from 500px to 600px */
   max-height: 100%;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
   position: relative;
@@ -46,14 +46,13 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 12px;
   flex-shrink: 0;
   min-height: 34px;
 }
 
 .header-back-btn,
 .header-close-btn {
-  /* top: 20px; */
   background: none;
   border: none;
   padding: 2px;
@@ -82,7 +81,7 @@
   border: 1px solid #D5D7DA;
   width: 37px;
   height: 33px;
-  margin-bottom: 16px;
+  margin-bottom: 10px;
   padding: 5px 2px 3px 5px;
   border-radius: 7px;
   flex-shrink: 0;
@@ -113,7 +112,7 @@
 }
 
 .form-step {
-  margin-top: 20px;
+  margin-top: 16px;
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -265,11 +264,6 @@ select {
   transition: all 0.2s ease;
   flex-shrink: 0;
 }
-
-/* .file-upload-area:hover {
-  border-color: #1DBC79;
-  background: #f9fafb;
-} */
 
 .file-input-hidden {
   display: none;
@@ -526,14 +520,14 @@ select {
   display: flex;
   gap: 12px;
   margin-top: auto;
-  padding-top: 13px;
+  padding-top: 10px;
   flex-shrink: 0;
 }
 
 .btn-secondary,
 .btn-primary {
   flex: 1;
-  padding: 11px 20px;
+  padding: 10px 20px;
   border-radius: 8px;
   font-size: 14px;
   font-weight: 600;
@@ -569,14 +563,15 @@ select {
   opacity: 0.6;
 }
 
+/* Mobile breakpoints - keep original max-width */
 @media (max-width: 640px) {
   .form-container {
     padding: 12px;
   }
   
   .form-box {
-    padding: 20px;
-    max-width: 100%;
+    padding: 18px;
+    max-width: 100%; /* Keep mobile at 100% */
   }
   
   .summary-grid {
@@ -594,23 +589,168 @@ select {
   .info-box li::marker {
     font-size: 20px;
   }
+  
+  .header-text p {
+    font-size: 20px;
+  }
+  
+  .step-indicator {
+    font-size: 12px;
+  }
+  
+  .btn-secondary,
+  .btn-primary {
+    padding: 10px 16px;
+    font-size: 14px;
+  }
 }
 
-@media (max-height: 700px) {
+@media (max-width: 480px) {
+  .form-container {
+    padding: 27px;
+  }
+  
+  .form-box {
+    padding: 16px;
+    border-radius: 10px;
+    max-width: 100%; /* Keep mobile at 100% */
+  }
+  
+  .header-text p {
+    font-size: 18px;
+  }
+  
+  .step-indicator {
+    font-size: 11px;
+  }
+  
+  .side-heading {
+    font-size: 13px;
+  }
+  
+  .fields {
+    padding: 10px 12px;
+    font-size: 14px;
+  }
+  
+  .form-group {
+    margin-bottom: 14px;
+  }
+  
+  .info-heading {
+    padding: 10px 14px;
+    font-size: 13px;
+  }
+  
+  .info-box ul {
+    margin: 12px 14px 12px 26px;
+  }
+  
+  .info-box li {
+    font-size: 13px;
+    line-height: 1.4;
+  }
+  
+  .file-upload-area {
+    padding: 24px 16px;
+  }
+  
+  .file-upload-label p {
+    font-size: 13px;
+  }
+  
+  .browse-btn {
+    padding: 8px 16px;
+    font-size: 13px;
+  }
+  
+  .submission-tables {
+    padding: 12px 16px;
+  }
+  
+  .submission-summary h3 {
+    font-size: 15px;
+  }
+  
+  .summary-grid {
+    gap: 24px;
+    padding: 0 12px;
+  }
+  
+  .summary-item.full-width {
+    margin: 16px;
+  }
+  
+  .ready-message h3 {
+    font-size: 15px;
+  }
+  
+  .ready-message p {
+    font-size: 13px;
+  }
+  
+  .terms-checkbox label {
+    font-size: 13px;
+  }
+  
+  .btn-secondary,
+  .btn-primary {
+    padding: 10px 14px;
+    font-size: 13px;
+  }
+  
+  .form-actions {
+    gap: 10px;
+  }
+}
+
+@media (max-width: 375px) {
+  .form-box {
+    padding: 14px;
+    max-width: 100%; /* Keep mobile at 100% */
+  }
+  
+  .header-text p {
+    font-size: 17px;
+  }
+  
+  .bynd-new-button {
+    width: 34px;
+    height: 30px;
+  }
+  
+  .fields {
+    padding: 9px 11px;
+    font-size: 13px;
+  }
+  
+  .btn-secondary,
+  .btn-primary {
+    padding: 9px 12px;
+    font-size: 13px;
+  }
+}
+
+@media (max-height: 760px) {
   .form-container {
     padding: 12px;
   }
   
   .form-box {
-    padding: 18px;
+    padding: 16px;
+    max-width: 500px; /* Slightly increased for height-constrained screens */
   }
   
   .form-header {
-    margin-bottom: 12px;
+    margin-bottom: 10px;
   }
   
-  .bynd-icon {
-    margin-bottom: 10px;
+  .bynd-new-button {
+    margin-bottom: 8px;
+  }
+  
+  .form-step {
+    margin-top: 12px;
   }
   
   .form-group {
@@ -622,7 +762,7 @@ select {
   }
   
   .info-heading {
-    padding: 12px 16px;
+    padding: 10px 16px;
   }
   
   .info-box ul {
@@ -637,5 +777,15 @@ select {
   
   .info-box li::marker {
     font-size: 20px;
+  }
+  
+  .terms-checkbox {
+    margin-bottom: 16px;
+  }
+}
+
+@media (max-height: 700px) {
+  .form-box {
+    max-width: 470px; /* Slightly increased for very short screens */
   }
 }

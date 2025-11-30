@@ -13,7 +13,7 @@ export default function SubmissionsTable({
       <div className="table-container">
         <table className="table">
           <thead>
-            <tr>
+            <tr className="mobile-table-card">
               <th>S.No.</th>
               <th>Company name</th>
               <th>Position</th>

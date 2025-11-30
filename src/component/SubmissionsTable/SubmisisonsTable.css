@@ -6,7 +6,6 @@
   margin-bottom: 30px;
   border: 2px solid #f3f4f6;
   border-radius: 14px;
-  overflow: hidden; 
   min-height: auto;
   max-height: auto;
   position: relative;
@@ -74,19 +73,9 @@
   overflow: visible;
 }
 
+/* ✅ KEY CHANGE: Remove border from the last row dynamically */
 .table tbody tr:last-child {
   border-bottom: none;
-}
-
-/* Add border radius to first row cells (when it's also the only row) */
-.table tbody tr:first-child:last-child td:first-child {
-  border-top-left-radius: 13px;
-  border-bottom-left-radius: 13px;
-}
-
-.table tbody tr:first-child:last-child td:last-child {
-  border-top-right-radius: 13px;
-  border-bottom-right-radius: 13px;
 }
 
 /* Add border radius to last row cells */
@@ -326,7 +315,7 @@
   stroke: #6B7280;
 }
 
-/* Status Badge - Updated with full rounded corners */
+/* Status Badge */
 .status-badge {
   display: inline-block;
   padding: 4px 12px;
@@ -403,13 +392,119 @@
   }
 }
 
+/* ============================
+   MOBILE VIEW (Figma Card Style)
+   ============================ */
+
+@media (max-width: 767px) {
+
+  .table thead {
+    display: none !important;
+  }
+
+  .table-container {
+    margin: 12px;
+    border: none !important;
+    background: transparent !important;
+    padding: 0 !important;
+  }
+
+  .table-title {
+    text-align: left !important;
+    margin-left: 16px !important;
+    font-size: 18px !important;
+  }
+
+  .table {
+    display: block;
+    width: 100%;
+  }
+
+  .table tbody {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  /* ✅ Each card wrapper */
+  .mobile-table-card {
+    background: #ffffff;
+    border: 1px solid #E5E7EB;
+    border-radius: 12px;
+    padding: 16px;
+    position: relative;
+  }
+
+  /* ✅ Mobile: Remove bottom border from all rows since they're cards now */
+  .table tbody tr {
+    border-bottom: none !important;
+  }
+
+  .table tbody td {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 0;
+    font-size: 14px;
+    border: none !important;
+  }
+
+  .table tbody td::before {
+    font-weight: 500;
+    color: #6B7280;
+  }
+
+  .table tbody td:nth-child(1)::before { content: "S.No."; }
+  .table tbody td:nth-child(2)::before { content: "Company name"; }
+  .table tbody td:nth-child(3)::before { content: "Position"; }
+  .table tbody td:nth-child(4)::before { content: "Submitted on"; }
+  .table tbody td:nth-child(5)::before { content: "Status"; }
+  .table tbody td:nth-child(6)::before { content: "Actions"; }
+
+  .status-badge {
+    font-size: 12px;
+    padding: 4px 10px;
+  }
+
+  .actions-container {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 4px;
+  }
+
+  /* ✅ TOP RIGHT DOTS FIX */
+  .mobile-table-card .more-btn-container {
+    position: absolute !important;
+    top: 12px;
+    right: 12px;
+    z-index: 999;
+  }
+
+  .mobile-table-card .more-btn {
+    width: 30px;
+    height: 30px;
+  }
+
+  .dropdown-menu {
+    right: 0;
+    min-width: 180px;
+  }
+
+  .table tbody td:last-child {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
 /* Responsive adjustments */
 @media (min-width: 1024px) and (max-width: 1440px) {
   .table-container { 
     margin-left: 25px; 
     margin-right: 25px; 
-    min-height: 280px; 
-    max-height: 320px; 
+    min-height: auto; 
+    max-height: none; 
   }
   .table-title { margin-left: 28px; font-size: 19px; margin-top: 10px; }
   .table thead th { padding: 22px 20px; font-size: 17px; font-weight: 400; }
@@ -420,12 +515,13 @@
   .copy-tooltip-content { font-size: 12px; padding: 11px 13px; }
   .copy-tooltip-content span { font-size: 12px; }
 }
+
 @media (min-width: 1440px) and (max-width: 1920px) {
   .table-container { 
     margin-left: 35px; 
     margin-right: 35px; 
-    min-height: 380px; 
-    max-height: 440px; 
+    min-height: auto; 
+    max-height: none; 
   }
   .table-title { font-size: 21px; margin-bottom: 26px; margin-left: 38px; margin-top: auto; }
   .table thead th { padding: 28px 26px; font-size: 19px; font-weight: 400; }
@@ -441,8 +537,8 @@
   .table-container { 
     margin-left: 45px; 
     margin-right: 45px; 
-    min-height: 420px; 
-    max-height: 480px; 
+    min-height: auto; 
+    max-height: none; 
   }
   .table-title { font-size: 23px; margin-bottom: 28px; margin-left: 48px; margin-top: 10px; }
   .table thead th { padding: 30px 28px; font-size: 20px; font-weight: 400; }

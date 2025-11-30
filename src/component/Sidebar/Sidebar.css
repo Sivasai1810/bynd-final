@@ -63,7 +63,7 @@
   position: relative;
   width: 18%;
   min-height: 100vh;
-  background-color: #f5f5f5;
+  background-color: #FAFAF8;
   padding: 4px 16px;
   display: flex;
   flex-direction: column;
@@ -116,13 +116,17 @@
   color: #606062;
   margin-bottom: 4px;
   text-align: left;
-  transition: background-color 0.2s;
+  transition: all 0.2s ease;
   white-space: nowrap;
   font-weight: 400;
 }
 
 .menu-item:hover {
   background-color: #F0F0F0;
+}
+
+.menu-item:hover .menu-icon {
+  opacity: 0.7;
 }
 
 .menu-item.active {
@@ -133,6 +137,7 @@
   width: 18px;
   height: 18px;
   flex-shrink: 0;
+  transition: opacity 0.2s ease;
 }
 
 .upgrade-card {
@@ -171,8 +176,87 @@
   transform: translateY(-1px);
 }
 
-/* Responsive Breakpoints */
+/* Trial Progress Card - Updated to match Figma design */
+.trial-progress-card {
+  background: #1DBC79;
+  border-radius: 12px;
+  padding: 0.95rem;
+  margin-top: auto;
+  margin-bottom: 30px;
+  color: white;
+}
 
+.trial-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.trial-title {
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin: 0;
+  color: white;
+  white-space: nowrap;
+}
+
+.trial-description {
+  font-size: 0.875rem;
+  line-height: 1.5;
+  margin: 0 0 1.95rem 0;
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.trial-progress-bar {
+  width: 100%;
+  height: 4px;
+  background-color: #000000;
+  border-radius: 10px;
+  overflow: hidden;
+  position: relative;
+}
+
+.trial-progress-fill {
+  height: 100%;
+  background-color: #FFFFFF;
+  border-radius: 10px;
+  transition: width 0.3s ease;
+}
+
+.trial-progress-percentage {
+  position: relative;
+  top: 80px;
+  right: 9px;
+  font-size: 1rem;
+  font-weight: 500;
+  color: white;
+  white-space: nowrap;
+}
+
+.pro-active-card {
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+  border-radius: 12px;
+  padding: 1.25rem;
+  margin-top: auto;
+  color: white;
+}
+
+.pro-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin: 0 0 0.5rem 0;
+  color: white;
+}
+
+.pro-description {
+  font-size: 0.875rem;
+  line-height: 1.5;
+  margin: 0;
+  color: rgba(255, 255, 255, 0.95);
+}
+
+/* Responsive Breakpoints */
 /* 1000px - 1300px */
 @media (min-width: 1000px) and (max-width: 1300px) {
   .sidebar {
