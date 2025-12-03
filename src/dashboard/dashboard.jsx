@@ -884,35 +884,35 @@ export default function Dashboard() {
     setPosition("");
   };
 
-  // const handleStartTrial = async () => {
-  //   if (!userId) {
-  //     showNotification('Please log in to start trial');
-  //     return;
-  //   }
+  const handleStartTrial = async () => {
+    if (!userId) {
+      showNotification('Please log in to start trial');
+      return;
+    }
 
-  //   if (subscription?.trial_used) {
-  //     showNotification('You have already used your free trial');
-  //     return;
-  //   }
+    if (subscription?.trial_used) {
+      showNotification('You have already used your free trial');
+      return;
+    }
 
-  //   try {
-  //     const response = await axios.post('https://bynd-backend.onrender.com/userplan/start-trial', 
-  //       { user_id: userId },
-  //       { withCredentials: true }
-  //     );
+    try {
+      const response = await axios.post('https://bynd-backend.onrender.com/userplan/start-trial', 
+        { user_id: userId },
+        { withCredentials: true }
+      );
 
-  //     if (response.data.subscription) {
-  //       setSubscription(prev => ({
-  //         ...prev,
-  //         ...response.data.subscription
-  //       }));
-  //       showNotification('14-day Pro trial started successfully! 🎉');
-  //     }
-  //   } catch (error) {
-  //     console.error('Error starting trial:', error);
-  //     showNotification(error.response?.data?.error || 'Failed to start trial');
-  //   }
-  // };
+      if (response.data.subscription) {
+        setSubscription(prev => ({
+          ...prev,
+          ...response.data.subscription
+        }));
+        showNotification('14-day Pro trial started successfully! 🎉');
+      }
+    } catch (error) {
+      console.error('Error starting trial:', error);
+      showNotification(error.response?.data?.error || 'Failed to start trial');
+    }
+  };
 
   const handleCopyLink = (shareableLink) => {
     if (!shareableLink) {
