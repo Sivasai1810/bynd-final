@@ -169,7 +169,7 @@ export default function DesignPreview() {
   useEffect(() => {
     async function load() {
       try {
-        const res = await axios.get(`http://localhost:3000/api/preview/${uniqueId}`);
+        const res = await axios.get(`https://bynd-backend.onrender.com/api/preview/${uniqueId}`);
         setDesign(res.data);
         setLayers(res.data.layers || []);
       } catch (err) {
