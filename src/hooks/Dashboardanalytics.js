@@ -18,6 +18,7 @@ const useAnalytics = (uniqueId) => {
 
       try {
         const response = await axios.get(
+          // https://bynd-backend.onrender.com
           `https://bynd-backend.onrender.com/getanalytics/${uniqueId}/dashboard-analytics`,
           { withCredentials: true }
         );

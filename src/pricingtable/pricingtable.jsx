@@ -250,7 +250,7 @@ export default function PricingPlan() {
       setError(null);
 
       const res = await axios.post(
-        "http://localhost:3000/userplan/start-trial",
+        "https://bynd-backend.onrender.com/userplan/start-trial",
         { user_id: userId },
         { withCredentials: true }
       );
@@ -319,8 +319,6 @@ export default function PricingPlan() {
               </div>
             )}
           </div>
-
-          {/* ================= PRO PLAN ================= */}
           <div className="plan-card">
             <div className="badge-best-value">Best value</div>
 
@@ -390,9 +388,6 @@ export default function PricingPlan() {
         {showToast && <div className="pricing-toast">{showToast}</div>}
       </div>
 
-      {/* ================= MODALS ================= */}
-
-      {/* Confirm modal: user clicks 'Yes, start trial' inside this */}
       <TrialConfirmModal
         isOpen={showConfirmModal}
         onClose={() => setShowConfirmModal(false)}

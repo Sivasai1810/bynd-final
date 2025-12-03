@@ -1,31 +1,29 @@
-.mobile-menu-toggle {
+ .mobile-menu-toggle {
   display: none;
   position: fixed;
-  top: 16px;
-  left: 16px;
+  top: 3.5%;
+  left: 13px;
+  transform: translateY(-50%);
   z-index: 1001;
-  background-color: #10b981;
+  background-color: #1DBC79;
   border: none;
   border-radius: 8px;
-  width: 44px;
-  height: 44px;
+  width: 34px;
+  height: 33px;
   cursor: pointer;
   color: white;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
   transition: background-color 0.2s, transform 0.1s;
 }
 
 .mobile-menu-toggle:hover {
-  background-color: #059669;
+  background-color: #1DBC79;
 }
-
 .mobile-menu-toggle:active {
   transform: scale(0.95);
 }
 
-/* Mobile Close Button - Inside Sidebar */
 .mobile-close-button {
   display: none;
   position: absolute;
@@ -129,9 +127,22 @@
   opacity: 0.7;
 }
 
+/* ACTIVE STATE (exactly like screenshot) */
 .menu-item.active {
-  background-color: #F0F0F0;
+  background-color: #F0F0F0 !important;
+  color: #000000 !important;   /* TEXT becomes black */
 }
+
+.menu-item.active span {
+  color: #000000 !important;   /* Ensure text is black */
+}
+
+/* ICON turns fully black */
+.menu-item.active .menu-icon {
+  filter: brightness(0) !important;
+  opacity: 1 !important;
+}
+
 
 .menu-icon {
   width: 18px;

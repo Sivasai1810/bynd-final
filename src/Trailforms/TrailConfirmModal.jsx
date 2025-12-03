@@ -74,7 +74,7 @@ export default function TrialConfirmModal({ isOpen, onClose }) {
 
     try {
       const response = await axios.post(
-        "http://localhost:3000/userplan/start-trial",
+        "https://bynd-backend.onrender.com/userplan/start-trial",
         { user_id: userId },
         { withCredentials: true }
       );

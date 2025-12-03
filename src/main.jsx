@@ -11,6 +11,7 @@ import Analytics from './component/Analytics/analytics.jsx'
 import SuccessModal from './component/SuccessModal/SuccessModal.jsx';
 import Pricingtable from "./pricingtable/pricingtable.jsx"
 import ChangeEmail from "./component/changepassword/changemail.jsx"
+import DesignPreview from './component/employersview/employersview.jsx';
 import Lang from './lang.jsx';
 createRoot(document.getElementById('root')).render(
   <StrictMode>
@@ -26,6 +27,9 @@ createRoot(document.getElementById('root')).render(
          <Route path="/ChangeEmail" element={<ChangeEmail />}/>
          <Route path="/Pricingtable" element={<Pricingtable />}/>
          <Route path="/Lang" element={<Lang/>}/>
+           {/* <Route path="/designpreview" element={<DesignPreview/>}/> */}
+           <Route path="/designpreview/:uniqueId" element={<DesignPreview />} />
+
       </Routes>
     </BrowserRouter>
   </StrictMode>

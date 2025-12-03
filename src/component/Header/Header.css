@@ -415,3 +415,10 @@
     margin-left: 3px;
   }
 }
+
+/* Hide search bar on all mobile devices (up to 768px) */
+@media (max-width: 768px) {
+  .search-container {
+    display: none !important;
+  }
+}

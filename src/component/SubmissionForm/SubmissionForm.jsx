@@ -1,5 +1,6 @@
+// SubmissionForm.jsx
 import React, { useState, useEffect } from 'react';
-import Addsymbol from "../../assets/addsymbol.svg"
+import Addsymbol from "../../assets/addsymbol.svg";
 import DiscardModal from '../discard/DiscardModal';
 import TermsOfUseModal from '../../footer/TermsOfUse';
 import './SubmissionForm.css';
@@ -24,7 +25,6 @@ export default function SubmissionForm({
   const [isTyping, setIsTyping] = useState(false);
   const [showTermsModal, setShowTermsModal] = useState(false);
 
- 
   useEffect(() => {
     if (showForm) {
       setStep(1);
@@ -38,7 +38,7 @@ export default function SubmissionForm({
   const handleUrlChange = (e) => {
     setPastedUrl(e.target.value);
     setIsTyping(true);
-    
+
     setTimeout(() => {
       setIsTyping(false);
     }, 1000);
@@ -47,7 +47,7 @@ export default function SubmissionForm({
   const handleNext = () => {
     if (step === 1 && companyName && position) {
       setStep(2);
-    } else if (step === 2 && (pdfFile || pastedUrl)) {
+    } else if (step === 2 && ((pdfFile) || pastedUrl)) {
       setStep(3);
     }
   };
@@ -63,7 +63,7 @@ export default function SubmissionForm({
   };
 
   const handleCancelClick = () => {
-    setShowDiscardModal(true)
+    setShowDiscardModal(true);
   };
 
   const handleStayHere = () => {
@@ -72,10 +72,10 @@ export default function SubmissionForm({
 
   const handleDiscardAndExit = () => {
     setShowDiscardModal(false);
-    setPdfFile(null)
-    setPastedUrl("")
-    setCompanyName("")
-    setPosition("")
+    setPdfFile(null);
+    setPastedUrl("");
+    setCompanyName("");
+    setPosition("");
     handleFormClose();
   };
 
@@ -113,7 +113,7 @@ export default function SubmissionForm({
           </div>
 
           <div className='bynd-new-button'>
-            <img src={Addsymbol} width="24" height="20" viewBox="0 0 24 24" fill="none"></img>
+            <img src={Addsymbol} width="24" height="20" viewBox="0 0 24 24" fill="none" alt="add" />
           </div>
 
           <div className='header-text'>
@@ -166,68 +166,123 @@ export default function SubmissionForm({
           )}
 
           {step === 2 && (
-            <div className='form-step'>
-              <div className='form-group'>
-                <label className='side-heading'>Figma link</label>
-                <div className='input-with-icon'>
-                  <input 
-                    type='text' 
-                    className='fields' 
-                    value={pastedUrl} 
+            <div className="form-step">
+
+              {/* Figma Link */}
+              <div className="form-group">
+                <label className="side-heading">Figma link</label>
+                <div className="input-with-icon">
+                  <input
+                    type="text"
+                    className="fields"
+                    value={pastedUrl}
                     onChange={handleUrlChange}
-                    placeholder='https://www.figma.com/design/...' 
+                    placeholder="Add figma file URL"
                     disabled={pdfFile !== null}
                   />
+
                   {pastedUrl && (
-                    <span className='input-icon success'>
-                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    <span className="input-icon success">
+                      <svg width="20" height="20" fill="none" stroke="currentColor">
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
+                          d="M5 13l4 4L19 7"
+                        />
                       </svg>
                     </span>
                   )}
                 </div>
               </div>
 
-              <div className='divider'>
+              <div className="divider">
                 <span>OR</span>
               </div>
 
-              <div className='form-group'>
-                <div className='file-upload-area'>
-                  <input 
-                    type='file' 
-                    id='file-input'
-                    accept=".pdf,.jpeg,.jpg,.png"
-                    className='file-input-hidden' 
-                    onChange={(e) => setPdfFile(e.target.files[0])} 
+              {/* Upload Area */}
+              <div className="form-group">
+                <div className="file-upload-area">
+
+                  {/* SINGLE FILE INPUT */}
+                  <input
+                    type="file"
+                    id="file-input"
+                    accept=".pdf,.jpg,.jpeg,.png"
+                    className="file-input-hidden"
                     disabled={pastedUrl.trim() !== ""}
+                    onChange={(e) => {
+                      const file = e.target.files[0];
+                      setPdfFile(file || null);
+                    }}
                   />
-                  <div className='file-upload-label'>
+
+                  <div className="file-upload-label">
                     <p>Choose a PDF, JPEG, PNG file or drag & drop it here</p>
-                    <button 
-                      type='button' 
-                      className='browse-btn' 
-                      onClick={() => document.getElementById('file-input').click()}
+
+                    <button
+                      type="button"
+                      className="browse-btn"
+                      onClick={() => document.getElementById("file-input").click()}
                       disabled={pastedUrl.trim() !== ""}
                     >
                       Browse File
                     </button>
                   </div>
-                  {pdfFile && (
-                    <div className='file-selected'>
-                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                      </svg>
-                      <span>{pdfFile.name}</span>
-                      <button onClick={() => setPdfFile(null)} className='remove-file'>×</button>
-                    </div>
-                  )}
                 </div>
               </div>
 
-              <div className='form-actions'>
-                <button className='btn-secondary' onClick={handleCancelClick}>Cancel</button>
-                <button className='btn-primary' onClick={handleNext} disabled={!isStep2Valid}>Next</button>
+              {/* Uploaded File Preview */}
+              {pdfFile && (
+                <div className="uploaded-section">
+                  <h4 className="uploaded-heading">Uploaded file</h4>
+
+                  <div className="uploaded-box">
+                 <div className="uploaded-row">
+
+  {/* File Icon */}
+  <svg
+    width="18"
+    height="18"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.5"
+    viewBox="0 0 24 24"
+    className="file-icon"
+  >
+    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+    <path d="M14 2v6h6" />
+  </svg>
+
+  {/* File Name */}
+  <span className="file-name">{pdfFile.name}</span>
+
+  {/* Close Button on RIGHT */}
+  <button
+    className="remove-file-btn-right"
+    onClick={() => setPdfFile(null)}
+  >
+    ×
+  </button>
+</div>
+
+                  </div>
+                </div>
+              )}
+
+              {/* Buttons */}
+              <div className="form-actions">
+                <button className="btn-secondary" onClick={handleCancelClick}>
+                  Cancel
+                </button>
+
+                <button
+                  className="btn-primary"
+                  onClick={handleNext}
+                  disabled={!(pdfFile || pastedUrl)}
+                >
+                  Next
+                </button>
               </div>
             </div>
           )}
@@ -253,7 +308,7 @@ export default function SubmissionForm({
                 <div className='summary-item full-width'>
                   <label>Design file</label>
                   <p className='design-link'>
-                    {pastedUrl || pdfFile?.name}
+                    {pastedUrl || (pdfFile ? pdfFile.name : 'No file')}
                   </p>
                 </div>
               </div>
@@ -290,14 +345,12 @@ export default function SubmissionForm({
         </div>
       </div>
 
-      {/* Discard Modal */}
       <DiscardModal 
         isOpen={showDiscardModal}
         onStay={handleStayHere}
         onDiscard={handleDiscardAndExit}
       />
 
-      {/* Terms of Use Modal */}
       <TermsOfUseModal 
         isOpen={showTermsModal}
         onClose={() => setShowTermsModal(false)}

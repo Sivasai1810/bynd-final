@@ -792,7 +792,7 @@ export default function Dashboard() {
   const { submissions, setSubmissions, stats, setStats, loading: submissionsLoading, deleteSubmission } = useSubmissions(userId);
   
   const [showForm, setShowForm] = useState(false);
-  const [pdfFile, setPdfFile] = useState(null);
+  const [pdfFile, setPdfFile] = useState([]);
   const [pastedUrl, setPastedUrl] = useState("");
   const [companyName, setCompanyName] = useState("");
   const [position, setPosition] = useState("");
@@ -803,7 +803,7 @@ export default function Dashboard() {
   const [submittedShareableLink, setSubmittedShareableLink] = useState("");
   const [currentView, setCurrentView] = useState('dashboard'); // 'dashboard', 'analytics', or 'notifications'
   const [selectedSubmissionForAnalytics, setSelectedSubmissionForAnalytics] = useState(null);
-  
+
   // Subscription state
   const [subscription, setSubscription] = useState(null);
   const [loadingSubscription, setLoadingSubscription] = useState(true);
@@ -884,35 +884,35 @@ export default function Dashboard() {
     setPosition("");
   };
 
-  const handleStartTrial = async () => {
-    if (!userId) {
-      showNotification('Please log in to start trial');
-      return;
-    }
+  // const handleStartTrial = async () => {
+  //   if (!userId) {
+  //     showNotification('Please log in to start trial');
+  //     return;
+  //   }
 
-    if (subscription?.trial_used) {
-      showNotification('You have already used your free trial');
-      return;
-    }
+  //   if (subscription?.trial_used) {
+  //     showNotification('You have already used your free trial');
+  //     return;
+  //   }
 
-    try {
-      const response = await axios.post('https://bynd-backend.onrender.com/userplan/start-trial', 
-        { user_id: userId },
-        { withCredentials: true }
-      );
+  //   try {
+  //     const response = await axios.post('https://bynd-backend.onrender.com/userplan/start-trial', 
+  //       { user_id: userId },
+  //       { withCredentials: true }
+  //     );
 
-      if (response.data.subscription) {
-        setSubscription(prev => ({
-          ...prev,
-          ...response.data.subscription
-        }));
-        showNotification('14-day Pro trial started successfully! 🎉');
-      }
-    } catch (error) {
-      console.error('Error starting trial:', error);
-      showNotification(error.response?.data?.error || 'Failed to start trial');
-    }
-  };
+  //     if (response.data.subscription) {
+  //       setSubscription(prev => ({
+  //         ...prev,
+  //         ...response.data.subscription
+  //       }));
+  //       showNotification('14-day Pro trial started successfully! 🎉');
+  //     }
+  //   } catch (error) {
+  //     console.error('Error starting trial:', error);
+  //     showNotification(error.response?.data?.error || 'Failed to start trial');
+  //   }
+  // };
 
   const handleCopyLink = (shareableLink) => {
     if (!shareableLink) {
@@ -940,145 +940,325 @@ export default function Dashboard() {
     }
   };
 
-  const handleStoreData = async () => {
-    try {
-      setIsSubmitting(true);
+//   const handleStoreData = async () => {
+//     try {
+//       setIsSubmitting(true);
 
-      if (!userId) {
-        showNotification('Please log in to submit designs');
-        return;
-      }
+//       if (!userId) {
+//         showNotification('Please log in to submit designs');
+//         setIsSubmitting(false)
+//         return;
+//       }
 
-      const uniqueId = nanoid(10);
+//       const uniqueId = nanoid(10);
       
-      // Determine design type based on input
-      let designType;
-      if (pdfFile) {
-        const fileType = pdfFile.type;
-        if (fileType === "application/pdf") {
-          designType = "pdf";
-        } else if (fileType === "image/png" || fileType === "image/jpeg" || fileType === "image/jpg") {
-          designType = "image";
-        } else {
-          showNotification("Please upload only PDF, PNG, or JPEG files.");
-          return;
-        }
-      } else if (pastedUrl.trim()) {
-        if (pastedUrl.includes("figma.com")) {
-          designType = "figma";
-        } else {
-          showNotification("Please provide a valid Figma link.");
-          return;
-        }
-      } else {
-        showNotification("Please provide a Figma link or upload a file.");
+//       // Determine design type based on input
+//       let designType;
+//      if (Array.isArray(pdfFile) && pdfFile.length>0) {
+//   let allValid = true;
+
+//   selectedFiles.forEach(file => {
+//     if (
+//       file.type !== "application/pdf" &&
+//       file.type !== "image/png" &&
+//       file.type !== "image/jpeg" &&
+//       file.type !== "image/jpg"
+//     ) {
+//       allValid = false;
+//     }
+//   });
+
+//   if (!allValid) {
+//     showNotification("Please upload only PDF, PNG, or JPEG files.");
+//     return;
+//   }
+
+//   // Set design type → treat all as PDF uploads
+//   designType = "pdf";
+// }
+//  else if (pastedUrl.trim()) {
+//         if (pastedUrl.includes("figma.com")) {
+//           designType = "figma";
+//         } else {
+//           showNotification("Please provide a valid Figma link.");
+//           return;
+//         }
+//       } else {
+//         showNotification("Please provide a Figma link or upload a file.");
+//         return;
+//       }
+
+//       console.log('Submitting with design type:', designType);
+
+//       let response;
+//       if (selectedFiles.length > 0) {
+//         const formData = new FormData();
+//         formData.append('user_id', userId);
+//         formData.append('unique_id', uniqueId);
+//         formData.append('design_type', designType);
+//         // formData.append('pdf_file', pdfFile);
+//         selectedFiles.forEach((file) => {
+//   formData.append("pdf_files", file); 
+// });
+
+//         formData.append('company_name', companyName.trim());
+//         formData.append('position', position.trim());
+//         formData.append('status', 'pending');
+        
+//         console.log('Sending FormData to server...');
+//         response = await axios.post(
+//           "http://localhost:3000/storeurls",
+//           formData,
+//           { 
+//             withCredentials: true,
+//             headers: { 'Content-Type': 'multipart/form-data' }
+//           }
+//         );
+//       } else {
+//         const payload = {
+//           user_id: userId,
+//           unique_id: uniqueId,
+//           design_type: designType,
+//           original_url: pastedUrl.trim(),
+//           pdf_file_path: null,
+//           company_name: companyName.trim(),
+//           position: position.trim(),
+//           status: "pending"
+//         };
+
+//         console.log('Sending JSON payload to server...');
+//         response = await axios.post(
+//           "http://localhost:3000/storeurls",
+//           payload,
+//           { 
+//             withCredentials: true,
+//             headers: { 'Content-Type': 'application/json' }
+//           }
+//         );
+//       }
+
+//       console.log('Server response:', response.data);
+
+//       const shareableLink = response.data.shareable_link || response.data.shareableLink;
+
+//       const newSubmission = {
+//         id: response.data.submission?.id || uniqueId,
+//         pastedUrl: designType === 'figma' ? pastedUrl.trim() : null,
+//         companyName: companyName.trim(),
+//         position: position.trim(),
+//         submittedOn: new Date().toLocaleDateString('en-CA'),
+//         status: "pending",
+//         shareableLink: shareableLink,
+//         uniqueId: uniqueId,
+//         designType: designType,
+//         totalViews: 0
+//       };
+
+//       setSubmissions(prev => [...prev, newSubmission]);
+//       setStats(prev => ({
+//         ...prev,
+//         active_submissions: prev.active_submissions + 1,
+//         available_slots: Math.max(prev.available_slots - 1, 0)
+//       }));
+
+//       setPdfFile(null);
+//       setPastedUrl("");
+//       setCompanyName("");
+//       setPosition("");
+//       setShowForm(false);
+      
+//       // Show success modal
+//       setSubmittedShareableLink(shareableLink);
+//       setShowSuccessModal(true);
+
+//     } catch (error) {
+//       console.error('Error submitting data:', error);
+//       console.error('Error response:', error.response?.data);
+      
+//       let errorMessage = "Failed to submit design";
+//       if (error.response?.data?.error) {
+//         errorMessage = error.response.data.error;
+//       } else if (error.response?.data?.details) {
+//         errorMessage = error.response.data.details;
+//       } else if (error.message) {
+//         errorMessage = error.message;
+//       }
+      
+//       showNotification(errorMessage);
+      
+//       setPdfFile(null);
+//       setPastedUrl("");
+//       setCompanyName("");
+//       setPosition("");
+//       setShowForm(false);
+      
+//     } finally {
+//       setIsSubmitting(false);
+//     }
+//   };
+const handleStoreData = async () => {
+  try {
+    setIsSubmitting(true);
+
+    if (!userId) {
+      showNotification("Please log in to submit designs");
+      setIsSubmitting(false);
+      return;
+    }
+
+    const uniqueId = nanoid(10);
+
+    // Determine design type
+    let designType;
+
+    // Single file case
+    if (pdfFile) {
+      // validate file type
+      const validTypes = [
+        "application/pdf",
+        "image/png",
+        "image/jpeg",
+        "image/jpg",
+      ];
+
+      if (!validTypes.includes(pdfFile.type)) {
+        showNotification("Please upload only PDF, PNG, or JPEG files.");
+        setIsSubmitting(false);
         return;
       }
 
-      console.log('Submitting with design type:', designType);
+      designType = "pdf";
 
-      let response;
-      if (pdfFile) {
-        const formData = new FormData();
-        formData.append('user_id', userId);
-        formData.append('unique_id', uniqueId);
-        formData.append('design_type', designType);
-        formData.append('pdf_file', pdfFile);
-        formData.append('company_name', companyName.trim());
-        formData.append('position', position.trim());
-        formData.append('status', 'pending');
-        
-        console.log('Sending FormData to server...');
-        response = await axios.post(
-          "https://bynd-backend.onrender.com/storeurls",
-          formData,
-          { 
-            withCredentials: true,
-            headers: { 'Content-Type': 'multipart/form-data' }
-          }
-        );
+    } else if (pastedUrl.trim()) {
+      if (pastedUrl.includes("figma.com")) {
+        designType = "figma";
       } else {
-        const payload = {
-          user_id: userId,
-          unique_id: uniqueId,
-          design_type: designType,
-          original_url: pastedUrl.trim(),
-          pdf_file_path: null,
-          company_name: companyName.trim(),
-          position: position.trim(),
-          status: "pending"
-        };
-
-        console.log('Sending JSON payload to server...');
-        response = await axios.post(
-          "https://bynd-backend.onrender.com/storeurls",
-          payload,
-          { 
-            withCredentials: true,
-            headers: { 'Content-Type': 'application/json' }
-          }
-        );
+        showNotification("Please provide a valid Figma link.");
+        setIsSubmitting(false);
+        return;
       }
 
-      console.log('Server response:', response.data);
+    } else {
+      showNotification("Please provide a Figma link or upload a file.");
+      setIsSubmitting(false);
+      return;
+    }
 
-      const shareableLink = response.data.shareable_link || response.data.shareableLink;
+    console.log("Submitting with design type:", designType);
 
-      const newSubmission = {
-        id: response.data.submission?.id || uniqueId,
-        pastedUrl: designType === 'figma' ? pastedUrl.trim() : null,
-        companyName: companyName.trim(),
+    let response;
+
+    // PDF upload flow (single file)
+    if (pdfFile) {
+      const formData = new FormData();
+      formData.append("user_id", userId);
+      formData.append("unique_id", uniqueId);
+      formData.append("design_type", designType);
+      formData.append("pdf_file", pdfFile); // single file
+      formData.append("company_name", companyName.trim());
+      formData.append("position", position.trim());
+      formData.append("status", "pending");
+
+      console.log("Sending FormData (single file) to server...");
+
+      response = await axios.post(
+        "https://bynd-backend.onrender.com/storeurls",
+        formData,
+        {
+          withCredentials: true,
+          headers: { "Content-Type": "multipart/form-data" },
+        }
+      );
+    }
+
+    // FIGMA URL flow
+    else {
+      const payload = {
+        user_id: userId,
+        unique_id: uniqueId,
+        design_type: designType,
+        original_url: pastedUrl.trim(),
+        pdf_file_path: null,
+        company_name: companyName.trim(),
         position: position.trim(),
-        submittedOn: new Date().toLocaleDateString('en-CA'),
         status: "pending",
-        shareableLink: shareableLink,
-        uniqueId: uniqueId,
-        designType: designType,
-        totalViews: 0
       };
 
-      setSubmissions(prev => [...prev, newSubmission]);
-      setStats(prev => ({
-        ...prev,
-        active_submissions: prev.active_submissions + 1,
-        available_slots: Math.max(prev.available_slots - 1, 0)
-      }));
+      console.log("Sending JSON payload to server...");
 
-      setPdfFile(null);
-      setPastedUrl("");
-      setCompanyName("");
-      setPosition("");
-      setShowForm(false);
-      
-      // Show success modal
-      setSubmittedShareableLink(shareableLink);
-      setShowSuccessModal(true);
-
-    } catch (error) {
-      console.error('Error submitting data:', error);
-      console.error('Error response:', error.response?.data);
-      
-      let errorMessage = "Failed to submit design";
-      if (error.response?.data?.error) {
-        errorMessage = error.response.data.error;
-      } else if (error.response?.data?.details) {
-        errorMessage = error.response.data.details;
-      } else if (error.message) {
-        errorMessage = error.message;
-      }
-      
-      showNotification(errorMessage);
-      
-      setPdfFile(null);
-      setPastedUrl("");
-      setCompanyName("");
-      setPosition("");
-      setShowForm(false);
-      
-    } finally {
-      setIsSubmitting(false);
+      response = await axios.post(
+        "https://bynd-backend.onrender.com/storeurls",
+        payload,
+        {
+          withCredentials: true,
+          headers: { "Content-Type": "application/json" },
+        }
+      );
     }
-  };
+
+    console.log("Server response:", response.data);
+
+    const shareableLink =
+      response.data.shareable_link || response.data.shareableLink;
+
+    const newSubmission = {
+      id: response.data.submission?.id || uniqueId,
+      pastedUrl: designType === "figma" ? pastedUrl.trim() : null,
+      companyName: companyName.trim(),
+      position: position.trim(),
+      submittedOn: new Date().toLocaleDateString("en-CA"),
+      status: "pending",
+      shareableLink,
+      uniqueId,
+      designType,
+      totalViews: 0,
+    };
+
+    setSubmissions((prev) => [newSubmission, ...prev]);
+
+    setStats((prev) => ({
+      ...prev,
+      active_submissions: (prev?.active_submissions || 0) + 1,
+      available_slots: Math.max((prev?.available_slots || 0) - 1, 0),
+    }));
+
+    // reset form state
+    setPdfFile(null);
+    setPastedUrl("");
+    setCompanyName("");
+    setPosition("");
+    setShowForm(false);
+
+    setSubmittedShareableLink(shareableLink);
+    setShowSuccessModal(true);
+
+  } catch (error) {
+    console.error("Error submitting data:", error);
+    console.error("Error response:", error.response?.data);
+
+    let errorMessage = "Failed to submit design";
+    if (error.response?.data?.error) {
+      errorMessage = error.response.data.error;
+    } else if (error.response?.data?.details) {
+      errorMessage = error.response.data.details;
+    } else if (error.message) {
+      errorMessage = error.message;
+    }
+
+    showNotification(errorMessage);
+
+    // reset on error
+    setPdfFile(null);
+    setPastedUrl("");
+    setCompanyName("");
+    setPosition("");
+    setShowForm(false);
+
+  } finally {
+    setIsSubmitting(false);
+  }
+};
+
 
   return (
     <div className="container">

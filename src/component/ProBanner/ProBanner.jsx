@@ -2,8 +2,14 @@ import Upgradetopro from "../../assets/upgradetopro.svg";
 import Prorocket from "../../assets/prorocket.svg";
 import "./ProBanner.css";
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const PromoBanner = () => {
+  const navigate = useNavigate();
+
+  const handleUpgradeClick = () => {
+    navigate("/Pricingtable"); 
+  };
   return (
     <div className="promo-banner">
       <div className="promo-content">
@@ -15,8 +21,8 @@ const PromoBanner = () => {
             and enjoy a 14-day <span className="free-text">free</span> trial today.
           </h2>
 
-          <div className="promo-actions">
-            <button className="upgrade-btn">
+            <div className="promo-actions">
+            <button className="upgrade-btn" onClick={handleUpgradeClick}>
               <img src={Prorocket} alt="" className="rocket-icon" />
               Upgrade to Pro
             </button>

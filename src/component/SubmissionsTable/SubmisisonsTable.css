@@ -127,13 +127,13 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 8px 12px;
-  border: 1px solid #d1d5db;
-  border-radius: 6px;
-  background-color: #ffffff;
-  color: #374151;
+  padding: 8px 14px;
+  border-radius: 10px;
+  background-color: #F3F4F6;
+  color: #111827;
   font-size: 14px;
   font-weight: 500;
+  border: 1px solid #E5E7EB;
   cursor: pointer;
   transition: all 0.2s ease;
 }
@@ -178,6 +178,24 @@
 .more-btn:disabled {
   opacity: 0.5;
   cursor: not-allowed;
+}
+
+/* Three-dots (more) button – float at top-right of card like Figma */
+.mobile-table-card {
+  position: relative; /* ensure absolute children are scoped to the card */
+}
+
+/* Make td non-positioned so the absolute menu uses the row/card as reference */
+.mobile-table-card td {
+  position: static;
+}
+.mobile-table-card .more-btn {
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  background: transparent;
+  border: none;
+  cursor: pointer;
 }
 
 .dropdown-menu {
@@ -330,8 +348,8 @@
 }
 
 .status-pending {
-  background-color: #FAF5F0;
-  color: #FC9533;
+  background-color: #FFF7E6;
+  color: #D97706;
 }
 
 .status-approved {
@@ -380,6 +398,28 @@
   font-weight: 600;
   display: inline;
 }
+.actions-container {
+  display: flex;
+  align-items: center; /* ensures vertical-center alignment */
+  gap: 8px;
+}
+
+.more-btn-container {
+  position: static; /* normal flow so it aligns in row */
+}
+.dropdown-xclose {
+  background: transparent;
+  border: none;
+  font-size: 16px;
+  color: #9ca3af;
+  cursor: pointer;
+  padding: 2px 4px;
+  border-radius: 4px;
+  transition: 0.2s ease;
+}
+
+
+
 
 @keyframes tooltipFadeIn {
   from {
@@ -392,9 +432,6 @@
   }
 }
 
-/* ============================
-   MOBILE VIEW (Figma Card Style)
-   ============================ */
 
 @media (max-width: 767px) {
 
@@ -403,7 +440,7 @@
   }
 
   .table-container {
-    margin: 12px;
+    margin: 16px;
     border: none !important;
     background: transparent !important;
     padding: 0 !important;
@@ -412,7 +449,9 @@
   .table-title {
     text-align: left !important;
     margin-left: 16px !important;
-    font-size: 18px !important;
+    font-size: 16px !important;
+    font-weight: 600;
+    color: #111827;
   }
 
   .table {
@@ -423,16 +462,16 @@
   .table tbody {
     display: flex;
     flex-direction: column;
-    gap: 14px;
+    gap: 18px; /* space between cards */
   }
 
-  /* ✅ Each card wrapper */
+  /* ✅ Each card wrapper (submission card) – match FIGMA card */
   .mobile-table-card {
     background: #ffffff;
     border: 1px solid #E5E7EB;
-    border-radius: 12px;
-    padding: 16px;
-    position: relative;
+    border-radius: 14px;
+    padding: 20px 22px;
+    margin-top: 0; /* first card flush, gap handled by tbody gap */
   }
 
   /* ✅ Mobile: Remove bottom border from all rows since they're cards now */
@@ -447,10 +486,18 @@
     padding: 6px 0;
     font-size: 14px;
     border: none !important;
+    margin-bottom: 10px; /* vertical spacing between rows */
   }
 
+  .table tbody td:last-child {
+    margin-bottom: 0;
+  }
+
+  /* Label (left text like "Company name") */
   .table tbody td::before {
+    font-size: 13px;
     font-weight: 500;
+    letter-spacing: 0.2px;
     color: #6B7280;
   }
 
@@ -461,9 +508,18 @@
   .table tbody td:nth-child(5)::before { content: "Status"; }
   .table tbody td:nth-child(6)::before { content: "Actions"; }
 
+  /* Value (right text like "Tech Corp") */
+  .cell-value {
+    font-size: 14px;
+    font-weight: 600;
+    color: #111827;
+  }
+
   .status-badge {
-    font-size: 12px;
+    font-size: 13px;
     padding: 4px 10px;
+    border-radius: 20px;
+    font-weight: 600;
   }
 
   .actions-container {
@@ -473,28 +529,28 @@
     gap: 4px;
   }
 
-  /* ✅ TOP RIGHT DOTS FIX */
-  .mobile-table-card .more-btn-container {
-    position: absolute !important;
-    top: 12px;
-    right: 12px;
-    z-index: 999;
-  }
-
-  .mobile-table-card .more-btn {
-    width: 30px;
-    height: 30px;
-  }
-
   .dropdown-menu {
     right: 0;
     min-width: 180px;
   }
+  .mobile-table-card .more-btn-container {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 999;
+}
 
-  .table tbody td:last-child {
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
+}
+
+/* Ultra-small mobile – match spacing with Pro banner (screenshot spec) */
+@media (max-width: 468px) {
+  .table-container {
+    margin: 16px;
+  }
+
+  /* Hide large table title on very small screens to match reference UI */
+  .table-title {
+    display: none;
   }
 }
 

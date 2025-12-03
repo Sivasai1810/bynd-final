@@ -1,8 +1,12 @@
 import React from 'react';
-import Probannerlock from "../../assets/probannerlock.svg"
-import './14daysbanner.css'
+import { useNavigate } from "react-router-dom";   
+import Probannerlock from "../../assets/probannerlock.svg";
+import './14daysbanner.css';
 
 export default function UpgradeProModal({ onClose }) {
+
+  const navigate = useNavigate();   
+
   const features = [
     'Real-time assignment analytics',
     'First & last viewed timestamps',
@@ -11,9 +15,15 @@ export default function UpgradeProModal({ onClose }) {
     'Per-assignment view history'
   ];
 
+  const goToPricing = () => {
+    onClose?.();                      // Close modal
+    navigate("/pricingtable");        
+  };
+
   return (
     <div className="modals-overlays">
       <div className="upgrades-modals">
+        
         {/* Close Button */}
         <button 
           className="close-btns"
@@ -31,7 +41,7 @@ export default function UpgradeProModal({ onClose }) {
         {/* Title */}
         <h2 className="modal-title">
           See what recruiters won't say — <br />
-         Unlock Pro Insights
+          Unlock Pro Insights
         </h2>
 
         {/* Subtitle */}
@@ -63,7 +73,10 @@ export default function UpgradeProModal({ onClose }) {
         </div>
 
         {/* CTA Button */}
-        <button className="try-pro-btn">
+        <button 
+          className="try-pro-btn"
+          onClick={goToPricing}          
+        >
           Try Pro free for 14 days
         </button>
 
@@ -71,6 +84,7 @@ export default function UpgradeProModal({ onClose }) {
         <p className="footer-text">
           Upgrade to PRO for unlimited slots. No credit card required
         </p>
+
       </div>
     </div>
   );

@@ -1,0 +1,244 @@
+/* Base Reset */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  /* font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; */
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Wrapper */
+.dp-wrapper {
+  background: #FFFFFF;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* --- Top Header --- */
+.dp-header {
+  padding: 24px 40px;
+  background: #ffffff;
+  border-bottom: 1px solid #E5E7EB;
+}
+
+.dp-header-content {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.dp-title {
+  font-size: 20px;
+  font-weight: 700;
+  margin: 0 0 6px 0;
+  color: #111827;
+  letter-spacing: -0.01em;
+}
+
+.dp-meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  color: #6B7280;
+}
+
+.dp-author {
+  font-weight: 500;
+  color: #6B7280;
+}
+
+.dp-dot {
+  font-size: 10px;
+  color: #9CA3AF;
+}
+
+.dp-main {
+  display: grid;
+  /* grid-template-columns: 1fr 360px; */
+  grid-template-columns: 1.8fr 0.68fr; 
+  gap: 32px;
+  /* padding:24px 40px; */
+    padding: 0 40px 32px 40px;
+  background: transparent; /* CHANGED: Removed the gray background from here */
+  flex-grow: 1;
+  max-width: 1600px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* --- Left: Preview Box --- */
+.dp-left {
+  display: flex;
+  flex-direction: column;
+  min-height: 80vh; 
+  /* CHANGED: Added background, radius, and padding here */
+  background: #F9FAFB; 
+  padding: 24px;
+}
+
+.dp-preview-box {
+  /* Removed dark background and border to match request */
+  background: transparent; 
+  border: none;
+  box-shadow: none;
+  height: 100%;
+  overflow: visible; /* Allow scrolling on page if needed, or hidden if internal scroll preferred */
+  display: flex;
+  flex-direction: column;
+}
+
+.dp-controls-overlay {
+    padding-bottom: 16px;
+    background: transparent;
+    z-index: 10;
+}
+
+.dp-layer-dropdown {
+    padding: 8px 12px;
+    border-radius: 6px;
+    border: 1px solid #E5E7EB;
+    font-size: 14px;
+    background: #ffffff;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+    cursor: pointer;
+}
+
+/* The "Paper" area expanded */
+.dp-document-canvas {
+    flex-grow: 1;
+    /* Padding removed so content hits the "blue lines" edges */
+    padding: 0; 
+    background: transparent; 
+    display: flex;
+    justify-content: flex-start; /* Align left/top */
+    flex-direction: column;
+}
+
+/* Image styles - Full Width */
+.dp-preview-img {
+  width: 100%;  /* Fills the space between blue lines */
+  height: auto;
+  display: block;
+  /* Optional: keeping a subtle shadow for the 'paper' look, remove if you want flat */
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  border-radius: 4px;
+}
+
+.dp-preview-iframe {
+  width: 100%;
+  height: 800px; /* Needs fixed height since it's an iframe */
+  border: none;
+  background: #fff;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+}
+
+/* --- Right: Sidebar --- */
+.dp-right {
+  padding: 76px 0 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.dp-card {
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid;
+}
+
+.dp-card-header {
+  padding: 16px 20px 8px 20px;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.dp-card-body {
+  padding: 0 20px 30px 20px;
+}
+
+.dp-card-body ul {
+  margin: 0;
+  padding-left: 28px;
+  /* display: flex; */
+  text-align: left;
+}
+
+.dp-card-body ul li {
+  font-size: 13px;
+  line-height: 1.6;
+  color: #374151;
+  margin-bottom: 8px;
+}
+.dp-card-body ul li:last-child {
+    margin-bottom: 0;
+}
+
+/* Card Colors */
+.dp-card-yellow { background-color: white; border-color: #FCE89C; }
+.dp-card-yellow .dp-card-header { color: #914017; background-color: #FEF3C9;  }
+.dp-card-yellow .dp-card-body ul li { position: relative;
+top: 20px;}
+
+
+.dp-card-blue { background-color: white; border-color: #CCD7E2; }
+.dp-card-blue .dp-card-header { color: #2144AC; background-color:#CCD7E2 }
+.dp-card-blue .dp-card-body ul li { position: relative;
+top: 20px; }
+
+.dp-preview-box {
+  position: relative;
+}
+
+
+ .expand-btn {
+  position: relative;
+  left: 95%;
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      border: 1px solid   white;
+      background: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .expand-btn:hover {
+      background: #F9FAFB;
+      border-color: #D1D5DB;
+    }
+.closex-btnx {
+  position: absolute;
+  top: 28px;
+  right: 38px; /* keep space between close and fullscreen */
+  border: 1px solid #E5E7EB;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+  transition: 0.2s ease;
+  z-index: 25;
+}
+
+
+
+/* --- Responsive --- */
+@media (max-width: 1024px) {
+  .dp-main {
+    grid-template-columns: 1fr;
+    padding: 20px;
+  }
+  
+  .dp-right {
+    margin-top: 20px;
+  }
+}/* Base Reset */

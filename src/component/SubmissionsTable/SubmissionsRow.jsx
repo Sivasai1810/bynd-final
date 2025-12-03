@@ -389,13 +389,20 @@ export default function SubmissionRow({ submission, index, onCopyLink, onDelete,
 
   return (
     <>
-      {/* ✅ ADD THIS CLASS */}
+      {/* Desktop = normal row, Mobile = styled card via CSS */}
       <tr className="mobile-table-card">
-
-        <td>{index + 1}</td>
-        <td>{submission.companyName}</td>
-        <td>{submission.position}</td>
-        <td>{submission.submittedOn}</td>
+        <td>
+          <span className="cell-value">{index + 1}</span>
+        </td>
+        <td>
+          <span className="cell-value">{submission.companyName}</span>
+        </td>
+        <td>
+          <span className="cell-value">{submission.position}</span>
+        </td>
+        <td>
+          <span className="cell-value">{submission.submittedOn}</span>
+        </td>
         <td>
           <span className={`status-badge status-${submission.status}`}>
             {submission.status.charAt(0).toUpperCase() + submission.status.slice(1)}
@@ -409,7 +416,7 @@ export default function SubmissionRow({ submission, index, onCopyLink, onDelete,
               shareableLink={submission.shareableLink}
             />
 
-            {/* ✅ THIS WILL FLOAT TOP RIGHT */}
+            {/* THIS WILL FLOAT TOP RIGHT */}
             <div className="more-btn-container" ref={menuRef}>
               <button 
                 ref={buttonRef}
@@ -429,9 +436,17 @@ export default function SubmissionRow({ submission, index, onCopyLink, onDelete,
                     bottom: 'calc(100% + 6px)' 
                   } : {}}
                 >
-                  <div className="dropdown-header">
-                    <span className="dropdown-title">Actions</span>
-                  </div>
+                 <div className="dropdown-header">
+  <span className="dropdown-title">Actions</span>
+
+  {/* Close button */}
+  <button
+    className="dropdown-xclose"
+    onClick={() => setShowMenu(false)}
+  >
+    ✕
+  </button>
+</div>
 
                   <button
                     onClick={handleDeleteClick}
@@ -440,12 +455,25 @@ export default function SubmissionRow({ submission, index, onCopyLink, onDelete,
                     Delete Submission
                   </button>
 
-                  <button
+                  {/* <button
                     onClick={() => onEmployerView?.(submission.id)}
                     className="dropdown-item view-item"
                   >
                     Employer's view
-                  </button>
+                  </button> */}
+                  <button
+  onClick={() => {
+    const full = submission.shareableLink; 
+    // Example: https://bynd.in/view/4Zvf5Id0Dn
+    const uniqueId = full.split("/").pop(); 
+    onEmployerView(uniqueId);
+    setShowMenu(false);
+  }}
+  className="dropdown-item view-item"
+>
+  Employer's view
+</button>
+
                 </div>
               )}
             </div>

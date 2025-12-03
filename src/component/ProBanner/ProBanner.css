@@ -8,20 +8,20 @@
   padding: 24px 28px 0 28px;   
   margin: 20px;
 }
-
-/* ------------------
-   LAYOUT (Left + Right)
------------------- */
-.promo-content {
+/* .promo-content {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;       
   gap: 30px;
   padding-bottom: 24px;       
+} */
+ .promo-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;     /* FIXES full section vertical alignment */
+  gap: 30px;
+  padding-bottom: 24px;
 }
-/* ------------------
-   LEFT TEXT SIDE
------------------- */
 .promo-text {
   flex: 1;
 }
@@ -65,8 +65,8 @@
 .rocket-icon {
   position: relative;
   top: 2px;
-  width: 18px;
-  height: 18px;
+  width: 19px;
+  height: 19px;
   vertical-align: end;
 }
 
@@ -76,8 +76,8 @@
 }
 .promo-image {
   position: relative;
-  top: 24px;
-  width: 260px;
+  top:24px;
+  width: 290px;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;   
@@ -85,21 +85,16 @@
 }
 
 .promo-image img {
-  width: 240px;
+  width: 270px;
   height: auto;
   display: block;
 }
 
-/* ------------------
-   RESPONSIVE
------------------- */
 @media (max-width: 1024px) {
   .promo-image img {
     width: 200px;
   }
 }
-
-/* MOBILE */
 @media (max-width: 768px) {
   .promo-content {
     align-items: flex-start;
@@ -130,7 +125,8 @@
 
   /* Banner bottom gap fix */
   .promo-banner {
-    padding: 16px 16px 0 16px;   /* bottom = 0, remove gap */
+    padding: 18px 16px 0 16px;   /* bottom = 0, remove gap, extra inner space */
+    margin: 16px;                /* align with submissions card margin */
   }
 
   .promo-content {

@@ -870,13 +870,13 @@ const Analytics = ({ submissions, loading, selectedSubmission, onSubmissionCompl
                 <img src={Engagement} className="anl-engx-icon" alt="Engagement" />
                 <p className="anl-engx-label">Engagement score</p>
 
-                <p
+                    <p
                   className={`anl-engx-value 
                     ${engagementScore >= 70 ? "eng-high" : 
                       engagementScore >= 40 ? "eng-moderate" : "eng-low"}
                   `}
                 >
-                  {totalViews > 0
+                  {uniqueViewers > 0
                     ? engagementScore >= 70
                       ? "High"
                       : engagementScore >= 40
@@ -886,37 +886,59 @@ const Analytics = ({ submissions, loading, selectedSubmission, onSubmissionCompl
                 </p>
               </div>
 
-              <div className="anl-engx-donut">
-                {(() => {
-                  const radius = 50;
-                  const circumference = 2 * Math.PI * radius;
-                  const percent = engagementScore || 0;
-                  const dash = (percent / 100) * circumference;
+        <div className="anl-engx-donut">
+  {(() => {
+    const radius = 50;
+    const circumference = 2 * Math.PI * radius;
+    const percent = engagementScore || 0;
+    const dash = (percent / 100) * circumference;
 
-                  let color = "#EF4444";
-                  if (engagementScore >= 70) color = "#22C55E";
-                  else if (engagementScore >= 40) color = "#FACC15";
+    let color = "#EF4444";
+    if (engagementScore >= 70) color = "#22C55E";
+    else if (engagementScore >= 40) color = "#FACC15";
 
-                  return (
-                    <svg width="130" height="130" viewBox="0 0 120 120">
-                      <circle cx="60" cy="60" r="50" stroke="#E5E7EB" strokeWidth="12" fill="none" />
-                      <circle
-                        cx="60"
-                        cy="60"
-                        r="50"
-                        stroke={color}
-                        strokeWidth="12"
-                        fill="none"
-                        strokeDasharray={`${dash} ${circumference}`}
-                        transform="rotate(-90 60 60)"
-                      />
-                      <text x="60" y="66" textAnchor="middle" fontSize="22" fontWeight="600">
-                        {percent}%
-                      </text>
-                    </svg>
-                  );
-                })()}
-              </div>
+    return (
+      <svg width="130" height="130" viewBox="0 0 120 120">
+        {/* Background Ring */}
+        <circle
+          cx="60"
+          cy="60"
+          r="50"
+          stroke="#E5E7EB"
+          strokeWidth="12"
+          fill="none"
+        />
+
+        {/* Foreground Progress Ring */}
+        <circle
+          cx="60"
+          cy="60"
+          r="50"
+          stroke={color}
+          strokeWidth="12"
+          fill="none"
+          strokeDasharray={circumference}
+          strokeDashoffset={circumference - dash}
+          strokeLinecap="round"
+          transform="rotate(-90 60 60)"
+          style={{ transition: "stroke-dashoffset 0.6s ease" }}
+        />
+
+        {/* Percent Text */}
+        <text
+          x="60"
+          y="66"
+          textAnchor="middle"
+          fontSize="22"
+          fontWeight="600"
+        >
+          {percent}%
+        </text>
+      </svg>
+    );
+  })()}
+</div>
+
 
               <div className="anl-engx-legend-center">
                 <div className="legend-item">
