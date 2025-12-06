@@ -27,7 +27,7 @@
   border-radius: 12px;
   padding: 20px;
   width: 100%;
-  max-width: 550px; /* Increased from 500px to 600px */
+  max-width: 550px;
   max-height: 100%;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
   position: relative;
@@ -172,7 +172,6 @@
   font-family: inherit;
   background: #ffffff;
   box-sizing: border-box;
-  padding-right: 14px;
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
@@ -265,6 +264,12 @@ select {
   flex-shrink: 0;
 }
 
+.file-upload-area p {
+  font-size: 14px;
+  color: #292D32;
+  margin-bottom:8px;
+}
+
 .file-input-hidden {
   display: none;
 }
@@ -288,10 +293,10 @@ select {
 }
 
 .browse-btn {
-  padding: 8px 20px;
+  padding: 6px 14px;
   background: white;
   border: 1.5px solid #d1d5db;
-  border-radius: 6px;
+  border-radius: 13px;
   font-size: 14px;
   font-weight: 500;
   color: #1a1a1a;
@@ -309,43 +314,118 @@ select {
   cursor: not-allowed;
 }
 
-.file-selected {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 12px;
-  background: #f3f4f6;
-  border-radius: 6px;
-  margin-top: 12px;
+/* Heading outside the box */
+.uploaded-files-title {
+  font-size: 14px;
+  font-weight: 500;
+  color: #292D32;
+  margin: 0px 0 8px 0; /* spacing above box */
 }
 
-.file-selected svg {
-  color: #6b7280;
+/* Outer container box */
+/* Wrapper box */
+.uploaded-files-box {
+  border: 1px solid #CBD0DC;
+  border-radius: 8px;
+  padding: 6px 9px;
+  background: #ffffff;
+}
+
+/* Scroll area */
+.uploaded-files-scroll {
+  max-height: 50px; /* ~2 rows */
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+/* Scrollbar */
+.uploaded-files-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+.uploaded-files-scroll::-webkit-scrollbar-thumb {
+  background: #d1d5db;
+  border-radius: 8px;
+}
+.uploaded-files-scroll::-webkit-scrollbar-thumb:hover {
+  background: #b3b9c5;
+}
+
+/* FILE ROW — FIXED HEIGHT + PERFECT ALIGNMENT */
+.uploaded-file-row {
+  display: flex;
+  align-items: center;
+  height: 34px; /* ⭐ same height for all rows */
+  padding: 0px 6px;
+  border-bottom: 1px solid #E5E7EB;
+  gap: 8px;
+}
+
+/* Number */
+.file-number {
+  width: 20px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #414651;
+  line-height: 1;     /* ⭐ prevents vertical drift */
+  display: flex;
+  align-items: center;
+}
+
+/* Icon wrapper */
+.file-icon-area {
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   flex-shrink: 0;
 }
 
-.file-selected span {
+/* Icon svg */
+.file-icon-area svg {
+  width: 14px;
+  height: 14px;
+  stroke: #6B7280;
+  display: block;     /* ⭐ fixes svg misalignment */
+}
+
+/* File name */
+.file-name-text {
   flex: 1;
   font-size: 14px;
-  color: #1a1a1a;
+  color: #414651;
+  white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  white-space: nowrap;
+  line-height: 1;     /* ⭐ fixes top-shifting */
 }
 
-.remove-file {
+/* Drag handle */
+.drag-handle {
+  font-size: 18px;
+  color: #6b7280;
+  cursor: grab;
+  display: flex;
+  align-items: center;
+}
+
+/* Delete icon */
+.delete-file-btn {
   background: none;
   border: none;
-  font-size: 20px;
-  color: #6b7280;
   cursor: pointer;
-  padding: 0 4px;
-  line-height: 1;
+  font-size: 18px;
+  color: #9CA3AF;
+  display: flex;
+  align-items: center;
+  padding: 2px 4px;
+  border-radius: 6px;
+}
+.delete-file-btn:hover {
+  background: #f3f4f6;
+  color: #111;
 }
 
-.remove-file:hover {
-  color: #1a1a1a;
-}
 
 .info-box {
   border-radius: 8px;
@@ -410,11 +490,6 @@ select {
   padding: 0px;
   margin-bottom: 20px;
   flex-shrink: 0;
-}
-
-.submission-summary hr {
-  position: relative;
-  top: 20px;
 }
 
 .submission-tables {
@@ -562,58 +637,8 @@ select {
   cursor: not-allowed;
   opacity: 0.6;
 }
-.uploaded-heading{
-  margin-bottom: 10px;
-}
-/* Uploaded file row container */
-.uploaded-row {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  background: #f7f8f9;     /* light background */
-  padding: 8px 12px;
-  border-radius: 8px;
-  font-size: 13px;          /* smaller font */
-}
 
-/* File icon */
-.file-icon {
-  flex-shrink: 0;
-  color: #666;
-  width: 18px;
-  height: 18px;
-}
-
-/* File name */
-.file-name {
-  flex-grow: 1;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  color: #222;
-  font-size: 13px;          /* smaller */
-  margin-left: 2px;
-}
-
-/* Close button on the right */
-.remove-file-btn-right {
-  background: none;
-  border: none;
-  font-size: 18px;
-  color: #777;
-  cursor: pointer;
-  padding: 4px 6px;
-  transition: all 0.2s ease;
-}
-
-.remove-file-btn-right:hover {
-  color: #000;
-  background: rgba(0,0,0,0.06); /* subtle hover background */
-  border-radius: 6px;
-}
-
-
-/* Mobile breakpoints - keep original max-width */
+/* Mobile breakpoints */
 @media (max-width: 640px) {
   .form-container {
     padding: 12px;
@@ -621,7 +646,7 @@ select {
   
   .form-box {
     padding: 18px;
-    max-width: 100%; /* Keep mobile at 100% */
+    max-width: 100%;
   }
   
   .summary-grid {
@@ -663,7 +688,7 @@ select {
   .form-box {
     padding: 16px;
     border-radius: 10px;
-    max-width: 100%; /* Keep mobile at 100% */
+    max-width: 100%;
   }
   
   .header-text p {
@@ -757,7 +782,7 @@ select {
 @media (max-width: 375px) {
   .form-box {
     padding: 14px;
-    max-width: 100%; /* Keep mobile at 100% */
+    max-width: 100%;
   }
   
   .header-text p {
@@ -788,7 +813,7 @@ select {
   
   .form-box {
     padding: 16px;
-    max-width: 500px; /* Slightly increased for height-constrained screens */
+    max-width: 500px;
   }
   
   .form-header {
@@ -836,6 +861,6 @@ select {
 
 @media (max-height: 700px) {
   .form-box {
-    max-width: 470px; /* Slightly increased for very short screens */
+    max-width: 470px;
   }
 }

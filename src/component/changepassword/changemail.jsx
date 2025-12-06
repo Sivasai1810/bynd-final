@@ -112,13 +112,10 @@ export default function ChangeEmailModal({
         return;
       }
 
-      console.log(" OTP sent successfully to:", newEmail);
-      console.log(" User should receive a 6-digit code");
-      
+    
       showToast("Verification code sent to your new email!", "success");
       
-      // Move to verification step
-      console.log(" Moving to verification step");
+     
       setStep("verification");
       setLoading(false);
       
@@ -150,10 +147,8 @@ export default function ChangeEmailModal({
     setLoading(true);
 
     try {
-      console.log(" Verifying OTP with Supabase...");
-      console.log("   Email:", newEmail.trim());
-      console.log("   Token:", verificationCode);
-      console.log("   Type: email_change");
+    
+   
       
       // Verify the OTP code
       const { data, error } = await supabase.auth.verifyOtp({
@@ -162,7 +157,7 @@ export default function ChangeEmailModal({
         type: "email_change"
       });
 
-      console.log(" Verification response:", { data, error });
+     
 
       if (error) {
         console.log(" Verification error:", error.message);
@@ -180,8 +175,7 @@ export default function ChangeEmailModal({
         return;
       }
 
-      console.log(" Email verified successfully!");
-      console.log(" Email updated in auth.users to:", newEmail);
+     
       
       showToast("Email changed successfully!", "success");
 
@@ -354,7 +348,6 @@ export default function ChangeEmailModal({
             </>
           )}
 
-          {/* ==================== STEP 2: Verification ==================== */}
           {step === "verification" && (
             <>
               <div className="cem-modal-header">
@@ -436,3 +429,311 @@ export default function ChangeEmailModal({
     </>
   );
 }
+// import React, { useState, useEffect } from "react";
+// import { supabase } from "../../auth/supabase.js";
+// import "./ChangeEmailModal.css";
+
+// // Toast Component
+// const Toast = ({ message, type, onClose }) => {
+//   React.useEffect(() => {
+//     const timer = setTimeout(onClose, 3500);
+//     return () => clearTimeout(timer);
+//   }, [onClose]);
+
+//   const colors = {
+//     success: "#10b981",
+//     error: "#dc2626",
+//     warning: "#f59e0b",
+//     info: "#3b82f6",
+//   };
+
+//   return (
+//     <div className="cem-toast-notification" style={{ backgroundColor: colors[type] }}>
+//       <span>{message}</span>
+//       <button className="cem-toast-close" onClick={onClose}>×</button>
+//     </div>
+//   );
+// };
+
+// export default function ChangeEmailModal({
+//   currentEmail,
+//   onClose,
+//   onEmailChanged
+// }) {
+//   const [step, setStep] = useState("checking"); // checking → password → email → verification
+//   const [loading, setLoading] = useState(false);
+
+//   const [password, setPassword] = useState("");
+//   const [confirmPass, setConfirmPass] = useState("");
+
+//   const [newEmail, setNewEmail] = useState("");
+//   const [otp, setOtp] = useState("");
+
+//   const [toast, setToast] = useState(null);
+
+//   const showToast = (msg, type = "info") => setToast({ message: msg, type });
+
+//   // ========================================================
+//   // STEP 0 — CHECK AUTH PROVIDER
+//   // ========================================================
+//   useEffect(() => {
+//     checkProvider();
+//   }, []);
+
+//   const checkProvider = async () => {
+//     setLoading(true);
+
+//     const { data, error } = await supabase.auth.getUser();
+
+//     if (error || !data?.user) {
+//       showToast("User not found", "error");
+//       setStep("email");
+//       setLoading(false);
+//       return;
+//     }
+
+//     const user = data.user;
+//     const provider = user.app_metadata?.provider;
+
+//     console.log("Detected provider:", provider);
+
+//     // Email/password users skip password step
+//     if (provider !== "google") {
+//       setStep("email");
+//       setLoading(false);
+//       return;
+//     }
+
+//     // GOOGLE USER:
+
+//     // Check if the user ALREADY set password before
+//     const alreadySet = localStorage.getItem("google_password_set") === "true";
+
+//     if (alreadySet) {
+//       console.log("Password already set earlier. Skipping...");
+//       setStep("email");
+//       setLoading(false);
+//       return;
+//     }
+
+//     // New Google user → show password screen
+//     setStep("password");
+//     setLoading(false);
+//   };
+
+//   // ========================================================
+//   // STEP 1 — SET PASSWORD FOR GOOGLE USER
+//   // ========================================================
+//   const handleSetPassword = async (e) => {
+//     e.preventDefault();
+
+//     if (!password.trim() || !confirmPass.trim()) {
+//       showToast("Fill all password fields", "error");
+//       return;
+//     }
+
+//     if (password.trim().length < 6) {
+//       showToast("Password must be 6+ characters", "error");
+//       return;
+//     }
+
+//     if (password.trim() !== confirmPass.trim()) {
+//       showToast("Passwords do not match", "error");
+//       return;
+//     }
+
+//     setLoading(true);
+
+//     const { error } = await supabase.auth.updateUser({
+//       password: password.trim(),
+//     });
+
+//     if (error) {
+//       showToast(error.message, "error");
+//       setLoading(false);
+//       return;
+//     }
+
+//     // SAVE FLAG
+//     localStorage.setItem("google_password_set", "true");
+
+//     showToast("Password set successfully!", "success");
+
+//     // Move immediately to next screen (DO NOT WAIT FOR identities)
+//     setPassword("");
+//     setConfirmPass("");
+
+//     setLoading(false);
+//     setStep("email");
+//   };
+
+//   // ========================================================
+//   // STEP 2 — SEND CHANGE EMAIL OTP
+//   // ========================================================
+//   const handleEmailUpdate = async (e) => {
+//     e.preventDefault();
+
+//     if (!newEmail.trim()) {
+//       showToast("Enter new email", "error");
+//       return;
+//     }
+
+//     if (newEmail.trim().toLowerCase() === currentEmail.toLowerCase()) {
+//       showToast("New email must be different", "error");
+//       return;
+//     }
+
+//     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+//     if (!emailRegex.test(newEmail.trim())) {
+//       showToast("Invalid email format", "error");
+//       return;
+//     }
+
+//     setLoading(true);
+
+//     const { error } = await supabase.auth.updateUser(
+//       { email: newEmail.trim() },
+//       { emailRedirectTo: undefined }
+//     );
+
+//     if (error) {
+//       showToast(error.message, "error");
+//       setLoading(false);
+//       return;
+//     }
+
+//     showToast("Verification code sent!", "success");
+
+//     setLoading(false);
+//     setStep("verification");
+//   };
+
+//   // ========================================================
+//   // STEP 3 — VERIFY OTP
+//   // ========================================================
+//   const handleVerify = async (e) => {
+//     e.preventDefault();
+
+//     if (!/^\d{6}$/.test(otp)) {
+//       showToast("Enter 6-digit code", "error");
+//       return;
+//     }
+
+//     setLoading(true);
+
+//     const { error } = await supabase.auth.verifyOtp({
+//       email: newEmail.trim(),
+//       token: otp,
+//       type: "email_change",
+//     });
+
+//     if (error) {
+//       showToast(error.message, "error");
+//       setLoading(false);
+//       return;
+//     }
+
+//     showToast("Email updated!", "success");
+
+//     // Optional: update your DB
+//     const { data: userData } = await supabase.auth.getUser();
+//     await supabase.from("profiles").update({ email: newEmail.trim() }).eq("id", userData.user.id);
+
+//     onEmailChanged && onEmailChanged(newEmail.trim());
+
+//     setLoading(false);
+//     onClose();
+//   };
+
+//   return (
+//     <>
+//       {toast && (
+//         <Toast
+//           message={toast.message}
+//           type={toast.type}
+//           onClose={() => setToast(null)}
+//         />
+//       )}
+
+//       <div className="cem-modal-overlay" onClick={onClose}>
+//         <div className="cem-change-email-modal" onClick={(e) => e.stopPropagation()}>
+
+//           {/* STEP: CHECKING */}
+//           {step === "checking" && <p>Checking authentication method...</p>}
+
+//           {/* STEP 1 — PASSWORD SET FOR GOOGLE */}
+//           {step === "password" && (
+//             <>
+//               <h2>Set a password first</h2>
+//               <p>Since you signed in with Google, you must set a password before changing your email.</p>
+
+//               <form onSubmit={handleSetPassword}>
+//                 <input
+//                   type="password"
+//                   placeholder="New password"
+//                   value={password}
+//                   onChange={(e) => setPassword(e.target.value)}
+//                 />
+
+//                 <input
+//                   type="password"
+//                   placeholder="Confirm password"
+//                   value={confirmPass}
+//                   onChange={(e) => setConfirmPass(e.target.value)}
+//                 />
+
+//                 <button type="submit" disabled={loading}>
+//                   {loading ? "Saving..." : "Set Password"}
+//                 </button>
+//               </form>
+//             </>
+//           )}
+
+//           {/* STEP 2 — ENTER NEW EMAIL */}
+//           {step === "email" && (
+//             <>
+//               <h2>Change your email</h2>
+
+//               <form onSubmit={handleEmailUpdate}>
+//                 <input value={currentEmail} disabled />
+
+//                 <input
+//                   type="email"
+//                   placeholder="New email"
+//                   value={newEmail}
+//                   onChange={(e) => setNewEmail(e.target.value)}
+//                 />
+
+//                 <button type="submit" disabled={loading}>
+//                   {loading ? "Sending..." : "Send Code"}
+//                 </button>
+//               </form>
+//             </>
+//           )}
+
+//           {/* STEP 3 — VERIFY CODE */}
+//           {step === "verification" && (
+//             <>
+//               <h2>Verify your email</h2>
+
+//               <form onSubmit={handleVerify}>
+//                 <input
+//                   type="text"
+//                   placeholder="000000"
+//                   maxLength="6"
+//                   value={otp}
+//                   onChange={(e) => setOtp(e.target.value.replace(/\D/g, ""))}
+//                 />
+
+//                 <button type="submit" disabled={loading}>
+//                   {loading ? "Verifying..." : "Verify Email"}
+//                 </button>
+//               </form>
+//             </>
+//           )}
+
+//         </div>
+//       </div>
+//     </>
+//   );
+// }

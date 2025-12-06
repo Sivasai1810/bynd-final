@@ -416,7 +416,283 @@
   padding: 2px 4px;
   border-radius: 4px;
   transition: 0.2s ease;
+}/* Hide mobile top-right button on desktop */
+.top-right-mobile-only {
+  display: none;
 }
+/* ---------------------------------------------------
+   TABLE CONTAINER – DESKTOP DEFAULT
+-----------------------------------------------------*/
+.table-container {
+  background-color: #fff;
+  padding: 0px;
+  margin-left: 30px;
+  margin-right: 30px;
+  margin-bottom: 30px;
+  border: 2px solid #f3f4f6;
+  border-radius: 14px;
+}
+
+.table-title {
+  display: flex;
+  align-items: flex-start;
+  font-size: 20px;
+  font-weight: 500;
+  color: #111827;
+  margin-bottom: 23px;
+  margin-left: 33px;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: auto;
+}
+
+.table thead {
+  background-color: #FAFAF8;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.table thead th {
+  padding: 26px 24px;
+  text-align: left;
+  font-size: 18px;
+  font-weight: 400;
+  color: #606062;
+}
+
+.table tbody td {
+  padding: 22px 24px;
+  font-size: 18px;
+  color: #111827;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.status-viewed { background: #F0FBF2; color: #1DB153; }
+.status-pending { background: #FFF7E6; color: #D97706; }
+.status-approved { background: #f0fdf4; color: #16a34a; }
+.status-rejected { background: #fef2f2; color: #dc2626; }
+
+/* ---------------------------------------------------
+   ACTION BUTTON (Copy BYND Link)
+-----------------------------------------------------*/
+.actions-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.action-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border-radius: 10px;
+  background-color: #F3F4F6;
+  border: 1px solid #E5E7EB;
+  font-size: 14px;
+  color: #111827;
+  cursor: pointer;
+}
+
+/* ---------------------------------------------------
+   DROPDOWN MENU STYLES
+-----------------------------------------------------*/
+.dropdown-menu {
+  position: absolute;
+  right: 0;
+  top: 100%;
+  margin-top: 6px;
+  background: #fff;
+  border: 1px solid #E5E7EB;
+  border-radius: 8px;
+  min-width: 200px;
+  z-index: 1000;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.dropdown-header {
+  padding: 10px 14px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.dropdown-item {
+  padding: 10px 14px;
+  background: white;
+  border: none;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.delete-item { color: #EF4444; }
+
+/* ---------------------------------------------------
+   DESKTOP DOTS BUTTON
+-----------------------------------------------------*/
+.desktop-dots {
+  display: inline-flex;
+  width: 32px;
+  height: 32px;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+/* .highlight-row {
+  background-color: #fff7d6 !important;
+  transition: background-color 0.3s ease;
+}
+
+.highlight-row:hover {
+  background-color: #ffeaa0 !important;
+} */
+ .highlight-row {
+  background-color: #fff7d6 !important;
+  animation: popHighlight 0.35s ease-out;
+  position: relative;
+  z-index: 2;
+}
+
+@keyframes popHighlight {
+  0% {
+    transform: scale(0.98);
+    box-shadow: 0 0 0 rgba(255, 215, 90, 0);
+  }
+  60% {
+    transform: scale(1.02);
+    box-shadow: 0 0 12px rgba(255, 215, 90, 0.6);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 6px rgba(255, 215, 90, 0.4);
+  }
+}
+
+.highlight-row:hover {
+  background-color: #ffeaa0 !important;
+  transform: scale(1.01);
+  box-shadow: 0 0 10px rgba(255, 215, 90, 0.5);
+}
+
+
+@media (max-width: 767px) {
+
+  /* hide table header */
+  .table thead {
+    display: none !important;
+  }
+
+  /* cards layout */
+  .table-container {
+    margin: 16px;
+    border: none !important;
+    background: transparent !important;
+  }
+
+  .table-title {
+    margin-left: 16px !important;
+    font-size: 16px !important;
+  }
+
+  .table tbody {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  .mobile-table-card {
+    background: #ffffff;
+    border: 1px solid #E5E7EB;
+    border-radius: 14px;
+    padding: 52px 22px 22px 22px;
+    position: relative;  /* needed for mobile dots */
+  }
+
+  .table tbody td {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    font-size: 14px;
+    gap: 10px;
+  }
+
+  /* Inject labels */
+  .table tbody td:nth-child(1)::before { content: "S.No."; }
+  .table tbody td:nth-child(2)::before { content: "Company name"; }
+  .table tbody td:nth-child(3)::before { content: "Position"; }
+  .table tbody td:nth-child(4)::before { content: "Submitted on"; }
+  .table tbody td:nth-child(5)::before { content: "Status"; }
+  .table tbody td:nth-child(6)::before { content: "Actions"; }
+
+  .table tbody td::before {
+    color: #6B7280;
+    font-size: 13px;
+    font-weight: 500;
+    flex-shrink: 0;
+  }
+
+  /* Fix value alignment */
+  .cell-value {
+    margin-left: auto;
+    font-size: 14px;
+    font-weight: 600;
+    text-align: right;
+  }
+
+  /* Hide desktop dots on mobile */
+  .desktop-dots {
+    display: none !important;
+  }
+
+ 
+  .mobile-dots-btn {
+    display: block !important;
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: transparent;
+    border: none;
+    font-size: 22px;
+    color: #6B7280;
+    cursor: pointer;
+    z-index: 999;
+  }
+
+  /* Action row fixes */
+  .actions-container {
+    justify-content: flex-end;
+  }
+}
+
+
+@media (min-width: 768px) {
+
+  /* Hide mobile dots on desktop */
+  .mobile-dots-btn {
+    display: none !important;
+  }
+
+  .desktop-dots {
+    display: inline-flex !important;
+  }
+}
+
 
 
 
@@ -433,122 +709,16 @@
 }
 
 
-@media (max-width: 767px) {
 
-  .table thead {
-    display: none !important;
-  }
 
-  .table-container {
-    margin: 16px;
-    border: none !important;
-    background: transparent !important;
-    padding: 0 !important;
-  }
 
-  .table-title {
-    text-align: left !important;
-    margin-left: 16px !important;
-    font-size: 16px !important;
-    font-weight: 600;
-    color: #111827;
-  }
 
-  .table {
-    display: block;
-    width: 100%;
-  }
-
-  .table tbody {
-    display: flex;
-    flex-direction: column;
-    gap: 18px; /* space between cards */
-  }
-
-  /* ✅ Each card wrapper (submission card) – match FIGMA card */
-  .mobile-table-card {
-    background: #ffffff;
-    border: 1px solid #E5E7EB;
-    border-radius: 14px;
-    padding: 20px 22px;
-    margin-top: 0; /* first card flush, gap handled by tbody gap */
-  }
-
-  /* ✅ Mobile: Remove bottom border from all rows since they're cards now */
-  .table tbody tr {
-    border-bottom: none !important;
-  }
-
-  .table tbody td {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 6px 0;
-    font-size: 14px;
-    border: none !important;
-    margin-bottom: 10px; /* vertical spacing between rows */
-  }
-
-  .table tbody td:last-child {
-    margin-bottom: 0;
-  }
-
-  /* Label (left text like "Company name") */
-  .table tbody td::before {
-    font-size: 13px;
-    font-weight: 500;
-    letter-spacing: 0.2px;
-    color: #6B7280;
-  }
-
-  .table tbody td:nth-child(1)::before { content: "S.No."; }
-  .table tbody td:nth-child(2)::before { content: "Company name"; }
-  .table tbody td:nth-child(3)::before { content: "Position"; }
-  .table tbody td:nth-child(4)::before { content: "Submitted on"; }
-  .table tbody td:nth-child(5)::before { content: "Status"; }
-  .table tbody td:nth-child(6)::before { content: "Actions"; }
-
-  /* Value (right text like "Tech Corp") */
-  .cell-value {
-    font-size: 14px;
-    font-weight: 600;
-    color: #111827;
-  }
-
-  .status-badge {
-    font-size: 13px;
-    padding: 4px 10px;
-    border-radius: 20px;
-    font-weight: 600;
-  }
-
-  .actions-container {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    gap: 4px;
-  }
-
-  .dropdown-menu {
-    right: 0;
-    min-width: 180px;
-  }
-  .mobile-table-card .more-btn-container {
-  position: absolute;
-  top: 12px;
-  right: 12px;
-  z-index: 999;
-}
-
-}
-
-/* Ultra-small mobile – match spacing with Pro banner (screenshot spec) */
 @media (max-width: 468px) {
   .table-container {
     margin: 16px;
   }
 
-  /* Hide large table title on very small screens to match reference UI */
+  
   .table-title {
     display: none;
   }

@@ -1,5 +1,6 @@
 // import React from 'react';
 // import SubmissionRow from './SubmissionsRow';
+// import { useNavigate } from "react-router-dom";
 
 // export default function SubmissionsTable({ 
 //   submissions, 
@@ -7,6 +8,14 @@
 //   onCopyLink,
 //   onDelete 
 // }) {
+
+//   const navigate = useNavigate();
+
+//   // ⭐ This is Step 2 — Employer View Handler
+//   const handleEmployerView = (uniqueId) => {
+//     navigate(`/designpreview/${uniqueId}`);
+//   };
+
 //   return (
 //     <>
 //       <h2 className="table-title">Design Submissions</h2>
@@ -22,6 +31,7 @@
 //               <th>Actions</th>
 //             </tr>
 //           </thead>
+
 //           <tbody>
 //             {loading ? (
 //               <tr>
@@ -40,6 +50,9 @@
 //                   index={index}
 //                   onCopyLink={onCopyLink}
 //                   onDelete={onDelete}
+
+//                   // ⭐ Pass new handler here
+//                   onEmployerView={handleEmployerView}
 //                 />
 //               ))
 //             ) : (
@@ -52,6 +65,7 @@
 //               </tr>
 //             )}
 //           </tbody>
+
 //         </table>
 //       </div>
 //     </>
@@ -63,6 +77,7 @@ import SubmissionRow from './SubmissionsRow';
 import { useNavigate } from "react-router-dom";
 
 export default function SubmissionsTable({ 
+  searchQuery,
   submissions, 
   loading, 
   onCopyLink,
@@ -71,7 +86,6 @@ export default function SubmissionsTable({
 
   const navigate = useNavigate();
 
-  // ⭐ This is Step 2 — Employer View Handler
   const handleEmployerView = (uniqueId) => {
     navigate(`/designpreview/${uniqueId}`);
   };
@@ -94,7 +108,8 @@ export default function SubmissionsTable({
 
           <tbody>
             {loading ? (
-              <tr>
+              // mark this row with a class so mobile CSS can ignore ::before injection
+              <tr className="loading-row">
                 <td colSpan={6} style={{ textAlign: 'center', padding: '20px' }}>
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px' }}>
                     <div className="spinner"></div>
@@ -110,13 +125,13 @@ export default function SubmissionsTable({
                   index={index}
                   onCopyLink={onCopyLink}
                   onDelete={onDelete}
-
-                  // ⭐ Pass new handler here
                   onEmployerView={handleEmployerView}
+                  searchQuery={searchQuery}
                 />
               ))
             ) : (
-              <tr>
+              // no-data row also gets a class so mobile CSS won't add a label
+              <tr className="no-data-row">
                 <td colSpan={6} style={{ textAlign: 'center', padding: '20px' }}>
                   <div style={{ color: '#666' }}>
                     NO DATA FOUND
