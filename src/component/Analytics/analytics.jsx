@@ -638,7 +638,7 @@ const formatDate = (date) => {
 
 
   const formatTime = (seconds) => {
-    if (!seconds || seconds === 0) return '--';
+    if (!seconds || seconds === 0) return '0s';
     const mins = Math.floor(seconds / 60);
     const secs = seconds % 60;
     if (mins === 0) {

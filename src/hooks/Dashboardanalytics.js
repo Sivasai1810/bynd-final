@@ -1,10 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-/* ---------------- ENGAGEMENT CALCULATION ---------------- */
-// based on:
-// 1) number of clicks (totalViews)
-// 2) avg time spent (avgTimePerView in seconds)
 
 function calculateEngagementScore(totalViews, avgTimePerView) {
   // 40% weight → clicks (max at 20 clicks)
@@ -33,7 +29,7 @@ const useAnalytics = (uniqueId) => {
 
       try {
         const response = await axios.get(
-          // ✅ FIXED localhost typo
+       
           `https://bynd-backend.onrender.com/getanalytics/${uniqueId}/dashboard-analytics`,
           { withCredentials: true }
         );
@@ -41,7 +37,6 @@ const useAnalytics = (uniqueId) => {
         if (response.data.success) {
           const data = response.data.data;
 
-          // ✅ FRONTEND engagement score calculation
           const engagementScore = calculateEngagementScore(
             data.totalViews,
             data.avgTimePerView
@@ -49,7 +44,7 @@ const useAnalytics = (uniqueId) => {
 
           setAnalyticsData({
             ...data,
-            engagementScore, // ✅ overwrite / inject calculated score
+            engagementScore, 
           });
         } else {
           throw new Error(response.data.error || "Failed to fetch analytics");
