@@ -11,7 +11,9 @@ import Analytics from './component/Analytics/analytics.jsx'
 import SuccessModal from './component/SuccessModal/SuccessModal.jsx';
 import Pricingtable from "./pricingtable/pricingtable.jsx"
 import ChangeEmail from "./component/changepassword/changemail.jsx"
-import DesignPreview from './component/employersview/employersview.jsx';
+ import EmployersPreview from './component/employersview/employersview.jsx';
+// import Recruiterview from './component/reviewpanel/DesignPreview.jsx';
+import DesignPreview from './component/reviewpanel/DesignPreview.jsx';
 import Lang from './lang.jsx';
 createRoot(document.getElementById('root')).render(
   <StrictMode>
@@ -27,8 +29,13 @@ createRoot(document.getElementById('root')).render(
          <Route path="/ChangeEmail" element={<ChangeEmail />}/>
          <Route path="/Pricingtable" element={<Pricingtable />}/>
          <Route path="/Lang" element={<Lang/>}/>
-           {/* <Route path="/designpreview" element={<DesignPreview/>}/> */}
-           <Route path="/designpreview/:uniqueId" element={<DesignPreview />} />
+           <Route path="/designpreview/:uniqueId" element={<EmployersPreview />} />
+         <Route
+  path="/recruiterview/:uniqueId"
+  element={<DesignPreview />}
+  // O5K2yZ1JCR
+/>
+
 
       </Routes>
     </BrowserRouter>

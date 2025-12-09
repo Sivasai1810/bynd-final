@@ -1,5 +1,20 @@
-import { useState, useEffect } from 'react';
-import axios from 'axios';
+import { useState, useEffect } from "react";
+import axios from "axios";
+
+/* ---------------- ENGAGEMENT CALCULATION ---------------- */
+// based on:
+// 1) number of clicks (totalViews)
+// 2) avg time spent (avgTimePerView in seconds)
+
+function calculateEngagementScore(totalViews, avgTimePerView) {
+  // 40% weight → clicks (max at 20 clicks)
+  const clickScore = Math.min((totalViews || 0) / 20, 1) * 40;
+
+  // 60% weight → time spent (max at 120 sec avg)
+  const timeScore = Math.min((avgTimePerView || 0) / 120, 1) * 60;
+
+  return Math.round(clickScore + timeScore);
+}
 
 const useAnalytics = (uniqueId) => {
   const [analyticsData, setAnalyticsData] = useState(null);
@@ -18,30 +33,41 @@ const useAnalytics = (uniqueId) => {
 
       try {
         const response = await axios.get(
-          // https://bynd-backend.onrender.com
+          // ✅ FIXED localhost typo
           `https://bynd-backend.onrender.com/getanalytics/${uniqueId}/dashboard-analytics`,
           { withCredentials: true }
         );
 
         if (response.data.success) {
-          setAnalyticsData(response.data.data);
+          const data = response.data.data;
+
+          // ✅ FRONTEND engagement score calculation
+          const engagementScore = calculateEngagementScore(
+            data.totalViews,
+            data.avgTimePerView
+          );
+
+          setAnalyticsData({
+            ...data,
+            engagementScore, // ✅ overwrite / inject calculated score
+          });
         } else {
-          throw new Error(response.data.error || 'Failed to fetch analytics');
+          throw new Error(response.data.error || "Failed to fetch analytics");
         }
       } catch (err) {
-        console.error('Analytics fetch error:', err);
-        
+        console.error("Analytics fetch error:", err);
+
         if (err.response) {
           setError(`Server error: ${err.response.status}`);
         } else if (err.request) {
-          setError('No response from server');
+          setError("No response from server");
         } else {
           setError(err.message);
         }
-        
-        // Set default values on error
+
+        // ✅ Safe fallback
         setAnalyticsData({
-          status: 'pending',
+          status: "pending",
           totalViews: 0,
           uniqueViewers: 0,
           avgTimePerView: 0,
@@ -50,7 +76,7 @@ const useAnalytics = (uniqueId) => {
           lastViewedAt: null,
           engagementScore: 0,
           engagementBreakdown: { high: 0, moderate: 0, low: 0 },
-          viewsOverTime: []
+          viewsOverTime: [],
         });
       } finally {
         setLoading(false);
@@ -59,9 +85,8 @@ const useAnalytics = (uniqueId) => {
 
     fetchAnalytics();
 
-    // Optional: Auto-refresh every 30 seconds
+    // ✅ Auto-refresh every 30s
     const interval = setInterval(fetchAnalytics, 30000);
-    
     return () => clearInterval(interval);
   }, [uniqueId]);
 

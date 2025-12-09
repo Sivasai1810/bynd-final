@@ -599,30 +599,43 @@ const Analytics = ({ submissions, loading, selectedSubmission, onSubmissionCompl
     }
   }, [selectedSubmission, submissions]);
 
-  const calculateSubmissionAge = (createdAt) => {
-    if (!createdAt) return '--';
-    const created = new Date(createdAt);
-    const now = new Date();
-    const diffTime = Math.abs(now - created);
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-    return `${diffDays} days`;
-  };
+const calculateSubmissionAge = (createdAt) => {
+  if (!createdAt) return "--";
 
-  const formatDate = (date) => {
-    if (!date) return 'Not yet viewed';
-    const d = new Date(date);
-    const formattedDate = d.toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "short",
-      day: "numeric",
-    });
-    const formattedTime = d.toLocaleTimeString("en-US", {
-      hour: "2-digit",
-      minute: "2-digit",
-      hour12: true,
-    });
-    return `${formattedDate}, ${formattedTime}`;
-  };
+  const submittedDate = new Date(createdAt);
+  const today = new Date();
+
+  // normalize both to midnight IST
+  const start = new Date(
+    submittedDate.toLocaleDateString("en-CA", { timeZone: "Asia/Kolkata" })
+  );
+  const end = new Date(
+    today.toLocaleDateString("en-CA", { timeZone: "Asia/Kolkata" })
+  );
+
+  const diffMs = end - start;
+  const diffDays = Math.round(diffMs / (1000 * 60 * 60 * 24));
+
+  return `${diffDays} days`;
+};
+
+
+
+const formatDate = (date) => {
+  if (!date) return "Not yet viewed";
+
+  return new Date(date).toLocaleString("en-IN", {
+    timeZone: "Asia/Kolkata",
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: true,
+  });
+};
+
+
 
   const formatTime = (seconds) => {
     if (!seconds || seconds === 0) return '--';
@@ -707,7 +720,7 @@ const Analytics = ({ submissions, loading, selectedSubmission, onSubmissionCompl
       </div>
     );
   }
-
+const createdAt = analyticsData?.createdAt;
   const statusText = analyticsData?.status === 'viewed' ? 'Viewed' : 'Pending';
   const statusClass = analyticsData?.status === 'viewed' ? 'status-viewed' : 'status-pending';
   const totalViews = analyticsData?.totalViews ?? 0;
@@ -717,7 +730,35 @@ const Analytics = ({ submissions, loading, selectedSubmission, onSubmissionCompl
   const firstViewed = analyticsData?.firstViewedOn;
   const engagementScore = analyticsData?.engagementScore ?? 0;
   const engagementBreakdown = analyticsData?.engagementBreakdown || { high: 0, moderate: 0, low: 0 };
-  const viewsOverTime = analyticsData?.viewsOverTime || [];
+const viewsOverTime = (() => {
+  if (analyticsData?.viewsOverTime?.length > 0) {
+    return analyticsData.viewsOverTime;
+  }
+
+  if (!createdAt || !firstViewed || totalViews === 0) return [];
+
+  const created = new Date(createdAt);
+  const viewed = new Date(firstViewed);
+
+  const start = new Date(
+    created.toLocaleDateString("en-CA", { timeZone: "Asia/Kolkata" })
+  );
+  const viewDay = new Date(
+    viewed.toLocaleDateString("en-CA", { timeZone: "Asia/Kolkata" })
+  );
+
+  const day =
+    Math.floor((viewDay - start) / (1000 * 60 * 60 * 24)) + 1;
+
+  return [
+    {
+      day,
+      views: totalViews, // ✅ TOTAL VIEWS ONLY
+    },
+  ];
+})();
+
+
 
   return (
     <>
@@ -804,9 +845,14 @@ const Analytics = ({ submissions, loading, selectedSubmission, onSubmissionCompl
           </div>
 
           <div className="anl-meta-row">
-            <p className="anl-submission-date">
+            {/* <p className="anl-submission-date">
               Submitted on {submissionData.submittedOn}
-            </p>
+            </p> */}
+            <p className="anl-submission-date">
+  Submitted on {formatDate(createdAt)}
+
+</p>
+
 
             <button 
               className="anl-add-assignment-btn"
@@ -842,19 +888,32 @@ const Analytics = ({ submissions, loading, selectedSubmission, onSubmissionCompl
             <div className="anl-summary-card">
               <img src={SubmissionAge} className="anl-card-icon" alt="Submission age" />
               <p className="anl-card-label">Submission age</p>
-              <p className="anl-card-value">{analyticsData?.submissionAge ?? calculateSubmissionAge(submissionData.submittedOn)} days</p>
+              {/* <p className="anl-card-value">{analyticsData?.submissionAge ?? calculateSubmissionAge(submissionData.submittedOn)} days</p> */}
+              <p className="anl-card-value">
+{calculateSubmissionAge(createdAt)}
+
+</p>
+
             </div>
 
             <div className="anl-summary-card">
               <img src={Lastviewedon} className="anl-card-icon" alt="First viewed" />
               <p className="anl-card-label">First viewed on</p>
-              <p className="anl-card-value">{formatDate(firstViewed)}</p>
+              {/* <p className="anl-card-value">{formatDate(firstViewed)}</p> */}
+              <p className="anl-card-value">
+  {formatDate(firstViewed)}
+</p>
+
             </div>
 
             <div className="anl-summary-card">
               <img src={Lastviewedon} className="anl-card-icon" alt="Last viewed" />
               <p className="anl-card-label">Last viewed on</p>
-              <p className="anl-card-value">{formatDate(lastViewed)}</p>
+              {/* <p className="anl-card-value">{formatDate(lastViewed)}</p> */}
+              <p className="anl-card-value">
+  {formatDate(lastViewed)}
+</p>
+
             </div>
 
             <div className="anl-engx-card">
@@ -972,7 +1031,12 @@ const Analytics = ({ submissions, loading, selectedSubmission, onSubmissionCompl
 
 
 {(() => {
-  const maxDataViews = Math.max(...viewsOverTime.map(v => v.views), 1);
+  // const maxDataViews = Math.max(...viewsOverTime.map(v => v.views), 1);
+  const maxDataViews =
+  viewsOverTime.length > 0
+    ? Math.max(...viewsOverTime.map(v => v.views))
+    : 1;
+
   const normalizedData = viewsOverTime.map(point => ({
     ...point,
     normalizedViews: maxDataViews > 5 
@@ -985,7 +1049,7 @@ const Analytics = ({ submissions, loading, selectedSubmission, onSubmissionCompl
     return existing || { day: i + 1, views: 0, normalizedViews: 0 };
   });
 
- return uniqueViewers === 0 ? (
+ return totalViews === 0 ? (
   <div className="anl-chart-svg-wrapper">
     <svg className="anl-line-chart" viewBox="0 0 1000 420" style={{ display: "block" }}>
 

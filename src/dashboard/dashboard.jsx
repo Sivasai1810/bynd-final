@@ -985,10 +985,8 @@ export default function Dashboard() {
           "https://bynd-backend.onrender.com/storeurls",
           formData,
           {
-            withCredentials: true,
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
+            withCredentials: true
+          
           }
         );
 

@@ -1,148 +1,10 @@
-// import { useEffect, useState } from "react";
-// import { useParams } from "react-router-dom";
-// import axios from "axios";
-// import "./employersview.css";
-
-// export default function DesignPreview() {
-//   const { uniqueId } = useParams();
-
-//   const [loading, setLoading] = useState(true);
-//   const [design, setDesign] = useState(null);
-//   const [layers, setLayers] = useState([]);
-//   const [current, setCurrent] = useState(0);
-
-//   useEffect(() => {
-//     async function load() {
-//       try {
-//        
-//         const res = await axios.get(`http://localhost:3000/api/preview/${uniqueId}`);
-
-//         setDesign(res.data);
-//         setLayers(res.data.layers || []);
-//       } catch (err) {
-//         console.error(err);
-//       }
-//       setLoading(false);
-//     }
-//     load();
-//   }, [uniqueId]);
-
-//   if (loading) return "Loading...";
-//   if (!design?.ok) return "Not found";
-
-//   const d = design.design;
-
-//   return (
-//     <div className="dp-wrapper">
-
-//       {/* Top Header */}
-//       <div className="dp-header">
-//         <h1 className="dp-title">{d.position}</h1>
-//         <div className="dp-meta">
-//           <span className="dp-company">{d.company_name}</span>
-//           <span className="dp-bullet">●</span>
-//           <span className="dp-date">
-//             Submitted on{" "}
-//             {new Date(d.created_at).toLocaleDateString("en-US", {
-//               month: "long",
-//               day: "numeric",
-//               year: "numeric",
-//             })}, 2:30pm
-//           </span>
-//         </div>
-//       </div>
-
-//       <div className="dp-main">
-
-//         {/* Left Section */}
-//         <div className="dp-left">
-
-//           <div className="dp-preview-top">
-//             <div className="dp-preview-controls">
-//               {d.design_type === "figma" && layers.length > 0 && (
-//                 <select
-//                   className="dp-layer-dropdown"
-//                   value={current}
-//                   onChange={(e) => setCurrent(Number(e.target.value))}
-//                 >
-//                   {layers.map((l, i) => (
-//                     <option key={i} value={i}>
-//                       {l.name}
-//                     </option>
-//                   ))}
-//                 </select>
-//               )}
-
-//               <button
-//                 className="dp-fullscreen-btn"
-//                 onClick={() =>
-//                   document
-//                     .getElementById("dp-preview-box")
-//                     .requestFullscreen()
-//                     .catch(() => {})
-//                 }
-//               >
-//                 ⛶
-//               </button>
-//             </div>
-//           </div>
-
-//           {/* Preview Box */}
-//           <div id="dp-preview-box" className="dp-preview-box">
-//             {d.design_type === "figma" ? (
-//               <img
-//                 src={layers[current].url}
-//                 className="dp-preview-img"
-//                 alt="preview"
-//               />
-//             ) : (
-//               <iframe
-//                 src={design.pdfUrl}
-//                 className="dp-preview-iframe"
-//                 title="preview"
-//               ></iframe>
-//             )}
-//           </div>
-//         </div>
-
-//         {/* Right Sidebar */}
-//         <div className="dp-right">
-//           <div className="dp-card dp-card-yellow">
-//             <div className="dp-card-header">Usage Terms</div>
-//             <div className="dp-card-body">
-//               <ul>
-//                 <li>This design is shared for evaluation purpose only.</li>
-//                 <li>This content is the intellectual property of the applicant.</li>
-//                 <li>Redistribution, duplication, or reuse is discouraged and may be subject to follow-up.</li>
-//               </ul>
-//             </div>
-//           </div>
-
-//           <div className="dp-card dp-card-blue">
-//             <div className="dp-card-header">Documentation Notice</div>
-//             <div className="dp-card-body">
-//               <ul>
-//                 <li>This submission is documented with activity logs.</li>
-//                 <li>Viewing this assignment logs your access.</li>
-//                 <li>The BYND ensures the designer receives fair credit.</li>
-//               </ul>
-//             </div>
-//           </div>
-//         </div>
-
-//       </div>
-//     </div>
-//   );
-// }
-
-
 import { useEffect, useState, useRef } from "react"; 
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom"; 
 import axios from "axios";
 import "./employersview.css";
 
-export default function DesignPreview() {
+export default function EmployersPreview() {
   const navigate = useNavigate();
   const { uniqueId } = useParams();
   const previewRef = useRef(null); // 2. Create the ref
@@ -169,7 +31,8 @@ export default function DesignPreview() {
   useEffect(() => {
     async function load() {
       try {
-        const res = await axios.get(`https://bynd-backend.onrender.com/api/preview/${uniqueId}`);
+        // const res = await axios.get(`https://bynd-backend.onrender.com/api/preview/${uniqueId}`);
+        const res = await axios.get(`http://localhost:3000/api/preview/${uniqueId}`);
         setDesign(res.data);
         setLayers(res.data.layers || []);
       } catch (err) {
