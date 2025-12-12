@@ -453,7 +453,7 @@ const viewsOverTime = (() => {
           <div className="anl-chart-container">
             <div className="anl-chart-header-section">
               <p className="anl-chart-title">
-                {uniqueViewers === 0 ? 'Not viewed' : `${uniqueViewers} ${uniqueViewers === 1 ? 'View' : 'Views'}`}
+                {totalViews === 0 ? 'Not viewed' : `${totalViews} ${totalViews === 1 ? 'View' : 'Views'}`}
               </p>
             </div>
 

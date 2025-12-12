@@ -229,6 +229,38 @@ top: 20px; }
   z-index: 25;
 }
 
+/* Full-page centered loading container */
+.dp-loading-wrapper {
+  width: 100%;
+  height: 70vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Circular spinner */
+.dp-spinner {
+  width: 48px;
+  height: 48px;
+  border: 4px solid #e5e7eb;
+  border-top: 4px solid #1dbc79;
+  border-radius: 50%;
+  animation: dp-spin 0.9s linear infinite;
+}
+
+/* Loading text */
+.dp-loading-text {
+  margin-top: 12px;
+  font-size: 15px;
+  color: #6b7280;
+  font-weight: 500;
+}
+
+@keyframes dp-spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
 
 
 /* --- Responsive --- */

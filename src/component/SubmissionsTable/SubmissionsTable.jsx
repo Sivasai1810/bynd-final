@@ -236,13 +236,13 @@ const MobileSubmissionCard = ({ submission, index, onCopyLink, onDelete, onEmplo
         {/* S.No */}
         <div style={{ display: 'flex', justifyContent: 'space-between', padding: '8px 0' }}>
           <span style={{ color: '#6B7280', fontSize: '13px', fontWeight: 500 }}>S.No.</span>
-          <span style={{ fontSize: '14px', fontWeight: 600, color: '#111827' }}>{index + 1}</span>
+          <span style={{ fontSize: '14px', fontWeight: 500, color: '#111827' }}>{index + 1}</span>
         </div>
 
         {/* Company name */}
         <div style={{ display: 'flex', justifyContent: 'space-between', padding: '8px 0' }}>
           <span style={{ color: '#6B7280', fontSize: '13px', fontWeight: 500 }}>Company name</span>
-          <span style={{ fontSize: '14px', fontWeight: 600, color: '#111827', textAlign: 'right' }}>
+          <span style={{ fontSize: '14px', fontWeight: 500, color: '#111827', textAlign: 'right' }}>
             {submission.companyName}
           </span>
         </div>
@@ -250,7 +250,7 @@ const MobileSubmissionCard = ({ submission, index, onCopyLink, onDelete, onEmplo
         {/* Position */}
         <div style={{ display: 'flex', justifyContent: 'space-between', padding: '8px 0' }}>
           <span style={{ color: '#6B7280', fontSize: '13px', fontWeight: 500 }}>Position</span>
-          <span style={{ fontSize: '14px', fontWeight: 600, color: '#111827', textAlign: 'right' }}>
+          <span style={{ fontSize: '14px', fontWeight: 500, color: '#111827', textAlign: 'right' }}>
             {submission.position}
           </span>
         </div>
@@ -258,7 +258,7 @@ const MobileSubmissionCard = ({ submission, index, onCopyLink, onDelete, onEmplo
         {/* Submitted on */}
         <div style={{ display: 'flex', justifyContent: 'space-between', padding: '8px 0' }}>
           <span style={{ color: '#6B7280', fontSize: '13px', fontWeight: 500 }}>Submitted on</span>
-          <span style={{ fontSize: '14px', fontWeight: 600, color: '#111827' }}>
+          <span style={{ fontSize: '14px', fontWeight: 500, color: '#111827' }}>
             {submission.submittedOn}
           </span>
         </div>
