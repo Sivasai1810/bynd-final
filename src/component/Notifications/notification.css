@@ -1,0 +1,233 @@
+/* ===========================
+   DESKTOP VERSION
+=========================== */
+
+.notification-page-container {
+  width: 100%;
+  padding: 2px;
+  max-width: 900px;
+  margin: 0 30px auto;
+}
+
+/* Title */
+.notification-title {
+  font-size: 25px;
+  font-weight: 500;
+  margin-bottom: 10px;
+  color: #111;
+}
+
+/* Section Headings */
+.notification-today-label {
+  margin-top: 15px;
+  margin-bottom: 12px;
+  font-size: 22px;
+  font-weight: 500;
+  color: #111;
+}
+
+/* ===========================
+   NOTIFICATION CARD
+=========================== */
+
+.notification-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.notification-card {
+  background: linear-gradient(
+    to right,
+    rgb(29, 188, 121) 1%, 
+    rgba(29, 188, 121, 0.12) 1%,   
+    #FAFAF8 1%,                   
+    #FAFAF8 100%
+  );
+  border-radius: 8px;
+  padding: 8px 11px;
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  border: 1px solid #eee;
+}
+
+/* Left green bar */
+.notification-left-bar {
+  width: 5px;
+  height: 100%;
+  background-color: #05a660;
+  border-radius: 4px;
+}
+
+/* Message Text */
+.notification-message {
+  color: #222;
+  font-size: 16px;
+  margin-bottom: 6px;
+  line-height: 1.4;
+}
+
+/* Timestamp */
+.notification-time {
+  font-size: 12px;
+  color: #666;
+}
+
+/* Center loading spinner */
+.notification-loading-container {
+  width: 100%;
+  height: 60vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Circular spinner */
+.notification-loader {
+  width: 48px;
+  height: 48px;
+  border: 4px solid #eaeaea;
+  border-top: 4px solid #1DBC79;
+  border-radius: 50%;
+  animation: notif-spin 0.9s linear infinite;
+}
+
+/* Loading text */
+.notification-loading-text {
+  margin-top: 12px;
+  font-size: 14px;
+  color: #6B7280;
+  font-weight: 500;
+}
+
+@keyframes notif-spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* ===========================
+   MOBILE VERSION
+=========================== */
+
+@media (max-width: 767px) {
+  .notification-page-container {
+    margin-right: 16px;
+  }
+
+  /* Title */
+  .notification-title {
+    font-size: 18px;
+    font-weight: 500;
+    margin-bottom: 12px;
+    color: #111;
+  }
+
+  /* Section Headings */
+  .notification-today-label {
+    margin-top: 12px;
+    margin-bottom: 10px;
+    font-size: 16px;
+    font-weight: 500;
+    color: #111;
+  }
+
+  /* Notification List */
+  .notification-list {
+    gap: 10px;
+  }
+
+  /* Notification Card */
+  .notification-card {
+    padding: 12px 14px;
+    gap: 12px;
+    border-radius: 10px;
+  }
+
+  /* Message Text */
+  .notification-message {
+    font-size: 14px;
+    margin-bottom: 4px;
+    line-height: 1.5;
+  }
+
+  /* Timestamp */
+  .notification-time {
+    font-size: 11px;
+    color: #666;
+  }
+
+  /* Loading spinner - slightly smaller on mobile */
+  .notification-loader {
+    width: 40px;
+    height: 40px;
+    border-width: 3px;
+  }
+
+  .notification-loading-text {
+    font-size: 13px;
+  }
+}
+
+/* ===========================
+   RESPONSIVE BREAKPOINTS
+=========================== */
+
+@media (min-width: 1024px) and (max-width: 1440px) {
+  .notification-page-container {
+    margin: 0 25px auto;
+  }
+
+  .notification-title {
+    font-size: 23px;
+  }
+
+  .notification-today-label {
+    font-size: 20px;
+  }
+
+  .notification-message {
+    font-size: 15px;
+  }
+}
+
+@media (min-width: 1440px) and (max-width: 1920px) {
+  .notification-page-container {
+    margin: 0 35px auto;
+  }
+
+  .notification-title {
+    font-size: 26px;
+  }
+
+  .notification-today-label {
+    font-size: 23px;
+  }
+
+  .notification-message {
+    font-size: 17px;
+  }
+}
+
+@media (min-width: 1920px) {
+  .notification-page-container {
+    margin: 0 45px auto;
+  }
+
+  .notification-title {
+    font-size: 28px;
+  }
+
+  .notification-today-label {
+    font-size: 24px;
+  }
+
+  .notification-message {
+    font-size: 18px;
+  }
+
+  .notification-time {
+    font-size: 13px;
+  }
+}

@@ -23,3 +23,21 @@ const NotificationEmptyState = () => {
 };
 
 export default NotificationEmptyState;
+
+// import "./EmptyState.css";
+// import NotificationImg from "../../assets/mail 1.svg";
+
+// export default function NotificationEmptyState() {
+//   return (
+//     <div className="notification-empty-container">
+//       <div className="notification-empty-content">
+//         <img src={NotificationImg} alt="no notifications" className="plane-icon" />
+
+//         <h2>No notifications yet</h2>
+//         <p>
+//           You'll see updates here once your assignments get viewed or engaged with.
+//         </p>
+//       </div>
+//     </div>
+//   );
+// }

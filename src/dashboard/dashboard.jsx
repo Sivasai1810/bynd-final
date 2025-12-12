@@ -783,7 +783,7 @@ import EmptyState from '../component/EmptyState/EmptyState';
 import SuccessModal from '../component/SuccessModal/SuccessModal';
 import TrailConfirmModal from "../Trailforms/TrailConfirmModal";
 import useUserPlan from "../hooks/useUserPlan";
-import NotificationEmptyState from '../component/EmptyState/Notification';
+import Notifications from "../component/Notifications/Notifications";
 import Analytics from '../component/Analytics/analytics';
 import './dashboard.css';
 
@@ -1158,15 +1158,15 @@ export default function Dashboard() {
               <p>Analytics is available for Pro users only</p>
             </div>
           )
-        ) : currentView === 'notifications' ? (
-          <NotificationEmptyState />
-        ) : hasNoSubmissions ? (
+        ) : currentView === "notifications" ? (
+  <Notifications userId={userId} />
+)
+ : hasNoSubmissions ? (
           <EmptyState onNewSubmission={handleShowForm} />
         ) : (
           <>
             <StatsGrid stats={stats} subscription={subscription} />
-            
-            {/* Only show ProBanner for Free users */}
+          
             {shouldShowProBanner && (
               <ProBanner 
                 subscription={subscription}

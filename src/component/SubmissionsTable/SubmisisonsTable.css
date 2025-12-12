@@ -11,6 +11,8 @@
   position: relative;
 }
 
+
+
 .table-title {
   display: flex;
   align-items: flex-start;
@@ -30,12 +32,13 @@
   position: relative;
 }
 
-.table thead {
+ .table thead {
   background-color: #FAFAF8;
-  position: sticky;
+  position: fixed;
   top: 0;
   z-index: 10;
-}
+} 
+
 
 .table thead tr {
   border-bottom: 1px solid #e5e7eb;
@@ -593,12 +596,12 @@
 
 @media (max-width: 767px) {
 
-  /* hide table header */
+  
   .table thead {
     display: none !important;
   }
 
-  /* cards layout */
+ 
   .table-container {
     margin: 16px;
     border: none !important;
@@ -632,7 +635,7 @@
     gap: 10px;
   }
 
-  /* Inject labels */
+  
   .table tbody td:nth-child(1)::before { content: "S.No."; }
   .table tbody td:nth-child(2)::before { content: "Company name"; }
   .table tbody td:nth-child(3)::before { content: "Position"; }
@@ -647,15 +650,12 @@
     flex-shrink: 0;
   }
 
-  /* Fix value alignment */
   .cell-value {
     margin-left: auto;
     font-size: 14px;
     font-weight: 600;
     text-align: right;
   }
-
-  /* Hide desktop dots on mobile */
   .desktop-dots {
     display: none !important;
   }
@@ -678,12 +678,12 @@
   .actions-container {
     justify-content: flex-end;
   }
+ 
 }
 
 
 @media (min-width: 768px) {
 
-  /* Hide mobile dots on desktop */
   .mobile-dots-btn {
     display: none !important;
   }

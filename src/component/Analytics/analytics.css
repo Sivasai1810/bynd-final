@@ -1,6 +1,3 @@
-/* =================================
-   BASE STYLES
-================================= */
 
 .anl-header {
   padding-left: 23px;
@@ -128,26 +125,9 @@
   color: #059669;
 }
 
-/* ASSIGNMENT SUMMARY */
-.anl-summary-card .anl-card-value.status-viewed  { 
-  width: 80px;
-  color: #10B981 !important;
-  background-color: #D1FAE5;
-  padding: 5px 12px;
-  border-radius: 36px;
-  display: inline-block;
-  font-size: 14px;
-}
-
-.anl-summary-card .anl-card-value.status-pending { 
-  width: 80px;
-  color: #F59E0B !important;
-  background-color: #FEF3C7;
-  padding: 5px 12px;
-  border-radius: 36px;
-  display: inline-block;
-  font-size: 14px;
-}
+/* =================================
+   ASSIGNMENT SUMMARY (STATS GRID STYLE)
+================================= */
 .anl-assignment-summary {
   margin-top: 10px;
 }
@@ -161,38 +141,82 @@
   color: #111;
 }
 
+/* Grid layout - same as StatsGrid */
 .anl-summary-grid {
   display: grid;
-  grid-template-columns: repeat(4, minmax(200px, 1fr));
-  gap: 20px;
-  padding: 0 23px;
-  align-items: start;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 46px;
+  padding-left: 30px;
+  padding-right: 30px;
 }
 
+/* Summary Card - same structure as stat-card */
 .anl-summary-card {
-  background: #FAFAF8;
+  background-color: #f5f5f5;
+  padding: 20px;
   border-radius: 12px;
-  padding: 22px 24px;
-  /* display: grid;
-  grid-template-rows: 30px 28px auto;
-  row-gap: 12px; */
-  display: flex;
-  flex-direction: column;
-  gap: 11px;
-  min-height: 150px;
+  border: 1px solid #f3f4f6;
 }
 
-.anl-summary-card .anl-card-icon { width: 20px; height: 20px; flex-shrink: 0;}
-.anl-summary-card .anl-card-label { font-size: 14px; color: #6B7280; margin:0;line-height:1.4; }
-.anl-summary-card .anl-card-value { font-size: 17px; font-weight: 600; color: #111;  margin:0;line-height:1.4;}
+/* Icon - 5% smaller than StatsGrid (29px -> 27.55px ≈ 28px) */
+.anl-summary-card .anl-card-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  margin-bottom: 12px;
+}
 
-/* ENGAGEMENT CARD */
+/* Label - 3% smaller than StatsGrid (17px -> 16.49px ≈ 16px) */
+.anl-summary-card .anl-card-label {
+  font-size: 16px;
+  color: #6b7280;
+  margin-bottom: 8px;
+  text-align: left;
+}
 
+/* Value - 2% smaller than StatsGrid (24px -> 23.52px ≈ 24px) */
+.anl-summary-card .anl-card-value {
+  font-size: 19px;
+  font-weight: 500;
+  color: #111827;
+  text-align: left;
+    white-space: nowrap;      /* ADD THIS */
+  overflow: hidden;          /* ADD THIS */
+  text-overflow: ellipsis;
+}
+
+/* Status Badge Styles */
+.anl-summary-card .anl-card-value.status-viewed {
+  width: 80px;
+  color: #10B981 !important;
+  background-color: #D1FAE5;
+  padding: 5px 12px;
+  border-radius: 36px;
+  display: inline-block;
+  font-size: 14px;
+}
+
+.anl-summary-card .anl-card-value.status-pending {
+  width: 80px;
+  color: #F59E0B !important;
+  background-color: #FEF3C7;
+  padding: 5px 12px;
+  border-radius: 36px;
+  display: inline-block;
+  font-size: 14px;
+}
+
+/* ENGAGEMENT CARD - spans 2 columns */
 .anl-engx-card {
   grid-column: span 2;
-  background: #FAFAF8;
+  background-color: #f5f5f5;
   border-radius: 12px;
-  padding: 22px 24px;
+  padding: 20px;
+  border: 1px solid #f3f4f6;
   display: grid;
   grid-template-columns: 1fr 100px 160px;
   column-gap: 14px;
@@ -202,17 +226,31 @@
 }
 
 .anl-engx-left {
-  /* display: grid;
-  grid-template-rows: 30px 28px auto;
-  row-gap: 12px; */
   display: flex;
   flex-direction: column;
   gap: 11px;
 }
 
-.anl-engx-icon { width: 20px; height: 20px; flex-shrink:0; }
-.anl-engx-label { font-size: 14px; color: #6B7280; margin: 0; line-height: 1.4; }
-.anl-engx-value { font-size: 22px; font-weight: 600; color: #111; margin:0;line-height: 1.4;}
+.anl-engx-icon {
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+}
+
+.anl-engx-label {
+  font-size: 16px;
+  color: #6B7280;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.anl-engx-value {
+  font-size: 21px;
+  font-weight: 500;
+  color: #111;
+  margin: 0;
+  line-height: 1.4;
+}
 
 .anl-engx-donut {
   display: flex;
@@ -228,7 +266,6 @@
 }
 
 /* LEGEND */
-
 .anl-engx-legend-center {
   position: absolute;
   top: 50%;
@@ -255,17 +292,17 @@
 .legend-square.moderate { background: #FACC15; }
 .legend-square.low { background: #EF4444; }
 
-/* MESSAGE */
+/* Engagement colors */
+.eng-high { color: #22C55E; }
+.eng-moderate { color: #FACC15; }
+.eng-low { color: #EF4444; }
 
-.anl-opened-message {
-  margin-top: 12px;
-  font-size: 13px;
-  color: #6B7280;
-  text-align: center;
-}
+/* Status colors */
+.status-viewed { color: #10B981; }
+.status-pending { color: #F59E0B; }
 
 /* ================================
-   VIEWS OVER TIME (FIXED VERSION)
+   VIEWS OVER TIME
 ================================ */
 
 .anl-views-over-time {
@@ -304,7 +341,7 @@
   background-color: #FAFAF8;
   border-radius: 12px;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
-  width: 100%;         
+  width: 100%;
   max-width: 100%;
   margin-left: 0;
   overflow-x: auto;
@@ -330,7 +367,8 @@
   font-weight: 600;
   color: #111827;
 }
-.anl-opened-message{
+
+.anl-opened-message {
   text-align: left;
   font-size: 16px;
   color: #71717A;
@@ -354,19 +392,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  gap: 24px;
   margin-top: 16px;
-}
-
-.anl-activity-dot {
-  width: 8px;
-  height: 8px;
-  background: #D1D5DB;
-  border-radius: 50%;
-}
-
-.anl-activity-dot.active {
-  background: #10B981;
+  padding: 16px;
+  background: #FAFAF8;
+  border-radius: 8px;
 }
 
 .anl-activity-text {
@@ -375,33 +405,243 @@
   font-weight: 500;
 }
 
-/* SVG dots */
-.anl-line-chart circle {
-  stroke: #fff;
-  stroke-width: 2;
-}
-
-/* Engagement colors */
-.eng-high { color: #22C55E; }
-.eng-moderate { color: #FACC15; }
-.eng-low { color: #EF4444; }
-
-/* Status colors */
-.status-viewed { color: #10B981; }
-.status-pending { color: #F59E0B; }
-.anl-activity-indicator {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 24px;
-  margin-top: 16px;
-  padding: 16px;
-  background: #FAFAF8;
-  border-radius: 8px;
-}
-.info-footer{
+.info-footer {
   margin-top: 30px;
   text-align: center;
- color: #71717A;
-font-size: 13px;
+  color: #71717A;
+  font-size: 13px;
+}
+
+/* Full-page centered loading container */
+.anl-loading-wrapper {
+  width: 100%;
+  height: 60vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Circular spinner */
+.anl-spinner {
+  width: 48px;
+  height: 48px;
+  border: 4px solid #e5e7eb;
+  border-top: 4px solid #1dbc79;
+  border-radius: 50%;
+  animation: anl-spin 0.9s linear infinite;
+}
+
+/* Loading text */
+.anl-loading-text {
+  margin-top: 12px;
+  font-size: 14px;
+  color: #6b7280;
+  font-weight: 500;
+}
+
+@keyframes anl-spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* ===== MOBILE VERSION – VERTICAL STACKED LEFT ALIGNED ===== */
+@media (max-width: 767px) {
+  .anl-submission-date{
+    font-size: 10px;
+  }
+  .anl-summary-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 0 16px;
+    margin-bottom: 20px;
+  }
+
+  .anl-summary-card {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 6px;
+    background: #ffffff;
+    border: none;
+    border-radius: 12px;
+    padding: 14px 16px;
+  }
+
+  .anl-summary-card .anl-card-icon {
+    width: 24px;
+    height: 24px;
+    margin: 0;
+  }
+
+  .anl-summary-card .anl-card-label {
+    font-size: 13px;
+    font-weight: 500;
+    color: #6b7280;
+    margin: 0;
+    text-align: left;
+  }
+
+  .anl-summary-card .anl-card-value {
+    font-size: 16px;
+    font-weight: 600;
+    color: #111827;
+    text-align: left;
+    line-height: 1.2;
+  }
+
+  /* Engagement card mobile */
+  .anl-engx-card {
+    grid-column: span 1;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    background: #ffffff;
+    border: none;
+    padding: 14px 16px;
+  }
+
+  .anl-engx-left {
+    gap: 6px;
+  }
+
+  .anl-engx-icon {
+    width: 24px;
+    height: 24px;
+  }
+
+  .anl-engx-label {
+    font-size: 13px;
+  }
+
+  .anl-engx-value {
+    font-size: 16px;
+  }
+
+  .anl-engx-donut {
+    display: none;
+  }
+
+  .anl-engx-legend-center {
+    display: none;
+  }
+
+  .anl-engx-info {
+    display: none;
+  }
+
+  .anl-summary-heading {
+    margin-left: 16px !important;
+    font-size: 16px !important;
+  }
+}
+
+/* ===== RESPONSIVE BREAKPOINTS (same as StatsGrid) ===== */
+@media (min-width: 1024px) and (max-width: 1440px) {
+  .anl-summary-grid {
+    gap: 14px;
+    margin-bottom: 40px;
+    padding-left: 25px;
+    padding-right: 25px;
+  }
+  .anl-summary-card {
+    padding: 18px;
+  }
+  .anl-summary-card .anl-card-icon {
+    width: 26px;
+    height: 26px;
+  }
+  .anl-summary-card .anl-card-label {
+    font-size: 15px;
+  }
+  .anl-summary-card .anl-card-value {
+    font-size: 22px;
+  }
+  .anl-engx-card {
+    padding: 18px;
+  }
+  .anl-engx-icon {
+    width: 26px;
+    height: 26px;
+  }
+  .anl-engx-label {
+    font-size: 15px;
+  }
+  .anl-engx-value {
+    font-size: 20px;
+  }
+}
+
+@media (min-width: 1440px) and (max-width: 1920px) {
+  .anl-summary-grid {
+    gap: 18px;
+    margin-bottom: 50px;
+    padding-left: 35px;
+    padding-right: 35px;
+  }
+  .anl-summary-card {
+    padding: 24px;
+  }
+  .anl-summary-card .anl-card-icon {
+    width: 34px;
+    height: 34px;
+  }
+  .anl-summary-card .anl-card-label {
+    font-size: 16px;
+    margin-bottom: 10px;
+  }
+  .anl-summary-card .anl-card-value {
+    font-size: 26px;
+  }
+  .anl-engx-card {
+    padding: 24px;
+  }
+  .anl-engx-icon {
+    width: 34px;
+    height: 34px;
+  }
+  .anl-engx-label {
+    font-size: 16px;
+  }
+  .anl-engx-value {
+    font-size: 24px;
+  }
+}
+
+@media (min-width: 1920px) {
+  .anl-summary-grid {
+    gap: 22px;
+    margin-bottom: 60px;
+    padding-left: 45px;
+    padding-right: 45px;
+  }
+  .anl-summary-card {
+    padding: 28px;
+  }
+  .anl-summary-card .anl-card-icon {
+    width: 40px;
+    height: 40px;
+  }
+  .anl-summary-card .anl-card-label {
+    font-size: 18px;
+    margin-bottom: 12px;
+  }
+  .anl-summary-card .anl-card-value {
+    font-size: 28px;
+  }
+  .anl-engx-card {
+    padding: 28px;
+  }
+  .anl-engx-icon {
+    width: 40px;
+    height: 40px;
+  }
+  .anl-engx-label {
+    font-size: 18px;
+  }
+  .anl-engx-value {
+    font-size: 26px;
+  }
 }

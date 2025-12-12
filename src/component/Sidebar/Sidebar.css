@@ -1,7 +1,7 @@
  .mobile-menu-toggle {
   display: none;
   position: fixed;
-  top: 3.5%;
+  top: 3%;
   left: 13px;
   transform: translateY(-50%);
   z-index: 1001;

@@ -199,7 +199,7 @@ import "../employersview/employersview.css";
 
 export default function DesignPreview() {
   const { uniqueId } = useParams();
-
+const hasSent=useRef(false)
 
   useAnalytics(uniqueId);
 useTimeAnalytics(uniqueId);
@@ -218,7 +218,6 @@ useTimeAnalytics(uniqueId);
     }
   }
 
-  /* ---------- fetch preview ---------- */
   useEffect(() => {
     if (!uniqueId) return;
 
@@ -247,6 +246,39 @@ useTimeAnalytics(uniqueId);
       alive = false;
     };
   }, [uniqueId]);
+
+// useEffect(()=>{
+// if(!uniqueId) return ;
+// try{
+// const sendNotification=async()=>{
+// const res=await axios.post(`http://localhost:3000/sendnotification/${uniqueId}`)
+// console.log(res.data.message);
+// }
+// sendNotification();
+// }catch(err){
+//   console.log(`unable to send the notification${err}`)
+//   // console.log("unable to send the notification ")
+// }
+// },[uniqueId])
+
+
+useEffect(() => {
+  if(hasSent.current) return;
+  hasSent.current=true
+  if (!uniqueId) return;
+
+  async function sendNotification() {
+    try {
+      const res = await axios.post(`http://localhost:3000/sendnotification/${uniqueId}`);
+      console.log(res.data.message);
+    } catch (err) {
+      console.log("unable to send the notification", err);
+    }
+  }
+
+  sendNotification();
+}, [uniqueId]);
+
 
   /* ---------- states ---------- */
   if (loading) return <div className="dp-loading">Loading…</div>;
