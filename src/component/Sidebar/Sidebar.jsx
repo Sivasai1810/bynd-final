@@ -15,7 +15,7 @@ export default function Sidebar({
   onAnalyticsClick,
   onDashboardClick,
   isSubmissionModalOpen,
-  currentView // Add this prop to know the current view
+  currentView 
 }) {
   const navigate = useNavigate();
   const [showTrialBanner, setShowTrialBanner] = useState(false);
