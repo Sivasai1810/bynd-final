@@ -3,10 +3,10 @@ import axios from "axios";
 
 
 function calculateEngagementScore(totalViews, avgTimePerView) {
-  // 40% weight → clicks (max at 20 clicks)
+ 
   const clickScore = Math.min((totalViews || 0) / 20, 1) * 40;
 
-  // 60% weight → time spent (max at 120 sec avg)
+
   const timeScore = Math.min((avgTimePerView || 0) / 120, 1) * 60;
 
   return Math.round(clickScore + timeScore);
@@ -60,7 +60,7 @@ const useAnalytics = (uniqueId) => {
           setError(err.message);
         }
 
-        // ✅ Safe fallback
+      
         setAnalyticsData({
           status: "pending",
           totalViews: 0,
@@ -80,7 +80,7 @@ const useAnalytics = (uniqueId) => {
 
     fetchAnalytics();
 
-    // ✅ Auto-refresh every 30s
+
     const interval = setInterval(fetchAnalytics, 30000);
     return () => clearInterval(interval);
   }, [uniqueId]);

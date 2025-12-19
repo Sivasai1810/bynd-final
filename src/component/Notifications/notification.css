@@ -107,9 +107,7 @@
   100% { transform: rotate(360deg); }
 }
 
-/* ===========================
-   MOBILE VERSION
-=========================== */
+
 
 @media (max-width: 767px) {
   .notification-page-container {

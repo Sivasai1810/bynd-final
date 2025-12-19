@@ -115,15 +115,14 @@ const formatDate = (date) => {
       setIsSubmitting(false);
     }
   };
-if (analyticsLoading && !analyticsData) {
-  return (
-    <div className="anl-loading-wrapper">
-      <div className="anl-spinner"></div>
-      <p className="anl-loading-text">Loading analytics...</p>
-    </div>
-  );
-}
 
+  if (loading) {
+    return (
+      <div className="anl-container">
+        <div className="anl-loading-state">Loading...</div>
+      </div>
+    );
+  }
 
   if (!submissions || submissions.length === 0) {
     return (
@@ -164,33 +163,49 @@ const createdAt = analyticsData?.createdAt;
   const firstViewed = analyticsData?.firstViewedOn;
   const engagementScore = analyticsData?.engagementScore ?? 0;
   const engagementBreakdown = analyticsData?.engagementBreakdown || { high: 0, moderate: 0, low: 0 };
+  const submissionDate = submissionData?.submittedOn || analyticsData?.createdAt;
+
 const viewsOverTime = (() => {
   if (analyticsData?.viewsOverTime?.length > 0) {
     return analyticsData.viewsOverTime;
   }
 
-  if (!createdAt || !firstViewed || totalViews === 0) return [];
+  if (!submissionDate || !firstViewed || totalViews === 0) return [];
 
-  const created = new Date(createdAt);
+  const created = new Date(submissionDate);
   const viewed = new Date(firstViewed);
 
+  // Normalize to IST midnight
   const start = new Date(
     created.toLocaleDateString("en-CA", { timeZone: "Asia/Kolkata" })
   );
-  const viewDay = new Date(
+  const viewDayDate = new Date(
     viewed.toLocaleDateString("en-CA", { timeZone: "Asia/Kolkata" })
   );
 
   const day =
-    Math.floor((viewDay - start) / (1000 * 60 * 60 * 24)) + 1;
+    Math.floor((viewDayDate - start) / (1000 * 60 * 60 * 24)) + 1;
 
   return [
     {
       day,
-      views: totalViews, // ✅ TOTAL VIEWS ONLY
+      views: totalViews, 
     },
   ];
 })();
+
+const getDateLabelForDay = (dayIndex) => {
+  if (!submissionData?.submittedOn) return `Day ${dayIndex}`;
+
+  const baseDate = new Date(submissionData.submittedOn);
+  const date = new Date(baseDate);
+  date.setDate(baseDate.getDate() + (dayIndex - 1));
+
+  return date.toLocaleDateString("en-IN", {
+    month: "short",
+    day: "numeric",
+  });
+};
 
 
 
@@ -282,10 +297,14 @@ const viewsOverTime = (() => {
             {/* <p className="anl-submission-date">
               Submitted on {submissionData.submittedOn}
             </p> */}
-            <p className="anl-submission-date">
+            {/* <p className="anl-submission-date">
   Submitted on {formatDate(createdAt)}
 
+</p> */}
+<p className="anl-submission-date">
+  Submitted on {formatDate(submissionData.submittedOn)}
 </p>
+
 
 
             <button 
@@ -351,7 +370,13 @@ const viewsOverTime = (() => {
             </div>
 
             <div className="anl-engx-card">
-            
+              <div className="anl-engx-info">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                  <circle cx="12" cy="12" r="10" stroke="#9CA3AF" strokeWidth="2" />
+                  <circle cx="12" cy="17" r="1" fill="#9CA3AF" />
+                  <rect x="11" y="7" width="2" height="7" rx="1" fill="#9CA3AF" />
+                </svg>
+              </div>
 
               <div className="anl-engx-left">
                 <img src={Engagement} className="anl-engx-icon" alt="Engagement" />
@@ -472,10 +497,46 @@ const viewsOverTime = (() => {
       : point.views
   }));
 
-  const fullWeekData = Array.from({ length: 8 }, (_, i) => {
-    const existing = normalizedData[i];
-    return existing || { day: i + 1, views: 0, normalizedViews: 0 };
-  });
+  // const fullWeekData = Array.from({ length: 8 }, (_, i) => {
+  //   const existing = normalizedData[i];
+  //   return existing || { day: i + 1, views: 0, normalizedViews: 0 };
+  // });
+
+//   const fullWeekData = Array.from({ length: 8 }, (_, i) => {
+//   const day = i + 1;
+
+//   const match = normalizedData.find(d => d.day === day);
+
+//   return match
+//     ? match
+//     : { day, views: 0, normalizedViews: 0 };
+// });
+
+
+const fullWeekData = Array.from({ length: 8 }, (_, i) => {
+  const day = i + 1;
+  const match = normalizedData.find(d => d.day === day);
+
+  return {
+    day,
+    dailyViews: match ? match.views : 0,
+  };
+});
+
+let runningTotal = 0;
+
+const cumulativeWeekData = fullWeekData.map(point => {
+  runningTotal += point.dailyViews;
+
+  return {
+    day: point.day,
+    dailyViews: point.dailyViews,
+    totalViews: runningTotal,
+    normalizedViews: runningTotal,
+  };
+});
+
+
 
  return totalViews === 0 ? (
   <div className="anl-chart-svg-wrapper">
@@ -548,14 +609,32 @@ const viewsOverTime = (() => {
       })}
 
       {/* X-axis labels */}
-      {[1,2,3,4,5,6,7,8].map((day, i) => {
+      {/* {[1,2,3,4,5,6,7,8].map((day, i) => {
         const x = 60 + (880/7) * i;
         return (
           <text key={i} x={x} y="370" textAnchor="middle" fontSize="16" fill="#111827" fontWeight="500">
             Day {day}
           </text>
         );
-      })}
+      })} */}
+
+      {[1,2,3,4,5,6,7,8].map((day, i) => {
+  const x = 60 + (880 / 7) * i;
+  return (
+    <text
+      key={i}
+      x={x}
+      y="370"
+      textAnchor="middle"
+      fontSize="14"
+      fill="#111827"
+      fontWeight="500"
+    >
+      {getDateLabelForDay(day)}
+    </text>
+  );
+})}
+
 
       {/* bottom axis title */}
       <text x="510" y="400" textAnchor="middle" fontSize="16" fill="#111827" fontWeight="500">
@@ -604,50 +683,48 @@ const viewsOverTime = (() => {
         <text x="45" y="288" fontSize="12" fill="#9CA3AF" textAnchor="end">1</text>
         <text x="45" y="345" fontSize="12" fill="#9CA3AF" textAnchor="end">0</text>
 
-       {fullWeekData.map((point, i) => {
+       {cumulativeWeekData.map((point, i) => {
   const x = 60 + (880 / 7) * i;
+  // const y = 340 - (point.normalizedViews * 56);
   const y = 340 - (point.normalizedViews * 56);
-  const hasViews = point.views > 0;
+
+  // const hasViews = point.views > 0;
+  const hasViews = point.dailyViews > 0;
+
   const radius = 7; // Changed from 9 to 6
   const strokeWidth = 3;
   
   return (
     <g key={i}>
       {/* LINE (passing through circle center) */}
-      {i > 0 && (() => {
-        const prevPoint = fullWeekData[i - 1];
-        const prevX = 60 + (880 / 7) * (i - 1);
-        const prevY = 340 - (prevPoint.normalizedViews * 56);
-        const prevHasViews = prevPoint.views > 0;
-        
-        // Calculate direction vector
-        const dx = x - prevX;
-        const dy = y - prevY;
-        const len = Math.sqrt(dx*dx + dy*dy);
-        const ux = dx / len;
-        const uy = dy / len;
-        
-        // Calculate start and end points based on circle edges
-        const startX = prevHasViews ? prevX + ux * radius : prevX;
-        const startY = prevHasViews ? prevY + uy * radius : prevY;
-        const endX = hasViews ? x - ux * radius : x;
-        const endY = hasViews ? y - uy * radius : y;
-        
-        return (
-          <line
-            x1={startX}
-            y1={startY}
-            x2={endX}
-            y2={endY}
-            style={{
-              stroke: "#10B981",
-              strokeWidth: 2,
-              strokeLinecap: "round"
-            }}
-          />
-        );
-      })()}
-      
+      {i > 0 && (
+  <>
+    {/* Horizontal line from previous day */}
+    <line
+      x1={60 + (880 / 7) * (i - 1)}
+      y1={340 - (cumulativeWeekData[i - 1].normalizedViews * 56)}
+      x2={x}
+      y2={340 - (cumulativeWeekData[i - 1].normalizedViews * 56)}
+      stroke="#10B981"
+      strokeWidth="2"
+      strokeLinecap="round"
+    />
+
+    {/* Vertical jump ONLY if new view happened */}
+    {point.dailyViews > 0 && (
+      <line
+        x1={x}
+        y1={340 - (cumulativeWeekData[i - 1].normalizedViews * 56)}
+        x2={x}
+        y2={y}
+        stroke="#10B981"
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
+    )}
+  </>
+)}
+  
       {/* DOTS */}
       {hasViews ? (
         <circle
@@ -672,14 +749,23 @@ const viewsOverTime = (() => {
   );
 })}
 
-        {[1, 2, 3, 4, 5, 6, 7, 8].map((day, i) => {
-          const x = 60 + (880 / 7) * i;
-          return (
-            <text key={i} x={x} y="370" textAnchor="middle" fontSize="16" fill="#111827" fontWeight="500">
-              Day {day}
-            </text>
-          );
-        })}
+    {[1, 2, 3, 4, 5, 6, 7, 8].map((day, i) => {
+  const x = 60 + (880 / 7) * i;
+  return (
+    <text
+      key={i}
+      x={x}
+      y="370"
+      textAnchor="middle"
+      fontSize="14"
+      fill="#111827"
+      fontWeight="500"
+    >
+      {getDateLabelForDay(day)}
+    </text>
+  );
+})}
+
         
         <text x="510" y="400" textAnchor="middle" fontSize="16" fill="#111827" fontWeight="500">
           Days after submission
