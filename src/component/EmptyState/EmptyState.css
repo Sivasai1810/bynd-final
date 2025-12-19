@@ -1,7 +1,3 @@
-/* ========================================
-   EMPTY STATE – BASE STYLES (DESKTOP FIRST)
-   ======================================== */
-
 .empty-state-container {
   display: flex;
   flex-direction: column;
@@ -12,10 +8,9 @@
   position: relative;
 }
 
-/* Pills positioned inside main content area */
 .empty-state-features {
   position: absolute;
-  top: 80px; /* A1 high spacing above title */
+  top: 80px; 
   left: 50%;
   transform: translateX(-50%);
   display: flex;
@@ -162,37 +157,39 @@
     margin-top: 110px; /* adjust space below pills */
   }
 }
+
 @media (max-width: 470px) {
 
   .empty-state-features {
     position: absolute;
-    top: 45px;
+    top: 32px;
     left: 50%;
     transform: translateX(-50%);
     width: 100%;
+
     display: flex;
-    flex-direction: column;
-    gap: 21px;
-    padding: 0 30px;
+    flex-wrap: wrap;
+    justify-content: space-between; /* ✅ edge alignment */
+    row-gap: 19px;                  /* ✅ smaller gap between rows */
+    column-gap: 0;
+
+    padding: 0 28px;
   }
 
   .empty-state-features-sections {
-    padding: 8px 14px;
+    padding: 6px 12px;
     gap: 6px;
+    background-color: #FAFAF8;
+    border-radius: 33px;
     width: fit-content;
   }
-
-  /* Zig-zag alternating left–right layout */
-  .empty-state-features-sections:nth-child(odd) {
-    margin-left: 0;              /* Left aligned */
-    align-self: flex-start;
-  }
-
-  .empty-state-features-sections:nth-child(even) {
-    margin-right: 0;             /* Right aligned */
-    align-self: flex-end;
-  }
-
+.empty-state-title{
+  font-size: 19px;
+}
+.empty-state-subtitle{
+  font-size: 16px;
+}
+  /* Each pill takes natural width */
   .empty-state-features-sections img {
     width: 14px;
     height: 14px;
@@ -205,6 +202,6 @@
   }
 
   .empty-state-content {
-    margin-top: 165px;
+    margin-top: 140px; /* adjusted for tighter rows */
   }
 }

@@ -77,6 +77,7 @@ useEffect(() => {
 
   async function sendNotification() {
     try {
+      // https://bynd-backend.onrender.com
       const res = await axios.post(`https://bynd-backend.onrender.com/sendnotification/${uniqueId}`);
       console.log(res.data.message);
     } catch (err) {

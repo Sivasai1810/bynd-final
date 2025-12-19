@@ -62,13 +62,21 @@
 /* ===== MOBILE VERSION – VERTICAL STACKED LEFT ALIGNED ===== */
 @media (max-width: 767px) {
 
-  .stats-grid {
+  /* .stats-grid {
     display: flex;
     flex-direction: column;
     gap: 12px;
     padding: 0 12px;
     margin-bottom: 20px;
+  } */
+     .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* ✅ 2 in a row */
+    gap: 12px;
+    padding: 0 12px;
+    margin-bottom: 20px;
   }
+
 
   .stat-card {
     display: flex;
@@ -76,7 +84,7 @@
     align-items: flex-start;          /* LEFT ALIGN */
     justify-content: flex-start;
     gap: 6px;
-    background: #ffffff;
+    background-color: #FAFAF8;
     border: none;
     border-radius: 12px;
     padding: 14px 16px;

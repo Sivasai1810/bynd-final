@@ -80,3 +80,47 @@
 color: #828282;
   max-width: 320px;
 } */
+
+@media (max-width: 767px) {
+
+  .notification-empty-container {
+    min-height: calc(100vh - 56px);
+    padding: 1.5rem 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .notification-empty-content {
+    max-width: 280px;
+    width: 100%;
+  }
+
+  .notification-empty-icon {
+    margin-bottom: 1rem;
+  }
+
+  .plane-icon {
+    width: 56px;      
+    height: 56px;
+  }
+
+  .notification-empty-title {
+    font-size: 1rem; 
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    line-height: 1.3;
+  }
+
+  .notification-empty-description {
+    font-size: 0.8125rem; 
+    line-height: 1.5;
+    color: #6B7280;
+
+
+    white-space: normal;   
+    margin: 0;            
+    padding: 0;
+    text-align: center;
+  }
+}

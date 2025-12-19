@@ -1,3 +1,7 @@
+.anl-chart-svg-wrapper {
+  overflow-x: auto;
+  padding-bottom: 12px;
+}
 
 .anl-header {
   padding-left: 23px;
@@ -125,9 +129,7 @@
   color: #059669;
 }
 
-/* =================================
-   ASSIGNMENT SUMMARY (STATS GRID STYLE)
-================================= */
+
 .anl-assignment-summary {
   margin-top: 10px;
 }
@@ -163,7 +165,6 @@
 .anl-summary-card .anl-card-icon {
   width: 28px;
   height: 28px;
-  border-radius: 8px;
   display: flex;
   align-items: flex-start;
   justify-content: flex-start;
@@ -373,6 +374,42 @@
   font-size: 16px;
   color: #71717A;
 }
+.anl-loading-screen {
+  height: 100vh;
+  width: 100%;
+  background: #ffffff;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Circular loader */
+.anl-loader {
+  width: 42px;
+  height: 42px;
+  border: 4px solid #e5e7eb;
+  border-top: 4px solid #10b981;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+/* Text below loader */
+.anl-loading-text {
+  margin-top: 12px;
+  font-size: 14px;
+  color: #6b7280;
+  font-weight: 500;
+}
+
+/* Animation */
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 
 .anl-chart-footer {
   margin-top: 12px;
@@ -445,87 +482,146 @@
   100% { transform: rotate(360deg); }
 }
 
-/* ===== MOBILE VERSION – VERTICAL STACKED LEFT ALIGNED ===== */
+
 @media (max-width: 767px) {
-  .anl-submission-date{
-    font-size: 10px;
-  }
+  .anl-submission-date {
+  font-size: 9px;
+  color: #6B7280;
+  padding: 4px 0;
+}
+ .anl-header {
+  padding-left: 23px;
+  padding-bottom: 10px;
+  font-size: 10px;
+}
+
+
   .anl-summary-grid {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
     gap: 12px;
-    padding: 0 16px;
-    margin-bottom: 20px;
+    padding: 0 14px;
+    margin-bottom: 16px;
   }
 
   .anl-summary-card {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-start;
-    gap: 6px;
-    background: #ffffff;
+    background: #FAFAF8;
     border: none;
     border-radius: 12px;
-    padding: 14px 16px;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 84px;
   }
 
   .anl-summary-card .anl-card-icon {
-    width: 24px;
-    height: 24px;
-    margin: 0;
+    width: 16px;
+    height: 16px;
+    margin-bottom: 4px;
   }
-
+  .anl-summary-card .anl-card-icon img {
+    width: 18px;
+    height: 18px;
+    object-fit: contain;       
+    display: block;
+  }
   .anl-summary-card .anl-card-label {
-    font-size: 13px;
+    font-size: 10px;
     font-weight: 500;
     color: #6b7280;
     margin: 0;
-    text-align: left;
   }
 
   .anl-summary-card .anl-card-value {
-    font-size: 16px;
+    font-size: 13px;
     font-weight: 600;
     color: #111827;
-    text-align: left;
+    margin-top: 2px;
     line-height: 1.2;
   }
 
-  /* Engagement card mobile */
+
+  .anl-card-value.status-pending {
+    font-size: 11px;
+    padding: 3px 8px;
+    width: fit-content;
+  }
+
+ 
   .anl-engx-card {
-    grid-column: span 1;
+    grid-column: span 2;
+    background: #FAFAF8;
+    border: none;
+    border-radius: 12px;
+    padding: 12px 14px;
+    display: grid;
+    grid-template-columns: 1fr 70px 90px; 
+    align-items: center;
+    gap: 10px;
+    min-height: 90px;
+  }
+   .anl-engx-left {
     display: flex;
     flex-direction: column;
-    gap: 6px;
-    background: #ffffff;
-    border: none;
-    padding: 14px 16px;
+    gap: 4px;
+    align-items: flex-start;
+    text-align: left;
   }
-
-  .anl-engx-left {
-    gap: 6px;
-  }
-
-  .anl-engx-icon {
-    width: 24px;
-    height: 24px;
+   .anl-engx-icon {
+    width: 16px;
+    height: 16px;
   }
 
   .anl-engx-label {
-    font-size: 13px;
+    font-size: 10px;
+    color: #6b7280;
+    line-height: 1.2;
   }
 
   .anl-engx-value {
-    font-size: 16px;
+    font-size: 11px;
+    font-weight: 500;
+    color: #111827;
   }
 
+  
   .anl-engx-donut {
-    display: none;
+    display: flex;
+    justify-content: center;
+    align-items:center;
+    position: relative;
+    right: 51px;
+    width: 64px;
+    height: 64px;
   }
 
+ .anl-summary-card .anl-card-value.status-viewed {
+  width: 60px;
+  color: #10B981 !important;
+  background-color: #D1FAE5;
+  padding: 5px 9px 1px 12px;
+  border-radius: 56px;
+  display: inline-block;
+  font-size: 9px;
+}
   .anl-engx-legend-center {
-    display: none;
+    position: static;
+    transform: none;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    align-items: flex-start;
+  }
+
+  .legend-item {
+    font-size: 10px;
+    gap: 6px;
+  }
+
+  .legend-square {
+    width: 8px;
+    height: 8px;
   }
 
   .anl-engx-info {
@@ -533,9 +629,36 @@
   }
 
   .anl-summary-heading {
-    margin-left: 16px !important;
-    font-size: 16px !important;
+    margin-left: 14px !important;
+    font-size: 15px !important;
+    margin-bottom: 10px !important;
   }
+
+.anl-views-over-time {
+  margin: 1px 16px 0 16px;   
+}
+.anl-chart-header-section {
+  padding: 6px;             
+  margin-bottom: 12px;       
+}
+.anl-opened-message{
+  margin-top: 10px;
+  font-size: 12px;
+}
+.anl-activity-indicator{
+  padding: 8px;
+}
+.info-footer{
+  font-size: 12px;
+  color: #71717A;
+}
+.anl-chart-svg-wrapper {
+  padding-bottom: 6px;      
+}
+.anl-line-chart {
+  height: 280px;             
+}
+ 
 }
 
 /* ===== RESPONSIVE BREAKPOINTS (same as StatsGrid) ===== */
