@@ -8,6 +8,7 @@ import Averagetime from "../../assets/Averagetimeper.svg";
 import Firstviewedon from "../../assets/viewtracking.svg";
 import Lastviewedon from "../../assets/lastviewedon.svg";
 import Engagement from "../../assets/Engagements.svg";
+import Lastviewedat from "../../assets/Group 17919.svg"
 import "./analytics.css";
 
 const Analytics = ({ submissions, loading, selectedSubmission, onSubmissionComplete }) => {
@@ -116,13 +117,6 @@ const formatDate = (date) => {
     }
   };
 
-  if (loading) {
-    return (
-      <div className="anl-container">
-        <div className="anl-loading-state">Loading...</div>
-      </div>
-    );
-  }
 
   if (!submissions || submissions.length === 0) {
     return (
@@ -146,13 +140,15 @@ const formatDate = (date) => {
     );
   }
 
-  if (analyticsLoading && !analyticsData) {
-    return (
-      <div className="anl-container">
-        <div className="anl-loading-state">Loading analytics...</div>
-      </div>
-    );
-  }
+if (analyticsLoading && !analyticsData) {
+  return (
+    <div className="anl-loading-screen">
+      <div className="anl-loader"></div>
+      <p className="anl-loading-text">Loading analytics...</p>
+    </div>
+  );
+}
+
 const createdAt = analyticsData?.createdAt;
   const statusText = analyticsData?.status === 'viewed' ? 'Viewed' : 'Pending';
   const statusClass = analyticsData?.status === 'viewed' ? 'status-viewed' : 'status-pending';
@@ -360,7 +356,7 @@ const getDateLabelForDay = (dayIndex) => {
             </div>
 
             <div className="anl-summary-card">
-              <img src={Lastviewedon} className="anl-card-icon" alt="Last viewed" />
+              <img src={Lastviewedat} className="anl-card-icon" alt="Last viewed" />
               <p className="anl-card-label">Last viewed on</p>
               {/* <p className="anl-card-value">{formatDate(lastViewed)}</p> */}
               <p className="anl-card-value">

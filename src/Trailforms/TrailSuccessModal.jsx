@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import Partypopup from "../assets/Featured icon.svg"
+import Partypopup from "../assets/party-pop-up.svg"
 import "./TrailSuccessModal.css";
 
 const TrialSuccessModal = ({ isOpen, onGoToDashboard }) => {
