@@ -59,16 +59,9 @@
   font-weight: 100;
   line-height: 0.5;
 }
-/* ===== MOBILE VERSION – VERTICAL STACKED LEFT ALIGNED ===== */
 @media (max-width: 767px) {
 
-  /* .stats-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    padding: 0 12px;
-    margin-bottom: 20px;
-  } */
+ 
      .stats-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr); /* ✅ 2 in a row */

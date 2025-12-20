@@ -16,6 +16,7 @@ import TrailConfirmModal from "../Trailforms/TrailConfirmModal";
 import useUserPlan from "../hooks/useUserPlan";
 import Notifications from "../component/Notifications/Notifications";
 import Analytics from '../component/Analytics/analytics';
+import Trialbanner from "../component/14daysfree/14daysbanner";
 import './dashboard.css';
 
 export default function Dashboard() {
@@ -34,6 +35,7 @@ export default function Dashboard() {
   const [submittedShareableLink, setSubmittedShareableLink] = useState("");
   const [currentView, setCurrentView] = useState('dashboard'); // 'dashboard', 'analytics', or 'notifications'
   const [selectedSubmissionForAnalytics, setSelectedSubmissionForAnalytics] = useState(null);
+const [showTrialBanner, setShowTrialBanner] = useState(false);
 
   // Subscription state
   const [subscription, setSubscription] = useState(null);
@@ -350,6 +352,7 @@ export default function Dashboard() {
 
       <Sidebar 
         onNewSubmission={handleShowForm}
+          onShowTrialBanner={() => setShowTrialBanner(true)}
         onNotificationClick={() => {
           if (isPro || isTrial) {
             setCurrentView('notifications');
@@ -412,8 +415,15 @@ export default function Dashboard() {
               onCopyLink={handleCopyLink}
               onDelete={handleDelete}
             />
+  
           </>
         )}
+
+
+            {showTrialBanner && (
+  <Trialbanner onClose={() => setShowTrialBanner(false)} />
+)}
+
       </div>
 
       <SubmissionForm
