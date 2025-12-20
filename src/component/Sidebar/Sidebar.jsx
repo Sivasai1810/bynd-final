@@ -5,7 +5,6 @@ import Addsymbol from "../../assets/addsymbol.svg";
 import Dashsymbol from "../../assets/dashsymbol.svg";
 import Analytics from "../../assets/Analytics.svg";
 import Notification from "../../assets/sidenotification.svg";
-import Trialbanner from "../../component/14daysfree/14daysbanner";
 import useUserPlan from "../../hooks/useUserPlan";
 import './Sidebar.css';
 
@@ -15,10 +14,11 @@ export default function Sidebar({
   onAnalyticsClick,
   onDashboardClick,
   isSubmissionModalOpen,
-  currentView 
+  currentView,
+  onShowTrialBanner
 }) {
   const navigate = useNavigate();
-  const [showTrialBanner, setShowTrialBanner] = useState(false);
+ 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeMenuItem, setActiveMenuItem] = useState('dashboard');
   
@@ -49,34 +49,24 @@ export default function Sidebar({
     setIsMobileMenuOpen(false);
     setActiveMenuItem('analytics');
     
-    if (isFree) {
-      setShowTrialBanner(true);
-    } else {
-      setShowTrialBanner(false);
-      if (onAnalyticsClick) {
-        onAnalyticsClick();
-      }
-    }
+   if (isFree) {
+  onShowTrialBanner?.();
+} else {
+  onAnalyticsClick?.();
+}
   };
 
-  const handleNotificationClick = () => {
-    setIsMobileMenuOpen(false);
-    setActiveMenuItem('notifications');
-    
-    if (isFree) {
-      setShowTrialBanner(true);
-    } else {
-      setShowTrialBanner(false);
-      if (onNotificationClick) {
-        onNotificationClick();
-      }
-    }
-  };
+const handleNotificationClick = () => {
+  setIsMobileMenuOpen(false);
+  setActiveMenuItem('notifications');
 
-  const handleCloseBanner = () => {
-    setShowTrialBanner(false);
-    setActiveMenuItem('dashboard');
-  };
+  if (isFree) {
+    onShowTrialBanner?.();
+  } else {
+    onNotificationClick?.();
+  }
+};
+
 
   const handleNewSubmission = () => {
     onNewSubmission();
@@ -84,14 +74,21 @@ export default function Sidebar({
     setActiveMenuItem('new-submission');
   };
 
+  // const handleDashboardClick = () => {
+  //   setIsMobileMenuOpen(false);
+  //   setActiveMenuItem('dashboard');
+  // onShowTrialBanner?.()
+  //   if (onDashboardClick) {
+  //     onDashboardClick();
+  //   }
+  // };
+
   const handleDashboardClick = () => {
-    setIsMobileMenuOpen(false);
-    setActiveMenuItem('dashboard');
-    setShowTrialBanner(false);
-    if (onDashboardClick) {
-      onDashboardClick();
-    }
-  };
+  setIsMobileMenuOpen(false);
+  setActiveMenuItem('dashboard');
+  onDashboardClick?.();
+};
+
 
   const handleUpgradeClick = () => {
     navigate('/Pricingtable');
@@ -205,9 +202,6 @@ export default function Sidebar({
           </div>
         )}
 
-        {showTrialBanner && isFree && (
-          <Trialbanner onClose={handleCloseBanner} />
-        )}
       </div>
     </>
   );
