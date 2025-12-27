@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react";
-
+import { supabase } from "../auth/supabase"
+import axios from "axios"
 export default function useTimeAnalytics(submissionUniqueId) {
   const startRef = useRef(Date.now());
   const sentRef = useRef(false);
@@ -10,7 +11,7 @@ export default function useTimeAnalytics(submissionUniqueId) {
     startRef.current = Date.now();
     sentRef.current = false;
 
-    const sendTime = () => {
+    const sendTime =async () => {
       if (sentRef.current) return;
       sentRef.current = true;
 
@@ -18,16 +19,39 @@ export default function useTimeAnalytics(submissionUniqueId) {
         (Date.now() - startRef.current) / 1000
       );
 
-      fetch("https://bynd-backend.onrender.com/api/analytics/time", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          submissionUniqueId,
-          timeSpent,
-        }),
-        keepalive: true,
-      });
-    };
+  //     fetch("http://localhost:3000/api/analytics/time", {
+  //       method: "POST",
+  //        headers: {
+  //   "Content-Type": "application/json",
+  //   Authorization: session?.access_token
+  //     ? `Bearer ${session.access_token}`
+  //     : "",
+  // },
+  //       body: JSON.stringify({
+  //         submissionUniqueId,
+  //         timeSpent,
+  //       }),
+  //       keepalive: true,
+  //     });
+  const {
+  data: { session },
+} = await supabase.auth.getSession();
+
+const accessToken = session?.access_token;
+
+await axios.post(
+  "https://bynd-backend.onrender.com/api/analytics/time",
+  {
+    submissionUniqueId,
+    timeSpent,
+  },
+  {
+    headers: accessToken
+      ? { Authorization: `Bearer ${accessToken}` }
+      : {},
+  }
+);
+     };
 
     window.addEventListener("beforeunload", sendTime);
     document.addEventListener("visibilitychange", () => {

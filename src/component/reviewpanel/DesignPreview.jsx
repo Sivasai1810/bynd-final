@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import { supabase } from "../../auth/supabase"
 import useAnalytics from "../../hooks/useAnalytics";
 import useTimeAnalytics from "../../hooks/timeanalytics";
 import "../employersview/employersview.css";
@@ -8,6 +9,7 @@ import "../employersview/employersview.css";
 export default function DesignPreview() {
   const { uniqueId } = useParams();
 const hasSent=useRef(false)
+const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
 
   useAnalytics(uniqueId);
 useTimeAnalytics(uniqueId);
@@ -33,9 +35,26 @@ useTimeAnalytics(uniqueId);
 
     async function load() {
       try {
-        const res = await axios.get(
-          `https://bynd-backend.onrender.com/api/view/${uniqueId}`
-        );
+        // https://bynd-backend.onrender.com
+        // const res = await axios.get(
+        //   `http://localhost:3000/api/view/${uniqueId}`,
+        //   {withCredentials:true}
+        // );
+        const {
+  data: { session },
+} = await supabase.auth.getSession();
+
+const accessToken = session?.access_token;
+
+const res = await axios.get(
+  `https://bynd-backend.onrender.com/api/view/${uniqueId}`,
+  {
+    headers: accessToken
+      ? { Authorization: `Bearer ${accessToken}` }
+      : {},
+  }
+);
+
 
         if (!alive) return;
 
@@ -102,6 +121,13 @@ useEffect(() => {
   if (!design?.ok) return <div className="dp-error">Not found</div>;
 
   const d = design.design;
+  const pdfUrl = design.pdfUrl;
+
+const finalPdfUrl =
+  isMobile && pdfUrl
+    ? `https://docs.google.com/gview?url=${encodeURIComponent(pdfUrl)}&embedded=true`
+    : pdfUrl;
+
 
   const dateStr = new Date(d.created_at).toLocaleDateString("en-US", {
     month: "long",
@@ -170,11 +196,13 @@ useEffect(() => {
                   alt="preview"
                 />
               ) : (
-                <iframe
-                  src={design.pdfUrl}
-                  className="dp-preview-iframe"
-                  title="preview"
-                />
+              <iframe
+  src={finalPdfUrl}
+  className="dp-preview-iframe"
+  title="preview"
+  allow="fullscreen"
+/>
+
               )}
             </div>
           </div>

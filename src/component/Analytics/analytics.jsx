@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect , useMemo } from "react";
+import ReactECharts from "echarts-for-react";
 import useAnalytics from "../../hooks/Dashboardanalytics";
 import SubmissionForm from "../SubmissionForm/SubmissionForm";
 import SubmissionAge from "../../assets/Submissionage.svg"
@@ -117,8 +118,183 @@ const formatDate = (date) => {
     }
   };
 
+   const submissionData = submissions.find(s => s.uniqueId === currentSubmissionId) || submissions[0];
+ 
+const createdAt = analyticsData?.createdAt;
+  const statusText = analyticsData?.status === 'viewed' ? 'Viewed' : 'Pending';
+  const statusClass = analyticsData?.status === 'viewed' ? 'status-viewed' : 'status-pending';
+  const totalViews = analyticsData?.totalViews ?? 0;
+  const uniqueViewers = analyticsData?.uniqueViewers ?? 0;
+  const avgTime = analyticsData?.avgTimePerView ?? 0;
+  const lastViewed = analyticsData?.lastViewedAt;
+  const firstViewed = analyticsData?.firstViewedOn;
+  const engagementScore = analyticsData?.engagementScore ?? 0;
+  const engagementBreakdown = analyticsData?.engagementBreakdown || { high: 0, moderate: 0, low: 0 };
+  
+const rawViews = analyticsData?.viewsOverTime || [];
+const submittedOn =submissionData?.submittedOn;
+const chartOption = useMemo(() => {
+  if (!submittedOn) return {};
+  // 
+  const submittedDate = new Date(submittedOn);
+  if (isNaN(submittedDate)) return {};
+const today = new Date();
+// Always allow future 7-day window
+const startDate = submittedDate;
+const endDate = new Date(
+  Math.max(
+    today.getTime(),
+    submittedDate.getTime()
+  )
+);
 
-  if (!submissions || submissions.length === 0) {
+// extend 6 more days into the future
+endDate.setDate(endDate.getDate() + 6);
+
+
+  // Map backend data → date => views
+  const viewMap = new Map(
+    rawViews.map(v => [v.date, v.views])
+  );
+const xData = [];
+const yData = [];
+
+let runningTotal = 0;
+
+for (
+  let d = new Date(startDate);
+  d <= endDate;      
+  d.setDate(d.getDate() + 1)
+) {
+  const iso = d.toISOString().slice(0, 10);
+
+  xData.push(
+    d.toLocaleDateString("en-IN", {
+      day: "2-digit",
+      month: "short",
+    })
+  );
+
+  const dailyViews = viewMap.get(iso) || 0;
+runningTotal += dailyViews;
+
+yData.push({
+  value: runningTotal,
+
+  symbol: "circle",
+  symbolSize: 8,
+
+  itemStyle: dailyViews > 0
+    ? {
+        color: "#FFFFFF",        
+        borderColor: "#10B981",  
+        borderWidth: 2,
+      }
+    : {
+        color: "#10B981",        
+      }
+});
+
+}
+
+
+
+  return {
+    grid: {
+      left: 60,
+      right: 30,
+      top: 20,
+      bottom: 60,
+    },
+
+    tooltip: {
+      trigger: "axis",
+    },
+
+    // xAxis: {
+    //   type: "category",
+    //   data: xData,
+    //   boundaryGap: false,
+    //   name: "Days after submission",
+    //   nameLocation: "middle",
+    //   nameGap: 40,
+    //   axisLabel: { color: "#6B7280" },
+    //   axisLine: { lineStyle: { color: "#D1D5DB" } },
+    // },
+ xAxis: {
+  type: "category",
+  data: xData,
+  boundaryGap: false,
+  name: "Date",
+  nameLocation: "middle",
+  nameGap: 35,
+  axisLabel: { color: "#6B7280" },
+},
+
+    // yAxis: {
+    //   type: "value",
+    //   min: 0,
+    //   max: 12,
+    //   interval: 2,
+    //   name: "Total views",
+    //   nameLocation: "middle",
+    //   nameGap: 45,
+    //   axisLabel: { color: "#6B7280" },
+    //   splitLine: {
+    //     lineStyle: { color: "#E5E7EB" },
+    //   },
+    // },
+yAxis: {
+  type: "value",
+  min: 0,
+  max: 12,
+  interval: 2,
+  name: "Total views",
+  nameLocation: "middle",
+  nameGap: 45,
+  axisLabel: { color: "#6B7280" },
+  splitLine: { lineStyle: { color: "#E5E7EB" } },
+},
+
+dataZoom: [
+  {
+    type: "slider",
+    height: 0,
+    bottom: 10,
+    start: 0,
+    end: 90,
+    showDetail: false,
+    showDataShadow: false
+  },
+  {
+    type: "inside",
+    zoomOnMouseWheel: false,
+    moveOnMouseWheel: true
+  }
+],
+
+
+
+    series: [
+      {
+        type: "line",
+        data: yData,
+        symbol: "circle",
+        symbolSize: 8,
+        lineStyle: {
+          width: 3,
+          color: "#10B981",
+        },
+        itemStyle: {
+          color: "#10B981",
+        },
+        smooth: false,
+      },
+    ],
+  };
+}, [rawViews, submittedOn]);
+
+if (!submissions || submissions.length === 0) {
     return (
       <div className="anl-container">
         <div className="anl-empty-state">
@@ -128,7 +304,7 @@ const formatDate = (date) => {
     );
   }
 
-  const submissionData = submissions.find(s => s.uniqueId === currentSubmissionId) || submissions[0];
+ 
 
   if (!submissionData) {
     return (
@@ -148,62 +324,7 @@ if (analyticsLoading && !analyticsData) {
     </div>
   );
 }
-
-const createdAt = analyticsData?.createdAt;
-  const statusText = analyticsData?.status === 'viewed' ? 'Viewed' : 'Pending';
-  const statusClass = analyticsData?.status === 'viewed' ? 'status-viewed' : 'status-pending';
-  const totalViews = analyticsData?.totalViews ?? 0;
-  const uniqueViewers = analyticsData?.uniqueViewers ?? 0;
-  const avgTime = analyticsData?.avgTimePerView ?? 0;
-  const lastViewed = analyticsData?.lastViewedAt;
-  const firstViewed = analyticsData?.firstViewedOn;
-  const engagementScore = analyticsData?.engagementScore ?? 0;
-  const engagementBreakdown = analyticsData?.engagementBreakdown || { high: 0, moderate: 0, low: 0 };
-  const submissionDate = submissionData?.submittedOn || analyticsData?.createdAt;
-
-const viewsOverTime = (() => {
-  if (analyticsData?.viewsOverTime?.length > 0) {
-    return analyticsData.viewsOverTime;
-  }
-
-  if (!submissionDate || !firstViewed || totalViews === 0) return [];
-
-  const created = new Date(submissionDate);
-  const viewed = new Date(firstViewed);
-
-  // Normalize to IST midnight
-  const start = new Date(
-    created.toLocaleDateString("en-CA", { timeZone: "Asia/Kolkata" })
-  );
-  const viewDayDate = new Date(
-    viewed.toLocaleDateString("en-CA", { timeZone: "Asia/Kolkata" })
-  );
-
-  const day =
-    Math.floor((viewDayDate - start) / (1000 * 60 * 60 * 24)) + 1;
-
-  return [
-    {
-      day,
-      views: totalViews, 
-    },
-  ];
-})();
-
-const getDateLabelForDay = (dayIndex) => {
-  if (!submissionData?.submittedOn) return `Day ${dayIndex}`;
-
-  const baseDate = new Date(submissionData.submittedOn);
-  const date = new Date(baseDate);
-  date.setDate(baseDate.getDate() + (dayIndex - 1));
-
-  return date.toLocaleDateString("en-IN", {
-    month: "short",
-    day: "numeric",
-  });
-};
-
-
+  
 
   return (
     <>
@@ -477,299 +598,24 @@ const getDateLabelForDay = (dayIndex) => {
                 {totalViews === 0 ? 'Not viewed' : `${totalViews} ${totalViews === 1 ? 'View' : 'Views'}`}
               </p>
             </div>
-
-
-{(() => {
-  // const maxDataViews = Math.max(...viewsOverTime.map(v => v.views), 1);
-  const maxDataViews =
-  viewsOverTime.length > 0
-    ? Math.max(...viewsOverTime.map(v => v.views))
-    : 1;
-
-  const normalizedData = viewsOverTime.map(point => ({
-    ...point,
-    normalizedViews: maxDataViews > 5 
-      ? Math.min((point.views / maxDataViews) * 5, 5) 
-      : point.views
-  }));
-
-  // const fullWeekData = Array.from({ length: 8 }, (_, i) => {
-  //   const existing = normalizedData[i];
-  //   return existing || { day: i + 1, views: 0, normalizedViews: 0 };
-  // });
-
-//   const fullWeekData = Array.from({ length: 8 }, (_, i) => {
-//   const day = i + 1;
-
-//   const match = normalizedData.find(d => d.day === day);
-
-//   return match
-//     ? match
-//     : { day, views: 0, normalizedViews: 0 };
-// });
-
-
-const fullWeekData = Array.from({ length: 8 }, (_, i) => {
-  const day = i + 1;
-  const match = normalizedData.find(d => d.day === day);
-
-  return {
-    day,
-    dailyViews: match ? match.views : 0,
-  };
-});
-
-let runningTotal = 0;
-
-const cumulativeWeekData = fullWeekData.map(point => {
-  runningTotal += point.dailyViews;
-
-  return {
-    day: point.day,
-    dailyViews: point.dailyViews,
-    totalViews: runningTotal,
-    normalizedViews: runningTotal,
-  };
-});
-
-
-
- return totalViews === 0 ? (
-  <div className="anl-chart-svg-wrapper">
-    <svg className="anl-line-chart" viewBox="0 0 1000 420" style={{ display: "block" }}>
-
-      {/* Y-Axis Title */}
-      <text 
-        x="-200" 
-        y="20" 
-        transform="rotate(-90)" 
-        fontSize="15" 
-        fill="#111827"
-        textAnchor="middle"
-        fontWeight="600"
-      >
-        Total views
-      </text>
-
-      {/* GRIDLINES (0 to 5) */}
-      {[0,1,2,3,4,5].map((v) => {
-        const y = 340 - (v * 56);
-        return (
-          <line
-            key={v}
-            x1="60"
-            y1={y}
-            x2="960"
-            y2={y}
-            stroke="#E5E7EB"
-            strokeWidth="1"
-          />
-        );
-      })}
-
-      {/* Y axis + baseline */}
-      <line x1="60" y1="60" x2="60" y2="340" stroke="#9CA3AF" strokeWidth="1" />
-      <line x1="60" y1="340" x2="960" y2="340" stroke="#9CA3AF" strokeWidth="2" />
-
-      {/* Y-axis tick labels */}
-      <text x="45" y="64" fontSize="12" fill="#9CA3AF" textAnchor="end">5</text>
-      <text x="45" y="120" fontSize="12" fill="#9CA3AF" textAnchor="end">4</text>
-      <text x="45" y="176" fontSize="12" fill="#9CA3AF" textAnchor="end">3</text>
-      <text x="45" y="232" fontSize="12" fill="#9CA3AF" textAnchor="end">2</text>
-      <text x="45" y="288" fontSize="12" fill="#9CA3AF" textAnchor="end">1</text>
-      <text x="45" y="345" fontSize="12" fill="#9CA3AF" textAnchor="end">0</text>
-
-      {/* FLAT LINE AT ZERO - connects all points */}
-      <line 
-        x1="60" 
-        y1="340" 
-        x2={60 + (880/7)*7} 
-        y2="340" 
-        stroke="#10B981"
-        strokeWidth="2"
-        strokeLinecap="round"
-      />
-
-      {/* DOTS - all small filled dots at baseline (y=340) */}
-      {[0, 1, 2, 3, 4, 5, 6, 7].map((i) => {
-        const x = 60 + (880/7) * i;
-        return (
-          <circle 
-            key={i}
-            cx={x} 
-            cy="340" 
-            r="5" 
-            fill="#10B981"
-          />
-        );
-      })}
-
-      {/* X-axis labels */}
-      {/* {[1,2,3,4,5,6,7,8].map((day, i) => {
-        const x = 60 + (880/7) * i;
-        return (
-          <text key={i} x={x} y="370" textAnchor="middle" fontSize="16" fill="#111827" fontWeight="500">
-            Day {day}
-          </text>
-        );
-      })} */}
-
-      {[1,2,3,4,5,6,7,8].map((day, i) => {
-  const x = 60 + (880 / 7) * i;
-  return (
-    <text
-      key={i}
-      x={x}
-      y="370"
-      textAnchor="middle"
-      fontSize="14"
-      fill="#111827"
-      fontWeight="500"
-    >
-      {getDateLabelForDay(day)}
-    </text>
-  );
-})}
-
-
-      {/* bottom axis title */}
-      <text x="510" y="400" textAnchor="middle" fontSize="16" fill="#111827" fontWeight="500">
-        Days after submission
-      </text>
-
-    </svg>
-  </div>
+{chartOption?.series?.[0]?.data?.length > 0 ? (
+  <div className="anl-chart-scroll">
+  <ReactECharts
+   className="anl-chart"
+    option={chartOption}
+    style={{ height: 360, width: "1050px" }}
+    notMerge
+    lazyUpdate
+  />
+   </div>
 ) : (
-    <div className="anl-chart-svg-wrapper">
-      <svg className="anl-line-chart" viewBox="0 0 1000 420" style={{ display: 'block' }}>
-        <text 
-          x="-200" 
-          y="20" 
-          transform="rotate(-90)" 
-          fontSize="15" 
-          fill="#111827"
-          textAnchor="middle"
-          fontWeight="600"
-        >
-          Total views
-        </text>
-
-        {[0, 1, 2, 3, 4, 5].map((val) => {
-          const y = 340 - (val * 56);
-          return (
-            <line 
-              key={val}
-              x1="60" 
-              y1={y} 
-              x2="960" 
-              y2={y} 
-              stroke="#E5E7EB" 
-              strokeWidth="1"
-            />
-          );
-        })}
-
-        <line x1="60" y1="60" x2="60" y2="340" stroke="#9CA3AF" strokeWidth="1" />
-        <line x1="60" y1="340" x2="960" y2="340" stroke="#9CA3AF" strokeWidth="2" />
-
-        <text x="45" y="64" fontSize="12" fill="#9CA3AF" textAnchor="end">5</text>
-        <text x="45" y="120" fontSize="12" fill="#9CA3AF" textAnchor="end">4</text>
-        <text x="45" y="176" fontSize="12" fill="#9CA3AF" textAnchor="end">3</text>
-        <text x="45" y="232" fontSize="12" fill="#9CA3AF" textAnchor="end">2</text>
-        <text x="45" y="288" fontSize="12" fill="#9CA3AF" textAnchor="end">1</text>
-        <text x="45" y="345" fontSize="12" fill="#9CA3AF" textAnchor="end">0</text>
-
-       {cumulativeWeekData.map((point, i) => {
-  const x = 60 + (880 / 7) * i;
-  // const y = 340 - (point.normalizedViews * 56);
-  const y = 340 - (point.normalizedViews * 56);
-
-  // const hasViews = point.views > 0;
-  const hasViews = point.dailyViews > 0;
-
-  const radius = 7; // Changed from 9 to 6
-  const strokeWidth = 3;
-  
-  return (
-    <g key={i}>
-      {/* LINE (passing through circle center) */}
-      {i > 0 && (
-  <>
-    {/* Horizontal line from previous day */}
-    <line
-      x1={60 + (880 / 7) * (i - 1)}
-      y1={340 - (cumulativeWeekData[i - 1].normalizedViews * 56)}
-      x2={x}
-      y2={340 - (cumulativeWeekData[i - 1].normalizedViews * 56)}
-      stroke="#10B981"
-      strokeWidth="2"
-      strokeLinecap="round"
-    />
-
-    {/* Vertical jump ONLY if new view happened */}
-    {point.dailyViews > 0 && (
-      <line
-        x1={x}
-        y1={340 - (cumulativeWeekData[i - 1].normalizedViews * 56)}
-        x2={x}
-        y2={y}
-        stroke="#10B981"
-        strokeWidth="2"
-        strokeLinecap="round"
-      />
-    )}
-  </>
+  <div className="anl-empty-chart">
+    No views yet
+  </div>
 )}
-  
-      {/* DOTS */}
-      {hasViews ? (
-        <circle
-          cx={x}
-          cy={y}
-          r={radius}
-          style={{
-            fill: "white",
-            stroke: "#10B981",
-            strokeWidth: strokeWidth,
-          }}
-        />
-      ) : (
-        <circle
-          cx={x}
-          cy={y}
-          r={5}
-          style={{ fill: "#10B981" }}
-        />
-      )}
-    </g>
-  );
-})}
 
-    {[1, 2, 3, 4, 5, 6, 7, 8].map((day, i) => {
-  const x = 60 + (880 / 7) * i;
-  return (
-    <text
-      key={i}
-      x={x}
-      y="370"
-      textAnchor="middle"
-      fontSize="14"
-      fill="#111827"
-      fontWeight="500"
-    >
-      {getDateLabelForDay(day)}
-    </text>
-  );
-})}
 
-        
-        <text x="510" y="400" textAnchor="middle" fontSize="16" fill="#111827" fontWeight="500">
-          Days after submission
-        </text>
-      </svg>
-    </div>
-  );
-})()}
+
           </div>
 
           <div className="anl-activity-indicator">

@@ -80,11 +80,10 @@
 color: #828282;
   max-width: 320px;
 } */
-
 @media (max-width: 767px) {
 
   .notification-empty-container {
-    min-height: calc(100vh - 56px);
+    min-height: calc(80vh - 56px);
     padding: 1.5rem 1rem;
     display: flex;
     align-items: center;
@@ -92,8 +91,15 @@ color: #828282;
   }
 
   .notification-empty-content {
-    max-width: 280px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
     width: 100%;
+    max-width: 280px;
+    margin-left: auto; 
+    margin-right: auto; 
   }
 
   .notification-empty-icon {
@@ -101,26 +107,24 @@ color: #828282;
   }
 
   .plane-icon {
-    width: 56px;      
+    width: 56px;
     height: 56px;
   }
 
   .notification-empty-title {
-    font-size: 1rem; 
-    font-weight: 600;
-    margin-bottom: 0.5rem;
+    font-size: 1rem;
+    font-weight: 500;
+    margin-bottom: 2.5rem;
     line-height: 1.3;
+    text-align: center;
   }
 
   .notification-empty-description {
-    font-size: 0.8125rem; 
+    font-size: 0.8125rem;
     line-height: 1.5;
-    color: #6B7280;
-
-
-    white-space: normal;   
-    margin: 0;            
-    padding: 0;
+    margin: 0;
+    padding: 0px;
     text-align: center;
+    white-space: normal;
   }
 }

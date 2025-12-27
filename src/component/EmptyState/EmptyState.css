@@ -202,6 +202,7 @@
   }
 
   .empty-state-content {
-    margin-top: 140px; /* adjusted for tighter rows */
+    margin-top: 0px; 
   }
+  
 }
