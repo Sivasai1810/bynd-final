@@ -273,4 +273,7 @@ top: 20px; }
   .dp-right {
     margin-top: 20px;
   }
+    .dp-date {
+    font-size: 12px;
+  }
 }/* Base Reset */

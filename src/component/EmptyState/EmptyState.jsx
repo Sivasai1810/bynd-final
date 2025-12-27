@@ -2,7 +2,8 @@ import React from 'react';
 import viewtracking from "../../assets/viewtracking.svg"
 import Engagementsgraphs from "../../assets/Engagementsgraph.svg"
 import Engagementsempty from "../../assets/Engagementsempty.svg"
-import Analyticsreport from "../../assets/Engagementsempty.svg"
+import Analyticsreport from "../../assets/emptystate.svg"
+
 import './EmptyState.css';
 
 export default function EmptyState({ onNewSubmission }) {

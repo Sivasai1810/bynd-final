@@ -441,6 +441,37 @@
   color: #6B7280;
   font-weight: 500;
 }
+/* .chart-scroll-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+.chart-scroll-wrapper::-webkit-scrollbar {
+  height: 8px;
+}
+
+.chart-scroll-wrapper::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.chart-scroll-wrapper::-webkit-scrollbar-thumb {
+  background: #555;
+  border-radius: 6px;
+}
+
+.chart-scroll-wrapper::-webkit-scrollbar-thumb:hover {
+  background: #777;
+} */
+
+.anl-chart-scroll{
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+.anl-chart{
+  height: 360px;
+  min-width: 1050px;
+}
 
 .info-footer {
   margin-top: 30px;
@@ -484,6 +515,7 @@
 
 
 @media (max-width: 767px) {
+
   .anl-submission-date {
   font-size: 9px;
   color: #6B7280;
@@ -657,6 +689,12 @@
 }
 .anl-line-chart {
   height: 280px;             
+}
+.anl-chart{
+  min-width: 100%;
+}
+.anl-chart-scroll{
+  overflow-x: hidden;
 }
  
 }

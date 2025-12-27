@@ -110,8 +110,11 @@
 
 
 @media (max-width: 767px) {
-  .notification-page-container {
-    margin-right: 16px;
+ .notification-page-container {
+    margin: 0 auto;
+    padding: 0 16px;   /* equal gap on left & right */
+    width: 100%;
+    box-sizing: border-box;
   }
 
   /* Title */
