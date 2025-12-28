@@ -4,7 +4,6 @@ import axios from "axios";
 import { supabase } from "../../auth/supabase"
 import useAnalytics from "../../hooks/useAnalytics";
 import useTimeAnalytics from "../../hooks/timeanalytics";
-import MobilePdfViewer from "./MobilePdfViewer";
 import "../employersview/employersview.css";
 
 export default function DesignPreview() {
@@ -196,34 +195,16 @@ const finalPdfUrl =
                   className="dp-preview-img"
                   alt="preview"
                 />
-              ) :  (
-    <>
-      {/* Mobile fallback open button */}
-      {isMobile && (
-        <a
-          href={pdfUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="open-pdf-btn"
-        >
-          Open document
-        </a>
-      )}
+              ) : (
+              <iframe
+  src={finalPdfUrl}
+  className="dp-preview-iframe"
+  title="preview"
+  allow="fullscreen"
+/>
 
-      {/* Preview */}
-      {isMobile ? (
-        <MobilePdfViewer url={pdfUrl} />
-      ) : (
-        <iframe
-          src={pdfUrl}
-          className="dp-preview-iframe"
-          title="preview"
-          allow="fullscreen"
-        />
-      )}
-    </>
-  )}
-</div>
+              )}
+            </div>
           </div>
         </div>
 
