@@ -1,7 +1,7 @@
  .mobile-menu-toggle {
   display: none;
   position: fixed;
-  top: 29px;
+  top: 25px;
   left: 13px;
   transform: translateY(-50%);
   background-color: white;
@@ -416,19 +416,27 @@
     transition: opacity 0.3s ease;
   }
 
-  /* Sidebar transforms to fixed slide-in menu */
   .sidebar {
     position: fixed;
     top: 0;
     left: 0;
     width: 280px;
-    height: 96vh;
-    z-index: 1000;
-    transform: translateX(-100%);
-    box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
+    height: 100vh;                
+    display: flex;
+    flex-direction: column;        
+    background-color: #FAFAF8;
+
     padding: 16px;
-    overflow-y: auto;
-    padding-bottom: 24px;
+    padding-bottom: 20px;         
+
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    z-index: 1000;
+    overflow: hidden;             
+  }
+
+  .sidebar.sidebar-open {
+    transform: translateX(0);
   }
 
   /* Open state */
@@ -495,15 +503,9 @@
     border-radius: 6px;
     font-size: 13px;
   }
-    .upgrade-card,
-  .trial-progress-card,
-  .pro-active-card {
-    margin-top: 20px;   /* normal spacing */
-    margin-bottom: 16px;
-  }
+   
 }
 
-/* 470px - 770px */
 @media (min-width: 470px) and (max-width: 769px) {
   .sidebar {
     width: 270px;
@@ -612,7 +614,7 @@
   .upgrade-card {
     border-radius: 8px;
     padding: 10px;
-    margin-bottom: 45px;
+
   }
   .trial-progress-card{
     border-radius: 8px;
