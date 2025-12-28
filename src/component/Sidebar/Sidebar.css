@@ -1,7 +1,7 @@
  .mobile-menu-toggle {
   display: none;
   position: fixed;
-  top: 34px;
+  top: 29px;
   left: 13px;
   transform: translateY(-50%);
   background-color: white;
@@ -422,11 +422,13 @@
     top: 0;
     left: 0;
     width: 280px;
-    height: 100vh;
+    height: 96vh;
     z-index: 1000;
     transform: translateX(-100%);
     box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
     padding: 16px;
+    overflow-y: auto;
+    padding-bottom: 24px;
   }
 
   /* Open state */
@@ -492,6 +494,12 @@
     padding: 10px;
     border-radius: 6px;
     font-size: 13px;
+  }
+    .upgrade-card,
+  .trial-progress-card,
+  .pro-active-card {
+    margin-top: 20px;   /* normal spacing */
+    margin-bottom: 16px;
   }
 }
 
@@ -609,7 +617,10 @@
   .trial-progress-card{
     border-radius: 8px;
     padding: 10px;
-    margin-bottom: 45px;
+  }
+   .upgrade-card,
+  .trial-progress-card {
+    margin-bottom: 20px;
   }
 
   .upgrade-text {
