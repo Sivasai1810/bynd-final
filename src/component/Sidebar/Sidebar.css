@@ -590,7 +590,7 @@
 
   .menu-item {
     gap: 8px;
-    padding: 10px 8px;
+    padding: 13px 8px;
     border-radius: 5px;
     font-size: 12px;
     margin-bottom: 3px;
@@ -604,7 +604,12 @@
   .upgrade-card {
     border-radius: 8px;
     padding: 10px;
-    margin-bottom: 12px;
+    margin-bottom: 45px;
+  }
+  .trial-progress-card{
+    border-radius: 8px;
+    padding: 10px;
+    margin-bottom: 45px;
   }
 
   .upgrade-text {

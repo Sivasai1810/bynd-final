@@ -146,7 +146,7 @@ const Navbar = () => {
               <li><Link to='contact' smooth={true} duration={70} onClick={closeMenu}>Contact</Link></li>
               
               {/* Mobile-only Login button */}
-              <li className='mobile-nav-actions'>
+              <li className='mobile-nav-actions  mobile-only'>
                 <a href='' className='nav-login mobile-login' onClick={closeMenus}>Login</a>
               </li>
             </ul>

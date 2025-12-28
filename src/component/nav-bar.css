@@ -126,6 +126,10 @@
   transform-origin: center;
   display: block;
 }
+.mobile-only {
+  display: none;
+}
+
 
 /* ========================================
    RESPONSIVE BREAKPOINTS
@@ -196,6 +200,9 @@
 
   .nav-logo img {
     height: 38px;
+  }
+  .mobile-only{
+    display: block;
   }
 
   .nav-menu {
@@ -364,6 +371,9 @@
     padding: 0 24px;
     height: 70px;
   }
+ .mobile-only{
+    display: block;
+  }
 
   .nav-menu {
     margin-left: calc(4% + 20px);
@@ -402,6 +412,9 @@
     padding: 0 20px;
     height: 68px;
     position: relative;
+  }
+   .mobile-only{
+    display: block;
   }
 
   .nav-logo img {
@@ -572,6 +585,9 @@
     position: relative;
   }
 
+   .mobile-only{
+    display: block;
+  }
   .nav-logo img {
     height: 34px;
   }

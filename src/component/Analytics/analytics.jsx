@@ -15,8 +15,8 @@ import "./analytics.css";
 const Analytics = ({ submissions, loading, selectedSubmission, onSubmissionComplete }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [currentSubmissionId, setCurrentSubmissionId] = useState(selectedSubmission);
-  
- 
+  const [isMobile, setIsMobile] = useState(false);
+
   const [showSubmissionForm, setShowSubmissionForm] = useState(false);
   const [pdfFile, setPdfFile] = useState(null);
   const [pastedUrl, setPastedUrl] = useState("");
@@ -25,6 +25,15 @@ const Analytics = ({ submissions, loading, selectedSubmission, onSubmissionCompl
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const { analyticsData, loading: analyticsLoading, error: analyticsError } = useAnalytics(currentSubmissionId);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 767);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   useEffect(() => {
     if (selectedSubmission) {
@@ -201,7 +210,7 @@ yData.push({
 
   return {
     grid: {
-      left: 60,
+      left: 0,
       right: 30,
       top: 20,
       bottom: 60,
@@ -211,16 +220,7 @@ yData.push({
       trigger: "axis",
     },
 
-    // xAxis: {
-    //   type: "category",
-    //   data: xData,
-    //   boundaryGap: false,
-    //   name: "Days after submission",
-    //   nameLocation: "middle",
-    //   nameGap: 40,
-    //   axisLabel: { color: "#6B7280" },
-    //   axisLine: { lineStyle: { color: "#D1D5DB" } },
-    // },
+  
  xAxis: {
   type: "category",
   data: xData,
@@ -231,48 +231,25 @@ yData.push({
   axisLabel: { color: "#6B7280" },
 },
 
-    // yAxis: {
-    //   type: "value",
-    //   min: 0,
-    //   max: 12,
-    //   interval: 2,
-    //   name: "Total views",
-    //   nameLocation: "middle",
-    //   nameGap: 45,
-    //   axisLabel: { color: "#6B7280" },
-    //   splitLine: {
-    //     lineStyle: { color: "#E5E7EB" },
-    //   },
-    // },
 yAxis: {
   type: "value",
   min: 0,
   max: 12,
   interval: 2,
-  name: "Total views",
-  nameLocation: "middle",
-  nameGap: 45,
-  axisLabel: { color: "#6B7280" },
-  splitLine: { lineStyle: { color: "#E5E7EB" } },
-},
-
-dataZoom: [
-  {
-    type: "slider",
-    height: 0,
-    bottom: 10,
-    start: 0,
-    end: 90,
-    showDetail: false,
-    showDataShadow: false
+  axisLabel: {
+    show: false  
   },
-  {
-    type: "inside",
-    zoomOnMouseWheel: false,
-    moveOnMouseWheel: true
-  }
-],
-
+  axisLine: {
+    show: false  
+  },
+  axisTick: {
+    show: false  
+  },
+  splitLine: {
+    show: true,  
+    lineStyle: { color: "#E5E7EB" }
+  },
+},
 
 
     series: [
@@ -292,7 +269,7 @@ dataZoom: [
       },
     ],
   };
-}, [rawViews, submittedOn]);
+}, [rawViews, submittedOn, isMobile]);
 
 if (!submissions || submissions.length === 0) {
     return (
@@ -411,13 +388,7 @@ if (analyticsLoading && !analyticsData) {
           </div>
 
           <div className="anl-meta-row">
-            {/* <p className="anl-submission-date">
-              Submitted on {submissionData.submittedOn}
-            </p> */}
-            {/* <p className="anl-submission-date">
-  Submitted on {formatDate(createdAt)}
-
-</p> */}
+      
 <p className="anl-submission-date">
   Submitted on {formatDate(submissionData.submittedOn)}
 </p>
@@ -599,15 +570,37 @@ if (analyticsLoading && !analyticsData) {
               </p>
             </div>
 {chartOption?.series?.[0]?.data?.length > 0 ? (
-  <div className="anl-chart-scroll">
-  <ReactECharts
-   className="anl-chart"
-    option={chartOption}
-    style={{ height: 360, width: "1050px" }}
-    notMerge
-    lazyUpdate
-  />
-   </div>
+  <div className="anl-chart-wrapper">
+    <div className="anl-y-axis-fixed">
+    <div className="anl-y-axis-labels">
+  <div className="anl-y-axis-title-wrap">
+    <div className="anl-y-axis-title-vertical">
+      <p>T o t a l  v i e w s</p>
+    </div>
+  </div>
+
+  <div className="anl-y-axis-values">
+    <span>12</span>
+    <span>10</span>
+    <span>8</span>
+    <span>6</span>
+    <span>4</span>
+    <span>2</span>
+    <span>0</span>
+  </div>
+</div>
+
+    </div>
+    <div className="anl-chart-scroll">
+      <ReactECharts
+        className="anl-chart"
+        option={chartOption}
+        style={{ height: 360, width: "1050px" }}
+        notMerge
+        lazyUpdate
+      />
+    </div>
+  </div>
 ) : (
   <div className="anl-empty-chart">
     No views yet
