@@ -157,3 +157,52 @@ export default function TrialConfirmModal({ isOpen, onClose }) {
     </>
   );
 }
+// export default function TrialConfirmModal({
+//   isOpen,
+//   onClose,
+//   onConfirm,
+//   isSubmitting,
+// }) {
+//   if (!isOpen) return null;
+
+//   return (
+//     <div className="trial-modal-overlay" onClick={onClose}>
+//       <div className="trial-modal" onClick={(e) => e.stopPropagation()}>
+//         {/* Close button */}
+//         <button className="trial-modal-close" onClick={onClose}>
+//           ✕
+//         </button>
+
+//         <h2 className="trial-modal-title">
+//           Start your 14 days free trial?
+//         </h2>
+
+//         <p className="trial-modal-subtitle">
+//           You'll unlock all Pro features instantly.
+//         </p>
+
+//         <p className="trial-modal-note">
+//           You won't be charged — your plan will auto-downgrade to Free after 14 days unless you upgrade.
+//         </p>
+
+//         <div className="trial-modal-actions">
+//           <button
+//             className="trial-btn-secondary"
+//             onClick={onClose}
+//             disabled={isSubmitting}
+//           >
+//             Not now
+//           </button>
+
+//           <button
+//             className="trial-btn-primary"
+//             onClick={onConfirm}
+//             disabled={isSubmitting}
+//           >
+//             {isSubmitting ? "Starting..." : "Start Trial"}
+//           </button>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// }

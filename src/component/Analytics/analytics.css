@@ -511,7 +511,7 @@
   writing-mode: vertical-rl;
   text-orientation: mixed;
   transform: rotate(180deg);
-  font-size: 13px;
+  font-size: 17px;
   font-weight: 500;
   color: #6B7280;
   white-space: nowrap;
@@ -615,6 +615,7 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+     align-items: flex-start;
     min-height: 84px;
   }
 
@@ -643,14 +644,6 @@
     margin-top: 2px;
     line-height: 1.2;
   }
-
-
-  .anl-card-value.status-pending {
-    font-size: 11px;
-    padding: 3px 8px;
-    width: fit-content;
-  }
-
  
   .anl-engx-card {
     grid-column: span 2;
@@ -699,19 +692,20 @@
     height: 64px;
   }
 
- .anl-card-value.status-viewed,
-.anl-card-value.status-pending {
-  display: inline-flex;
-  align-items: center;       
-  justify-content: center;    
-  height: 22px;              
-  width: 36px;
-  padding: 0 9px;          
-  border-radius: 999px;
-  font-size: 11px;
-  font-weight: 500;
-  line-height: 1;
-}
+  .anl-card-value.status-viewed,
+  .anl-card-value.status-pending {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 10px;     
+    padding: 2px 8px;    
+    width: fit-content;  
+    height: auto;
+
+    border-radius: 999px;
+    line-height: 1;
+  }
   .anl-engx-legend-center {
     position: static;
     transform: none;

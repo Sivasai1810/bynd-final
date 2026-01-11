@@ -13,7 +13,7 @@ import TrialSuccessModal from "../Trailforms/TrailSuccessModal.jsx";
 export default function PricingPlan() {
   const navigate = useNavigate();
   const { userId } = useAuth();
-
+console.log(userId)
   // plan state from hook
   const { plan, loading, isFree, isTrial, isPro, refetch} = useUserPlan();
 
@@ -46,39 +46,37 @@ const hasUsedTrial = plan?.trial_used === true;
     setTimeout(() => setShowToast(null), 3000);
   };
 
-  const handleConfirmTrial = async () => {
-    if (!userId) {
-      showNotification("Please log in to start trial.");
-      return;
-    }
+ const handleConfirmTrial = async () => {
+  if (!userId || typeof userId !== "string") {
+    showNotification("User not loaded yet. Please wait a second and try again.");
+    return;
+  }
 
-    try {
-      setStartingTrial(true);
-      setError(null);
+  try {
+    setStartingTrial(true);
 
-      const res = await axios.post(
-        "https://bynd-backend.onrender.com/userplan/start-trial",
-        { user_id: userId },
-        { withCredentials: true }
-      );
+   await axios.post(
+  "https://bynd-backend.onrender.com/userplan/start-trial",
+  { user_id: userId,
+    name:"sivasai"
+   },          
+  { withCredentials: true }     
+);
 
-      showNotification("Your 14-day Pro trial has started!");
+   
+    showNotification("Your 14-day Pro trial has started 🎉");
+    setShowConfirmModal(false);
+    setShowSuccessModal(true);
+    await refetch();
+  } catch (err) {
+    showNotification(
+      err?.response?.data?.error || "Failed to start trial"
+    );
+  } finally {
+    setStartingTrial(false);
+  }
+};
 
-      await refetch?.();
-
-      
-      setShowConfirmModal(false);
-      setShowSuccessModal(true);
-    } catch (err) {
-      console.error("Error starting trial:", err);
-      const msg =
-        err?.response?.data?.error || "Failed to start trial. Please try again.";
-      setError(msg);
-      showNotification(msg);
-    } finally {
-      setStartingTrial(false);
-    }
-  };
 
   if (loading) {
     return <div className="pricing-loading">Loading plans...</div>;
@@ -204,12 +202,12 @@ const hasUsedTrial = plan?.trial_used === true;
       </div>
 
       <TrialConfirmModal
-        isOpen={showConfirmModal}
-        onClose={() => setShowConfirmModal(false)}
-        onShowToast={showNotification}
-        onConfirm={handleConfirmTrial}      
-        isSubmitting={startingTrial}       
-      />
+  isOpen={showConfirmModal}
+  onClose={() => setShowConfirmModal(false)}
+  onConfirm={handleConfirmTrial}
+  isSubmitting={startingTrial}
+/>
+
 
      
       <TrialSuccessModal

@@ -1,32 +1,34 @@
 import { useEffect, useState, useRef } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import { supabase } from "../../auth/supabase"
+import { supabase } from "../../auth/supabase";
 import useAnalytics from "../../hooks/useAnalytics";
 import useTimeAnalytics from "../../hooks/timeanalytics";
 import "../employersview/employersview.css";
 
 export default function DesignPreview() {
   const { uniqueId } = useParams();
-const hasSent=useRef(false)
-const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
 
-  useAnalytics(uniqueId);
-useTimeAnalytics(uniqueId);
-  const previewRef = useRef(null);
+  const [session, setSession] = useState(null);
   const [loading, setLoading] = useState(true);
   const [design, setDesign] = useState(null);
   const [layers, setLayers] = useState([]);
   const [current, setCurrent] = useState(0);
 
-  /* ---------- fullscreen ---------- */
-  function toggleFullscreen() {
-    if (!document.fullscreenElement) {
-      previewRef.current?.requestFullscreen().catch(console.error);
-    } else {
-      document.exitFullscreen();
-    }
-  }
+  const previewRef = useRef(null);
+  const hasSent = useRef(false);
+
+  const isMobile = /Android|iPhone|iPad|iPod/i.test(
+    navigator.userAgent
+  );
+
+ 
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data }) => {
+      setSession(data.session);
+    });
+  }, []);
+
 
   useEffect(() => {
     if (!uniqueId) return;
@@ -35,26 +37,20 @@ useTimeAnalytics(uniqueId);
 
     async function load() {
       try {
-        // https://bynd-backend.onrender.com
-        // const res = await axios.get(
-        //   `http://localhost:3000/api/view/${uniqueId}`,
-        //   {withCredentials:true}
-        // );
         const {
-  data: { session },
-} = await supabase.auth.getSession();
+          data: { session },
+        } = await supabase.auth.getSession();
 
-const accessToken = session?.access_token;
+        const accessToken = session?.access_token;
 
-const res = await axios.get(
-  `https://bynd-backend.onrender.com/api/view/${uniqueId}`,
-  {
-    headers: accessToken
-      ? { Authorization: `Bearer ${accessToken}` }
-      : {},
-  }
-);
-
+        const res = await axios.get(
+          `https://bynd-backend.onrender.com/api/view/${uniqueId}`,
+          {
+            headers: accessToken
+              ? { Authorization: `Bearer ${accessToken}` }
+              : {},
+          }
+        );
 
         if (!alive) return;
 
@@ -74,68 +70,75 @@ const res = await axios.get(
     };
   }, [uniqueId]);
 
-// useEffect(()=>{
-// if(!uniqueId) return ;
-// try{
-// const sendNotification=async()=>{
-// const res=await axios.post(`http://localhost:3000/sendnotification/${uniqueId}`)
-// console.log(res.data.message);
-// }
-// sendNotification();
-// }catch(err){
-//   console.log(`unable to send the notification${err}`)
-//   // console.log("unable to send the notification ")
-// }
-// },[uniqueId])
+ 
+  const isReady = Boolean(uniqueId && design && session);
 
+  const isOwnerView =
+    isReady &&
+    session.user.id === design.design.user_id;
 
-useEffect(() => {
-  if(hasSent.current) return;
-  hasSent.current=true
-  if (!uniqueId) return;
+  useAnalytics(isReady ? uniqueId : null);
+  useTimeAnalytics(
+    isReady ? uniqueId : null,
+    isOwnerView
+  );
 
-  async function sendNotification() {
-    try {
-      // https://bynd-backend.onrender.com
-      const res = await axios.post(`https://bynd-backend.onrender.com/sendnotification/${uniqueId}`);
-      console.log(res.data.message);
-    } catch (err) {
-      console.log("unable to send the notification", err);
+  useEffect(() => {
+    if (!uniqueId || hasSent.current) return;
+    hasSent.current = true;
+
+    axios
+      .post(`https://bynd-backend.onrender.com/sendnotification/${uniqueId}`)
+      .catch(() => {});
+  }, [uniqueId]);
+
+  /* ---------- fullscreen ---------- */
+  function toggleFullscreen() {
+    if (!document.fullscreenElement) {
+      previewRef.current
+        ?.requestFullscreen()
+        .catch(console.error);
+    } else {
+      document.exitFullscreen();
     }
   }
 
-  sendNotification();
-}, [uniqueId]);
+  if (loading) {
+    return (
+      <div className="dp-loading-wrapper">
+        <div className="dp-spinner"></div>
+        <p className="dp-loading-text">
+          Loading preview design…
+        </p>
+      </div>
+    );
+  }
 
-
-  /* ---------- states ---------- */
- if (loading) {
-  return (
-    <div className="dp-loading-wrapper">
-      <div className="dp-spinner"></div>
-      <p className="dp-loading-text">Loading preview design…</p>
-    </div>
-  );
-}
-
-  if (!design?.ok) return <div className="dp-error">Not found</div>;
+  if (!design?.ok) {
+    return <div className="dp-error">Not found</div>;
+  }
 
   const d = design.design;
   const pdfUrl = design.pdfUrl;
 
-const finalPdfUrl =
-  isMobile && pdfUrl
-    ? `https://docs.google.com/gview?url=${encodeURIComponent(pdfUrl)}&embedded=true`
-    : pdfUrl;
+  const finalPdfUrl =
+    isMobile && pdfUrl
+      ? `https://docs.google.com/gview?url=${encodeURIComponent(
+          pdfUrl
+        )}&embedded=true`
+      : pdfUrl;
 
-
-  const dateStr = new Date(d.created_at).toLocaleDateString("en-US", {
+  const dateStr = new Date(
+    d.created_at
+  ).toLocaleDateString("en-US", {
     month: "long",
     day: "numeric",
     year: "numeric",
   });
 
-  const timeStr = new Date(d.created_at).toLocaleTimeString("en-US", {
+  const timeStr = new Date(
+    d.created_at
+  ).toLocaleTimeString("en-US", {
     hour: "numeric",
     minute: "2-digit",
     hour12: true,
