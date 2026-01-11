@@ -33,4 +33,3 @@ export default function Toast({ message, onClose }) {
   );
 }
 
-// ===== src/components/Toast/Toast.css =====

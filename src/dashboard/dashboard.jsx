@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react'
+ import { useNavigate } from "react-router-dom";
 import { nanoid } from 'nanoid';
 import axios from 'axios';
 import { useAuth } from '../hooks/useAuth';
@@ -36,45 +37,13 @@ export default function Dashboard() {
   const [currentView, setCurrentView] = useState('dashboard'); // 'dashboard', 'analytics', or 'notifications'
   const [selectedSubmissionForAnalytics, setSelectedSubmissionForAnalytics] = useState(null);
 const [showTrialBanner, setShowTrialBanner] = useState(false);
-
-  // Subscription state
-  const [subscription, setSubscription] = useState(null);
-  const [loadingSubscription, setLoadingSubscription] = useState(true);
-
   const hasNoSubmissions = !submissionsLoading && submissions.length === 0;
   const [showTrialModal, setShowTrialModal] = useState(false);
   const { plan, loading, isFree, isPro, isTrial } = useUserPlan();
   
   const shouldShowProBanner = isFree;
-  useEffect(() => {
-    const fetchUserPlan = async () => {
-      if (!userId) {
-        setLoadingSubscription(false);
-        return;
-      }
 
-      try {
-        setLoadingSubscription(true);
-        const response = await axios.get('https://bynd-backend.onrender.com/userplan', {
-          params: { user_id: userId },
-          withCredentials: true
-        });
-
-        if (response.data.subscription) {
-          setSubscription(response.data.subscription);
-          console.log('User subscription:', response.data.subscription);
-        }
-      } catch (error) {
-        console.error('Error fetching user plan:', error);
-        showNotification('Failed to load subscription details');
-      } finally {
-        setLoadingSubscription(false);
-      }
-    };
-
-    fetchUserPlan();
-  }, [userId]);
-
+const navigate = useNavigate();
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (showProfileDropdown && !e.target.closest('.avatar-container')) {
@@ -111,41 +80,17 @@ const [showTrialBanner, setShowTrialBanner] = useState(false);
     }
 
     setShowForm(true);
-    setPdfFile([]); // <-- make sure we reset to an empty array (never null)
+    setPdfFile([]); // 
     setPastedUrl("");
     setCompanyName("");
     setPosition("");
   };
 
-  const handleStartTrial = async () => {
-    if (!userId) {
-      showNotification('Please log in to start trial');
-      return;
-    }
 
-    if (subscription?.trial_used) {
-      showNotification('You have already used your free trial');
-      return;
-    }
+const handleStartTrial = () => {
+  navigate("/pricingtable");
+};
 
-    try {
-      const response = await axios.post('https://bynd-backend.onrender.com/userplan/start-trial', 
-        { user_id: userId },
-        { withCredentials: true }
-      );
-
-      if (response.data.subscription) {
-        setSubscription(prev => ({
-          ...prev,
-          ...response.data.subscription
-        }));
-        showNotification('14-day Pro trial started successfully! 🎉');
-      }
-    } catch (error) {
-      console.error('Error starting trial:', error);
-      showNotification(error.response?.data?.error || 'Failed to start trial');
-    }
-  };
 
   const handleCopyLink = (shareableLink) => {
     if (!shareableLink) {
@@ -215,13 +160,15 @@ const [showTrialBanner, setShowTrialBanner] = useState(false);
         });
 // https://bynd-backend.onrender.com
         const response = await axios.post(
-          "https://bynd-backend.onrender.com/storeurls",
-          formData,
-          {
-            withCredentials: true
-          
-          }
-        );
+  "https://bynd-backend.onrender.com/storeurls",
+  formData,
+  {
+    withCredentials: true,
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  }
+);
 
         const shareableLink = response.data.shareable_link;
 
@@ -375,7 +322,7 @@ const [showTrialBanner, setShowTrialBanner] = useState(false);
           showProfileDropdown={showProfileDropdown}
           setShowProfileDropdown={setShowProfileDropdown}
           onLogout={logout}
-          subscription={subscription}
+          subscription={plan}
           onSearch={setSearchQuery}
         />
 
@@ -399,11 +346,11 @@ const [showTrialBanner, setShowTrialBanner] = useState(false);
           <EmptyState onNewSubmission={handleShowForm} />
         ) : (
           <>
-            <StatsGrid stats={stats} subscription={subscription} />
+            <StatsGrid stats={stats} subscription={plan} />
           
             {shouldShowProBanner && (
               <ProBanner 
-                subscription={subscription}
+                subscription={plan}
                 onStartTrial={handleStartTrial}
               />
             )}

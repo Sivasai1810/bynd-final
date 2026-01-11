@@ -11,6 +11,7 @@ import Lastviewedon from "../../assets/lastviewedon.svg";
 import Engagement from "../../assets/Engagements.svg";
 import Lastviewedat from "../../assets/Group 17919.svg"
 import "./analytics.css";
+import { color } from "echarts";
 
 const Analytics = ({ submissions, loading, selectedSubmission, onSubmissionComplete }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -65,7 +66,20 @@ const calculateSubmissionAge = (createdAt) => {
 
 
 
-const formatDate = (date) => {
+// const formatDate = (date) => {
+//   if (!date) return "Not yet viewed";
+
+//   return new Date(date).toLocaleString("en-IN", {
+//     timeZone: "Asia/Kolkata",
+//     year: "numeric",
+//     month: "short",
+//     day: "numeric",
+//     hour: "2-digit",
+//     minute: "2-digit",
+//     hour12: true,
+//   });
+// };
+const formatDateWithTime = (date) => {
   if (!date) return "Not yet viewed";
 
   return new Date(date).toLocaleString("en-IN", {
@@ -78,6 +92,18 @@ const formatDate = (date) => {
     hour12: true,
   });
 };
+
+const formatDateOnly = (date) => {
+  if (!date) return "Not yet viewed";
+
+  return new Date(date).toLocaleDateString("en-IN", {
+    timeZone: "Asia/Kolkata",
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  });
+};
+
 
 
 
@@ -229,7 +255,13 @@ yData.push({
   nameLocation: "middle",
   nameGap: 35,
   axisLabel: { color: "#6B7280" },
+  nameTextStyle:{
+    fontSize:20,
+    fontWeight:500,
+   lineHeight: 20,
+  }
 },
+
 
 yAxis: {
   type: "value",
@@ -390,8 +422,12 @@ if (analyticsLoading && !analyticsData) {
           <div className="anl-meta-row">
       
 <p className="anl-submission-date">
-  Submitted on {formatDate(submissionData.submittedOn)}
+  Submitted on{" "}
+  {isMobile
+    ? formatDateOnly(submissionData.submittedOn)
+    : formatDateWithTime(submissionData.submittedOn)}
 </p>
+
 
 
 
@@ -442,7 +478,7 @@ if (analyticsLoading && !analyticsData) {
               <p className="anl-card-label">First viewed on</p>
               {/* <p className="anl-card-value">{formatDate(firstViewed)}</p> */}
               <p className="anl-card-value">
-  {formatDate(firstViewed)}
+  {formatDateWithTime(firstViewed)}
 </p>
 
             </div>
@@ -452,7 +488,7 @@ if (analyticsLoading && !analyticsData) {
               <p className="anl-card-label">Last viewed on</p>
               {/* <p className="anl-card-value">{formatDate(lastViewed)}</p> */}
               <p className="anl-card-value">
-  {formatDate(lastViewed)}
+  {formatDateWithTime(lastViewed)}
 </p>
 
             </div>

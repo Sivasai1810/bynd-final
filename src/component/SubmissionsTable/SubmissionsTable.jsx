@@ -1,94 +1,13 @@
-// import React, { useEffect, useState } from 'react';
-// import SubmissionRow from './SubmissionsRow';
-// import Mobileview from "./mobileview"
-// import { useNavigate } from "react-router-dom";
-
-// export default function SubmissionsTable({ 
-//   searchQuery,
-//   submissions, 
-//   loading, 
-//   onCopyLink,
-//   onDelete 
-// }) {
-// const [isMobile,setIsmobile]=useState(window.innerWidth<=767);
-// useEffect(()=>{
-//   const handleResize=()=>setIsmobile(window.innerWidth<=767)
-//   window.addEventListener('resize',handleResize);
-//   return ()=>window.removeEventListener('resizze',handleResize);
-// },[])
-//   const navigate = useNavigate();
-
-//   const handleEmployerView = (uniqueId) => {
-//     navigate(`/designpreview/${uniqueId}`);
-//   };
-
-//   return (
-//     <>
-//       <h2 className="table-title">Design Submissions</h2>
-//       <div className="table-container">
-//          <div className="table-wrapper">
-//         <table className="table">
-//           <thead>
-//             <tr className="mobile-table-card">
-//               <th>S.No.</th>
-//               <th>Company name</th>
-//               <th>Position</th>
-//               <th>Submitted on</th>
-//               <th>Status</th>
-//               <th>Actions</th>
-//             </tr>
-//           </thead>
-
-//           <tbody>
-//             {loading ? (
-//               // mark this row with a class so mobile CSS can ignore ::before injection
-//               <tr className="loading-row">
-//                 <td colSpan={6} style={{ textAlign: 'center', padding: '20px' }}>
-//                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px' }}>
-//                     <div className="spinner"></div>
-//                     LOADING...
-//                   </div>
-//                 </td>
-//               </tr>
-//             ) : submissions.length > 0 ? (
-//               submissions.map((submission, index) => (
-//                 <SubmissionRow
-//                   key={submission.id}
-//                   submission={submission}
-//                   index={index}
-//                   onCopyLink={onCopyLink}
-//                   onDelete={onDelete}
-//                   onEmployerView={handleEmployerView}
-//                   searchQuery={searchQuery}
-//                 />
-//               ))
-//             ) : (
-//               // no-data row also gets a class so mobile CSS won't add a label
-//               <tr className="no-data-row">
-//                 <td colSpan={6} style={{ textAlign: 'center', padding: '20px' }}>
-//                   <div style={{ color: '#666' }}>
-//                     NO DATA FOUND
-//                   </div>
-//                 </td>
-//               </tr>
-//             )}
-//           </tbody>
-
-//         </table>
-//       </div>
-//       </div>
-//     </>
-//   );
-// }
-
 import React, { useEffect, useState } from 'react';
 import SubmissionRow from './SubmissionsRow';
+import Toast from '../Toast/Toast';
 import { useNavigate } from "react-router-dom";
 
 // Mobile Card Component
 const MobileSubmissionCard = ({ submission, index, onCopyLink, onDelete, onEmployerView, searchQuery }) => {
   const [showMenu, setShowMenu] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
+const status = submission?.status || "pending";
 
   const handleMenuToggle = () => {
     setShowMenu(prev => !prev);
@@ -279,7 +198,9 @@ const MobileSubmissionCard = ({ submission, index, onCopyLink, onDelete, onEmplo
                    submission.status === 'pending' ? '#D97706' : 
                    submission.status === 'approved' ? '#16a34a' : '#dc2626'
           }}>
-            {submission.status.charAt(0).toUpperCase() + submission.status.slice(1)}
+            {/* {submission.status.charAt(0).toUpperCase() + submission.status.slice(1)} */}
+            {status.charAt(0).toUpperCase() + status.slice(1)}
+
           </span>
         </div>
 
@@ -330,7 +251,7 @@ export default function SubmissionsTable({
   onDelete 
 }) {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 767);
-  
+  const [toastMessage ,setToastMessage]=useState("")
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth <= 767);
     window.addEventListener('resize', handleResize);
@@ -338,13 +259,24 @@ export default function SubmissionsTable({
   }, []);
 
   const navigate = useNavigate();
+const showCopyToast = (link) => {
+  navigator.clipboard.writeText(link);
+  setToastMessage("BYND link copied to your clipboard");
+};
 
+const closeToast=()=>{
+  setToastMessage("")
+}
   const handleEmployerView = (uniqueId) => {
     navigate(`/designpreview/${uniqueId}`);
   };
 
   return (
     <>
+    {toastMessage && (
+  <Toast message={toastMessage} onClose={closeToast} />
+)}
+
       <h2 className="table-title">Design Submissions</h2>
       <div className="table-container">
         {/* DESKTOP VIEW */}
@@ -378,7 +310,7 @@ export default function SubmissionsTable({
                       key={submission.id}
                       submission={submission}
                       index={index}
-                      onCopyLink={onCopyLink}
+                      onCopyLinkTrigger={showCopyToast}
                       onDelete={onDelete}
                       onEmployerView={handleEmployerView}
                       searchQuery={searchQuery}
