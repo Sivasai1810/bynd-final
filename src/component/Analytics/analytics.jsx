@@ -11,7 +11,6 @@ import Lastviewedon from "../../assets/lastviewedon.svg";
 import Engagement from "../../assets/Engagements.svg";
 import Lastviewedat from "../../assets/Group 17919.svg"
 import "./analytics.css";
-import { color } from "echarts";
 
 const Analytics = ({ submissions, loading, selectedSubmission, onSubmissionComplete }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -103,10 +102,6 @@ const formatDateOnly = (date) => {
     day: "numeric",
   });
 };
-
-
-
-
   const formatTime = (seconds) => {
     if (!seconds || seconds === 0) return '0s';
     const mins = Math.floor(seconds / 60);
@@ -165,132 +160,112 @@ const createdAt = analyticsData?.createdAt;
   const firstViewed = analyticsData?.firstViewedOn;
   const engagementScore = analyticsData?.engagementScore ?? 0;
   const engagementBreakdown = analyticsData?.engagementBreakdown || { high: 0, moderate: 0, low: 0 };
-  
 const rawViews = analyticsData?.viewsOverTime || [];
 const submittedOn =submissionData?.submittedOn;
-const chartOption = useMemo(() => {
+const mainChartOption = useMemo(() => {
   if (!submittedOn) return {};
-  // 
+  
   const submittedDate = new Date(submittedOn);
   if (isNaN(submittedDate)) return {};
-const today = new Date();
-// Always allow future 7-day window
-const startDate = submittedDate;
-const endDate = new Date(
-  Math.max(
-    today.getTime(),
-    submittedDate.getTime()
-  )
-);
-
-// extend 6 more days into the future
-endDate.setDate(endDate.getDate() + 6);
-
-
-  // Map backend data → date => views
-  const viewMap = new Map(
-    rawViews.map(v => [v.date, v.views])
+  
+  const today = new Date();
+  const startDate = submittedDate;
+  const endDate = new Date(
+    Math.max(today.getTime(), submittedDate.getTime())
   );
-const xData = [];
-const yData = [];
+  endDate.setDate(endDate.getDate() + 6);
 
-let runningTotal = 0;
+  const viewMap = new Map(rawViews.map(v => [v.date, v.views]));
+  const xData = [];
+  const yData = [];
+  let runningTotal = 0;
 
-for (
-  let d = new Date(startDate);
-  d <= endDate;      
-  d.setDate(d.getDate() + 1)
-) {
-  const iso = d.toISOString().slice(0, 10);
+  for (
+    let d = new Date(startDate);
+    d <= endDate;
+    d.setDate(d.getDate() + 1)
+  ) {
+    const iso = d.toISOString().slice(0, 10);
+    xData.push(
+      d.toLocaleDateString("en-IN", {
+        day: "2-digit",
+        month: "short",
+      })
+    );
 
-  xData.push(
-    d.toLocaleDateString("en-IN", {
-      day: "2-digit",
-      month: "short",
-    })
-  );
+    const dailyViews = viewMap.get(iso) || 0;
+    runningTotal += dailyViews;
 
-  const dailyViews = viewMap.get(iso) || 0;
-runningTotal += dailyViews;
-
-yData.push({
-  value: runningTotal,
-
-  symbol: "circle",
-  symbolSize: 8,
-
-  itemStyle: dailyViews > 0
-    ? {
-        color: "#FFFFFF",        
-        borderColor: "#10B981",  
-        borderWidth: 2,
-      }
-    : {
-        color: "#10B981",        
-      }
-});
-
-}
-
-
+    yData.push({
+      value: runningTotal,
+      symbol: "circle",
+      symbolSize: 8,
+      itemStyle: dailyViews > 0
+        ? {
+            color: "#FFFFFF",
+            borderColor: "#10B981",
+            borderWidth: 2,
+          }
+        : {
+            color: "#10B981",
+          }
+    });
+  }
 
   return {
-  grid: {
-  left: 0,
-  right: 30,
-  top: 20,
-  bottom: isMobile ? 70 : 60,
-},
-
-
+    grid: {
+      left: 10,
+      right: 30,
+      top: 20,
+      bottom: isMobile ? 70 : 60,
+    },
+    
     tooltip: {
       trigger: "axis",
     },
-
-  
-xAxis: {
-  type: "category",
-  data: xData,
-  boundaryGap: false,
-
-  name: "Date",
-  nameLocation: "middle",
-  nameGap: 28,
-
-  axisLabel: {
-    color: "#6B7280",
-    interval: isMobile ? 1 : 0,   
-    hideOverlap: true,           
-    margin: 12,
-    fontSize: isMobile ? 10 : 12
-  },
-
-  axisTick: { alignWithLabel: true }
-},
-
-
-
-yAxis: {
-  type: "value",
-  min: 0,
-  max: 12,
-  interval: 2,
-  axisLabel: {
-    show: false  
-  },
-  axisLine: {
-    show: false  
-  },
-  axisTick: {
-    show: false  
-  },
-  splitLine: {
-    show: true,  
-    lineStyle: { color: "#E5E7EB" }
-  },
-},
-
-
+    
+    xAxis: {
+      type: "category",
+      data: xData,
+      boundaryGap: false,
+      name: "Date",
+      nameLocation: "middle",
+      nameGap: 38,
+      axisLabel: {
+        color: "#6B7280",
+        interval: isMobile ? 1 : 0,
+        hideOverlap: false,
+        rotate: 0,
+        margin: 14,
+        fontSize: isMobile ? 10 : 15
+      },
+      nameTextStyle: {
+        color: "#6B7280",
+        fontSize: 17,
+        fontWeight: 500,
+      },
+      axisTick: { alignWithLabel: true }
+    },
+    
+    yAxis: {
+      type: "value",
+      min: 0,
+      max: 12,
+      interval: 2,
+      show: true,
+      axisLine: { show: false },
+      axisTick: { show: false },
+      axisLabel: { show: false },
+      splitLine: {
+        show: true,
+        lineStyle: {
+          color: "#E5E7EB",
+          width: 1,
+          type: "solid"
+        }
+      }
+    },
+    
     series: [
       {
         type: "line",
@@ -305,10 +280,57 @@ yAxis: {
           color: "#10B981",
         },
         smooth: false,
+        z: 10, 
       },
     ],
   };
 }, [rawViews, submittedOn, isMobile]);
+const yAxisOnlyOption = {
+  backgroundColor: "transparent",
+
+  grid: {
+    left: 0,
+    right: 0,
+    top: 20,
+    bottom: 60,
+  },
+
+  xAxis: { show: false },
+
+  yAxis: {
+    type: "value",
+    min: 0,
+    max: 12,
+    interval: 2,
+
+    name: "Total views",
+    nameLocation: "middle",
+    nameGap: 29,
+     
+    axisLabel: {
+      color: "#6B7280",
+      fontSize: 13,
+    },
+      nameTextStyle: {
+        color: "#6B7280",
+        fontSize: 16,
+        fontWeight: 500,
+      },
+
+    axisLine: { show: false },
+    axisTick: { show: false },
+
+    splitLine: {
+      show: true,                
+      lineStyle: {
+        color: "#E5E7EB",
+        width: 1,
+      },
+    },
+  },
+
+  series: [],
+};
 
 if (!submissions || submissions.length === 0) {
     return (
@@ -612,38 +634,26 @@ if (analyticsLoading && !analyticsData) {
                 {totalViews === 0 ? 'Not viewed' : `${totalViews} ${totalViews === 1 ? 'View' : 'Views'}`}
               </p>
             </div>
-{chartOption?.series?.[0]?.data?.length > 0 ? (
-  <div className="anl-chart-wrapper">
-    <div className="anl-y-axis-fixed">
-    <div className="anl-y-axis-labels">
-  <div className="anl-y-axis-title-wrap">
-    <div className="anl-y-axis-title-vertical">
-      <p>T o t a l  v i e w s</p>
-    </div>
+{mainChartOption?.series?.[0]?.data?.length > 0 ? (
+<div className="anl-chart-wrapper">
+  <div className="anl-chart-y-fixed">
+    <ReactECharts
+      option={yAxisOnlyOption}
+      style={{ height: 360, width: 60 }}
+      notMerge
+      lazyUpdate
+    />
   </div>
-
-  <div className="anl-y-axis-values">
-    <span>12</span>
-    <span>10</span>
-    <span>8</span>
-    <span>6</span>
-    <span>4</span>
-    <span>2</span>
-    <span>0</span>
+  <div className="anl-chart-scroll">
+ <ReactECharts
+    option={mainChartOption}
+    style={{ height: 360, width: "1050px" }}
+    notMerge
+    lazyUpdate
+  />
   </div>
 </div>
 
-    </div>
-    <div className="anl-chart-scroll">
-      <ReactECharts
-        className="anl-chart"
-        option={chartOption}
-        style={{ height: 360, width: "1050px" }}
-        notMerge
-        lazyUpdate
-      />
-    </div>
-  </div>
 ) : (
   <div className="anl-empty-chart">
     No views yet

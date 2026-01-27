@@ -509,43 +509,10 @@
   padding: 20px 6px 60px 6px;
   box-sizing: border-box;
 } */
-.anl-y-axis-labels {
-  display: flex;
-  flex-direction: row; 
-  align-items: center;
-  gap: 6.5px;
-  height: var(--chart-height);
-  padding: 14px 10px 40px 18px;
-  font-size: 10px;
-  color: #6B7280;
-  box-sizing: border-box;
-}
 
 
-.anl-y-axis-title-vertical {
-  margin-top: 90px;
-  writing-mode: vertical-rl;
-  text-orientation: mixed;
-  transform: rotate(180deg);
-  font-size: 17px;
-  font-weight: 500;
-  color: #6B7280;
-  white-space: nowrap;
-}
 
 /* VALUES */
-.anl-y-axis-values {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  gap: 0;
-  height: 100%;
-  font-size: 12px;
-  color: #6B7280;
-  /* padding-top: 20px;       */
-  /* padding-bottom: 60px; */
-  box-sizing: border-box; 
-}
 
 
 .anl-y-axis-values span {
@@ -587,6 +554,25 @@
   color: #6b7280;
   font-weight: 500;
 }
+.anl-chart-wrapper {
+  position: relative;
+  display: flex;
+  width: 100%;
+}
+
+.anl-chart-y-fixed {
+  width: 60px;
+  flex-shrink: 0;
+  background-color: transparent;
+  pointer-events: none;
+}
+
+.anl-chart-scroll {
+  flex: 1;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
 
 @keyframes anl-spin {
   0% { transform: rotate(0deg); }
@@ -595,14 +581,7 @@
 
 
 @media (max-width: 767px) {
-  .anl-y-axis-title-vertical {
-    font-size: 9px;
-  }
   
-  .anl-y-axis-values {
-    font-size: 10px;
-  }
-
   .anl-submission-date {
   font-size: 11px;
   color: #6B7280;
