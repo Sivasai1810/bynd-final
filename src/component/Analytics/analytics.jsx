@@ -235,32 +235,39 @@ yData.push({
 
 
   return {
-    grid: {
-      left: 0,
-      right: 30,
-      top: 20,
-      bottom: 60,
-    },
+  grid: {
+  left: 0,
+  right: 30,
+  top: 20,
+  bottom: isMobile ? 70 : 60,
+},
+
 
     tooltip: {
       trigger: "axis",
     },
 
   
- xAxis: {
+xAxis: {
   type: "category",
   data: xData,
   boundaryGap: false,
+
   name: "Date",
   nameLocation: "middle",
-  nameGap: 35,
-  axisLabel: { color: "#6B7280" },
-  nameTextStyle:{
-    fontSize:20,
-    fontWeight:500,
-   lineHeight: 20,
-  }
+  nameGap: 28,
+
+  axisLabel: {
+    color: "#6B7280",
+    interval: isMobile ? 1 : 0,   
+    hideOverlap: true,           
+    margin: 12,
+    fontSize: isMobile ? 10 : 12
+  },
+
+  axisTick: { alignWithLabel: true }
 },
+
 
 
 yAxis: {

@@ -76,7 +76,6 @@
   overflow: visible;
 }
 
-/* ✅ KEY CHANGE: Remove border from the last row dynamically */
 .table tbody tr:last-child {
   border-bottom: none;
 }
@@ -183,12 +182,10 @@
   cursor: not-allowed;
 }
 
-/* Three-dots (more) button – float at top-right of card like Figma */
 .mobile-table-card {
-  position: relative; /* ensure absolute children are scoped to the card */
+  position: relative; 
 }
 
-/* Make td non-positioned so the absolute menu uses the row/card as reference */
 .mobile-table-card td {
   position: static;
 }
@@ -486,9 +483,7 @@
 .status-approved { background: #f0fdf4; color: #16a34a; }
 .status-rejected { background: #fef2f2; color: #dc2626; }
 
-/* ---------------------------------------------------
-   ACTION BUTTON (Copy BYND Link)
------------------------------------------------------*/
+
 .actions-container {
   display: flex;
   align-items: center;
